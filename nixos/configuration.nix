@@ -161,6 +161,7 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ]; # Obsidian uses EOL electron :( 
   environment.systemPackages = with pkgs; [
+    home-manager
 
     # Audio
     pavucontrol
@@ -178,9 +179,6 @@
     zplug
     zsh
 
-    # Homelab
-    home-manager
-
     # Display & Graphics
     dunst				  # Notifications
     libnotify
@@ -189,10 +187,6 @@
     rofi-wayland 	# App Switcher
     swww 			  	# Wallpaper
     waybar 				# Toolbar
-    # (waybar.overrideAttrs (oldAttrs: {
-    #   mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-    #   })
-    # )
     
     # Media
     discord
