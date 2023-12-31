@@ -21,10 +21,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Expose RAID array
-  boot.swraid.enable = true;
-  boot.swraid.mdadmConf = "MAILADDR=steve@apple.com"; # silence warning during install
-
   # Define linux kernel
   # Vanilla NixOS 23.11 had an older kernel that caused some Hyprland/Nvidia issues
   boot.kernelPackages = pkgs.linuxPackages_latest;

@@ -57,8 +57,6 @@
     # https://nixos.wiki/wiki/Visual_Studio_Code
   	enable = true;
   	extensions = with pkgs.vscode-extensions; [
-  	  # Themes
-  	  # azemoh.one-monokai
       
       # Languages
   	  ms-python.python
@@ -71,11 +69,13 @@
   	];
   	userSettings = {
   	  "files.autoSave" = "afterDelay";
-      # "workbench.colorTheme": "One Monokai",
       "git.confirmSync" = false;
       "git.autofetch" = true;
       "editor.accessibilitySupport" = "off";
+      # VSCode needs this to run in Wayland
       "window.titleBarStyle" = "custom";
+  	  # One Monokai Theme can't be installed here because it's not in the nixpkgs repo
+      "workbench.colorTheme" = "One Monokai";
   	};
   };
 
