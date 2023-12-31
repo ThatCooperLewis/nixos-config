@@ -162,6 +162,11 @@
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ]; # Obsidian uses EOL electron :( 
   environment.systemPackages = with pkgs; [
 
+    # Audio
+    pavucontrol
+    pipewire
+    playerctl
+
     # Dev Tools
     btop
     git
@@ -184,10 +189,10 @@
     rofi-wayland 	# App Switcher
     swww 			  	# Wallpaper
     waybar 				# Toolbar
-    (waybar.overrideAttrs (oldAttrs: {
-      mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-      })
-    )
+    # (waybar.overrideAttrs (oldAttrs: {
+    #   mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+    #   })
+    # )
     
     # Media
     discord
@@ -198,10 +203,18 @@
     obsidian
   ];
 
+  nixpkgs.overlays = [
+    (self: super: {
+      waybar = super.waybar.overrideAttrs (oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+      });
+    })
+  ];
 
   ### Fonts
   fonts.packages = with pkgs; [
     meslo-lgs-nf
+    nerdfonts
   ];
 
 
