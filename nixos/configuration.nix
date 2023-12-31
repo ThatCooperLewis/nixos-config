@@ -143,7 +143,7 @@
   	  useDefaultShell = true;
       isNormalUser = true;
       description = "Cooper Lewis";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      extraGroups = [ "networkmanager" "input" "wheel" "docker" ];
     };
   };
 
@@ -163,39 +163,39 @@
   environment.systemPackages = with pkgs; [
 
     # Dev Tools
-	btop
-	git
-	kitty
+    btop
+    git
+    kitty
     micro
     openssh
-	vscode
+    vscode
     wget
     zplug
     zsh
 
-	# Homelab
+    # Homelab
     home-manager
 
     # Display & Graphics
-    dunst				# Notifications
+    dunst				  # Notifications
     libnotify
-    grim 				# Screenshots
+    grim 				  # Screenshots
     networkmanagerapplet
-    rofi-wayland 		# App Switcher
-    swww 				# Wallpaper
+    rofi-wayland 	# App Switcher
+    swww 			  	# Wallpaper
     waybar 				# Toolbar
-	(waybar.overrideAttrs (oldAttrs: {
-		mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-	  })
-	)
-	
-	# Media
-	discord
-	firefox
+    (waybar.overrideAttrs (oldAttrs: {
+      mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+      })
+    )
+    
+    # Media
+    discord
+    firefox
     spotify
     steam
     tidal-hifi
-	obsidian
+    obsidian
   ];
 
 
