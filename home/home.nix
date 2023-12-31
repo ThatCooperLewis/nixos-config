@@ -87,7 +87,7 @@
   	  # One Monokai Theme can't be installed here because it's not in the nixpkgs repo
       "workbench.colorTheme" = "One Monokai";
       # Change font to nerdfont
-      "editor.fontFamily" = "Fira Code Nerd Font";
+      "editor.fontFamily" = "FiraCode Nerd Font";
   	};
   };
 
