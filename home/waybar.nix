@@ -3,6 +3,11 @@
 {
   # xdg.configFile."waybar/style.css" = ../waybar/style.css;
   # xdg.configFile."waybar/mocha.css" = ../waybar/mocha.css;
+
+  # Helpful links
+  # https://github.com/georgewhewell/nixos-host/blob/master/home/waybar.nix
+  # https://github.com/MathisP75/summer-day-and-night/blob/main/waybar/everforest/config
+
   programs.waybar = {
     enable = true;
     systemd.enable = true;
