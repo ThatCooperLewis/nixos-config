@@ -7,9 +7,9 @@
       ./hardware-configuration.nix
 
       # All docker containers
-	  ./plex-stack.nix
+      ./containers.nix
 
-	  # Home Manager
+      # Home Manager
       # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nixos-module
       # See unpure-commands.md for initial setup
       <home-manager/nixos>
@@ -157,7 +157,7 @@
   # Install packages to /etc/profile instead of ~/.nix-profile – Per the docs, this may become the default in the future
   home-manager.useUserPackages = true;
   # Import everything else directly from file
-  home-manager.users.cooper = import ../../../home/cooper/.config/home-manager/home.nix;
+  home-manager.users.cooper = import /home/cooper/.config/home-manager/home.nix;
 
 
 
