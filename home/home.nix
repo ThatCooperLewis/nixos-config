@@ -9,6 +9,9 @@
 
       # zsh shell
       ./zsh.nix
+
+      # Kitty terminal colors and margins
+      ./kitty.nix
     ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -84,9 +87,7 @@
       # VSCode needs this to run in Wayland
       "window.titleBarStyle" = "custom";
   	  # One Monokai Theme can't be installed here because it's not in the nixpkgs repo
-      # "workbench.colorTheme" = "One Monokai";
-      # "workbench.colorTheme" = "Noctis Bordo";
-      "workbench.colorTheme"=  "Monokai";
+      "workbench.colorTheme"=  "Kimbie Dark";
       # Change font to nerdfont
       "editor.fontFamily" = "FiraCode Nerd Font";
   	};
