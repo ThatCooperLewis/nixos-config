@@ -1,16 +1,22 @@
-# Cooper's NixOS Configs
+These are my dotfiles. There are many like them, but these are mine.
 
+### Overview:
+- NixOS as pure as possible
+- A lush Plex stack running via Nix containers (docker backend, nvidia transcode)
+- Hyprland desktop with a custom theme 
+- Nvidia Multi-GPU support
+- KVM Passthrough
 
-## NixOS + Hyprland + Nvidia Multi-GPU + KVM Passthrough
-*or, a masochist's wet dream*
+### Hardware:
+- Ryzen 5950X - 16C32T
+- Nvidia 3080 10GB (provided to KVM for gaming)
+- Nvidia 1080 8GB (provided to containers for transcode)
+- 64 GB CL16 3600MT/s RAM
+- 4TB SSD storage
 
-This is a collection of my config files to get a very pretty (and powerful) installation of NixOS running on my Nvidia-heavy home server. 
-
-The goals I've set for myself are:
-- NixOS installed as purely as possible
-- My Plex stack running in its various Docker containers, with nvidia hardware-acceleration for my transcode containers, configured via Nix
-- Aesthetically-pleasing Hyprland desktop with functional Electron apps
-- Multi-GPU support for my RTX 3080 and GTX 1080
-- KVM Passthrough for gaming on a windows installation, either directly or via Looking Glass (depending on whether I want G-Sync)
+Also patched into this config is a TrueNAS machine:
+- Intel 8700k - 6C12T
+- 32GB 3200MT/s RAM
+- 100TB raw, 60TB usable storage
 
 I've included URL sources for any odd/unique config choices I've made along the way.
