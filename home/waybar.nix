@@ -28,8 +28,8 @@
       
       margin-top = 0;
       margin-bottom = 0;
-      margin-left = 100;
-      margin-right = 100;
+      margin-left = 80;
+      margin-right = 80;
 
       spacing = 15;
 
@@ -37,7 +37,6 @@
         "custom/launcher" 
         "clock" 
         "clock#date"
-        "tray"
       ];
       modules-center = [
         "hyprland/workspaces"
@@ -49,6 +48,7 @@
         "cpu" 
         "memory" 
         "temperature" 
+        "tray"
         "custom/powermenu"
       ];
 
@@ -59,6 +59,10 @@
 
       memory = { 
         format = "{}% "; 
+      };
+
+      tray = { 
+        spacing = 15;
       };
 
       pulseaudio = {
@@ -105,7 +109,7 @@
         escape =  true;
         interval = 3;
         tooltip = false;
-        exec = "playerctl metadata --format='{{ title }} - {{ artist }}'";
+        exec = "playerctl metadata -s --format='{{ title }} - {{ artist }}'";
         on-click = "playerctl play-pause";
         max-length = 60;
       };
