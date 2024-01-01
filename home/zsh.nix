@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  programs.zsh = {
+  config.programs.zsh = {
     # https://nixos.wiki/wiki/zsh
     enable = true;
     shellAliases = {
@@ -33,7 +33,7 @@
         ];
     };
 
-    # Up/Down Arrow keys to 
+    # Up/Down Arrow keys to search history
     historySubstringSearch = {
       enable = true;
       searchUpKey = [ "$terminfo[kcuu1]" "^[[B" ];
