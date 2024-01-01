@@ -64,7 +64,8 @@
 }
 
 window#waybar {
-  background-color: @fg;
+  /* background-color: @fg; */
+  background-color: #a1a791;
   color: @bg0;
   transition-property: background-color;
   transition-duration: 0.5s;
@@ -85,6 +86,8 @@ window#waybar {
 #network,
 #cpu,
 #memory,
+#pulseaudio,
+#tray,
 #temperature,
 #battery,
 #custom-powermenu {
