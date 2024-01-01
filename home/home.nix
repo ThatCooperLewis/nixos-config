@@ -85,7 +85,8 @@
       "window.titleBarStyle" = "custom";
   	  # One Monokai Theme can't be installed here because it's not in the nixpkgs repo
       # "workbench.colorTheme" = "One Monokai";
-      "workbench.colorTheme" = "Noctis Bordo";
+      # "workbench.colorTheme" = "Noctis Bordo";
+      "workbench.colorTheme"=  "Monokai";
       # Change font to nerdfont
       "editor.fontFamily" = "FiraCode Nerd Font";
   	};
