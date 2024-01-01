@@ -33,27 +33,57 @@
 
       spacing = 15;
 
-      modules-left = ["custom/launcher" "clock" "clock#date"];
-      modules-center = ["hyprland/workspaces"];
-      modules-right = ["custom/music" "network" "cpu" "memory" "temperature" "custom/powermenu" ];
+      modules-left = [
+        "custom/launcher" 
+        "clock" 
+        "clock#date"
+        "tray"
+      ];
+      modules-center = [
+        "hyprland/workspaces"
+      ];
+      modules-right = [
+        "custom/music"
+        "pulseaudio" 
+        "network" 
+        "cpu" 
+        "memory" 
+        "temperature" 
+        "custom/powermenu"
+      ];
 
       cpu = {
         format = "{usage}% ";
         tooltip = false;
       };      
 
-      memory = { format = "{}% "; };
+      memory = { 
+        format = "{}% "; 
+      };
+
+      pulseaudio = {
+        format = "{volume}% {icon} {format_source}";
+        format-bluetooth = "{volume}% {icon} {format_source}";
+        format-bluetooth-muted = " {icon} {format_source}";
+        format-icons = {
+          car = "";
+          default = [ "" "" "" ];
+          handsfree = "";
+          headphones = "";
+          headset = "";
+          phone = "";
+          portable = "";
+        };
+        format-source-muted = "";
+        on-click = "pavucontrol";
+      };
 
       "hyprland/workspaces" = {
         disable-scroll = true;
-        # format = "  {}";
-        # escape = true;
-        # interval = 1;
         all-outputs = true;
         separate-outputs = true;
-        # on-click = "bspc desktop -f '^{index}'";
-        on-scroll-up = "hyprctl dispatch workspace e+1";
-        on-scroll-down = "hyprctl dispatch workspace e-1";
+        on-scroll-up = "hyprctl dispatch workspace e-1";
+        on-scroll-down = "hyprctl dispatch workspace e+1";
         persistent-workspaces = {
           "1" = [];
           "2" = [];
@@ -82,14 +112,16 @@
 
       "custom/powermenu" = {
         format = "";
-        on-click = "pkill rofi || sh .config/wofi/scripts/powermenu.sh 'everforest-light' '--height=17% -o $MAIN_DISPLAY'";
+        # on-click = "pkill rofi || sh .config/wofi/scripts/powermenu.sh 'everforest-light' '--height=17% -o $MAIN_DISPLAY'";
+        on-click = "wlogout";
         tooltip = false;
       };
 
       network = {
-          format-ethernet = " up: {bandwidthUpBits} down: {bandwidthDownBits}";
+          interval = 2;
+          format-ethernet = "↑ {bandwidthUpBits} ↓ {bandwidthDownBits}";
           format-disconnected = "󰤭";
-            # on-click = "sh ~/.config/wofi/scripts/wifimenu.sh";
+          on-click = "nm-connection-editor";
       };
 
       "clock" = {

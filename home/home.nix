@@ -67,7 +67,6 @@
     # https://nixos.wiki/wiki/Visual_Studio_Code
   	enable = true;
   	extensions = with pkgs.vscode-extensions; [
-      
       # Languages
   	  ms-python.python
   	  # kevinrose.vsc-python-indent
@@ -85,12 +84,19 @@
       # VSCode needs this to run in Wayland
       "window.titleBarStyle" = "custom";
   	  # One Monokai Theme can't be installed here because it's not in the nixpkgs repo
-      "workbench.colorTheme" = "One Monokai";
+      # "workbench.colorTheme" = "One Monokai";
+      "workbench.colorTheme" = "Noctis Bordo";
       # Change font to nerdfont
       "editor.fontFamily" = "FiraCode Nerd Font";
   	};
   };
 
+
+  programs.wlogout = {
+    enable = true;
+    # TODO: Add styling
+    # https://mynixos.com/options/programs.wlogout
+  };
 
   #### Git
   programs.git = {
