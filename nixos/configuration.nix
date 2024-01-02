@@ -9,12 +9,14 @@
       # All docker containers
       ./containers.nix
 
+      # KVM, QEMU, and other virtualization configs
+      ./virtualization.nix
+
       # Home Manager
       # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nixos-module
       # See unpure-commands.md for initial setup
       <home-manager/nixos>
     ];
-
 
 
   ### Bootloader.
@@ -113,8 +115,11 @@
     # A mix of other settings here + in home.nix ended up resolving it
     # I think the main culprit was an outdate linux kernel (see above) plus adding the DRM_DEVICES flag below
     WLR_NO_HARDWARE_CURSORS = "1";
-    # Define which GPU to use (3080)
+    
+    # Define which GPU to use 
     WLR_DRM_DEVICES = "/dev/dri/card0";
+    # WLR_DRM_DEVICES = "/dev/dri/card1"; If you're using second GPU and it's not detached from the host
+    
     # Tells electron apps to use Wayland
     NIXOS_OZONE_WL = "1";
   };
@@ -143,7 +148,7 @@
   	  useDefaultShell = true;
       isNormalUser = true;
       description = "Cooper Lewis";
-      extraGroups = [ "networkmanager" "input" "wheel" "docker" ];
+      extraGroups = [ "networkmanager" "input" "wheel" "docker" "libvirtd" ];
     };
   };
 

@@ -137,7 +137,7 @@ in {
       ];
       extraOptions = [
       	"--runtime=nvidia"
-      	"--gpus=${containerGpus}}"
+      	"--gpus=${containerGpus}"
       	"--network=plex-stack"
       ];
     };
@@ -218,9 +218,9 @@ in {
       environmentFiles = [ ./plexDefault.env ];
       volumes = [
         "${arrConfigDir}/nzbget/config:/config"
- 	    "${usenetDownloads}:/data/usenet"
- 	    "${usenet4kDownloads}:/data-4k/usenet"
-		# Path to SSL certs used to be provided, but they're dead now       
+        "${usenetDownloads}:/data/usenet"
+        "${usenet4kDownloads}:/data-4k/usenet"
+        # Path to SSL certs used to be provided, but they're dead now       
       ];
       extraOptions = [ "--network=plex-stack" ];
     };
