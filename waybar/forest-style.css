@@ -73,7 +73,8 @@ window#waybar {
   transition-duration: .5s;
 
   border-bottom-width: 5px;
-  border-bottom-color: #7d6a40;
+  /* border-bottom-color: #7d6a40; */
+  border-bottom-color: #556a35;
   border-bottom-style: solid;
 }
 
