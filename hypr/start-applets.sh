@@ -3,7 +3,7 @@
 # Wallpaper daemon
 swww init &
 # Set wallpaper
-swww img ~/Wallpapers/kalalau.jpg &
+swww img /home/cooper/Wallpapers/kalalau.jpg &
 
 # Network manager
 nm-applet --indicator &
