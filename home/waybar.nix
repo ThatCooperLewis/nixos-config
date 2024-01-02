@@ -35,8 +35,8 @@
 
       modules-left = [
         "custom/launcher" 
-        "clock" 
         "clock#date"
+        "network" 
       ];
       modules-center = [
         "hyprland/workspaces"
@@ -44,11 +44,11 @@
       modules-right = [
         "custom/music"
         "pulseaudio" 
-        "network" 
         "cpu" 
         "memory" 
         "temperature" 
         "tray"
+        "clock" 
         "custom/powermenu"
       ];
 
