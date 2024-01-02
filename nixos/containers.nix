@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 
-# {
 let
 
   hostIP = "10.0.50.1";
@@ -17,6 +16,10 @@ let
   arrConfigDir = "/mnt/config-array";
   plexConfigDir = "/mnt/config-array/plex/config";
   plexTranscodeDir = "/mnt/config-array/plex/transcode";
+
+  containerGpus = "all";
+  # When using the second GPU, but the primary is still nix-visible
+  # containerGpus = "\"device=1\"";
 
   ports = {
   	bazarr = 6767;
@@ -134,7 +137,7 @@ in {
       ];
       extraOptions = [
       	"--runtime=nvidia"
-      	"--gpus=\"device=1\""
+      	"--gpus=${containerGpus}}"
       	"--network=plex-stack"
       ];
     };
@@ -278,7 +281,7 @@ in {
       ];
       extraOptions = [
       	"--runtime=nvidia"
-      	"--gpus=\"device=1\""
+      	"--gpus=${containerGpus}"
       	"--network=plex-stack"
       ];
     };
@@ -309,7 +312,7 @@ in {
       ];
       extraOptions = [
       	"--runtime=nvidia"
-      	"--gpus=\"device=1\""
+      	"--gpus=${containerGpus}"
       	"--network=plex-stack"
       ];
     };
