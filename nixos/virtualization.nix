@@ -40,7 +40,10 @@ in { pkgs, lib, config, ... }: {
     virtualisation.spiceUSBRedirection.enable = true; # Enable guest/host USB hotplug
     
     # From https://nixos.wiki/wiki/Virt-manager
-    virtualisation.libvirtd.enable = true;
+    virtualisation.libvirtd = {
+      enable = true;
+      qemu.swtpm.enable = true;
+    };
     programs.virt-manager.enable = true;
   };
 }

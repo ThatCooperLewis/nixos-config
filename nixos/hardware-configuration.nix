@@ -35,9 +35,9 @@
 
   # Local Drives 
   
-  fileSystems."/mnt/endeavour" =
-    { device = "/dev/disk/by-uuid/17ca1048-379a-44ca-8fe2-8c0ca438088e";
-      fsType = "ext4";
+  fileSystems."/mnt/windows" =
+    { device = "/dev/disk/by-uuid/0C1F-1464";
+      fsType = "msdos";
     };
 
   fileSystems."/mnt/config-array" =

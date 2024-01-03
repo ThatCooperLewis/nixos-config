@@ -192,7 +192,8 @@
     rofi-wayland 	# App Switcher
     swww 			  	# Wallpaper
     waybar 				# Toolbar
-    
+    swtpm 			  # Virtual TPM
+        
     # Media
     discord
     firefox
