@@ -36,8 +36,8 @@
   # Local Drives 
   
   fileSystems."/mnt/windows" =
-    { device = "/dev/disk/by-uuid/0C1F-1464";
-      fsType = "msdos";
+    { device = "/dev/disk/by-uuid/4eb14be0-730b-40a7-8ec6-056c4eeb8411";
+      fsType = "ext4";
     };
 
   fileSystems."/mnt/config-array" =
