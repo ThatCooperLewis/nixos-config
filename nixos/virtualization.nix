@@ -1,8 +1,12 @@
-# Stolen mostly from https://astrid.tech/2022/09/22/0/nixos-gpu-vfio/
+# Stolen mostly from Astrid https://astrid.tech/2022/09/22/0/nixos-gpu-vfio/
 let
   gpuIDs = [
     "10de:2206" # RTX 3080 Graphics
     "10de:1aef" # Audio
+
+    "8086:1539" # 1gig Ethernet (host keeps 2.5gig port)
+
+    "15b7:5017" # NVMe SSD (VM boot drive)
 
     # "10de:1b80" # GTX 1080 Graphics
     # "10de:10f0" # Audio
@@ -20,8 +24,7 @@ in { pkgs, lib, config, ... }: {
         "vfio_pci"
         "vfio"
         "vfio_iommu_type1"
-        # No longer needed, built into kernel https://www.reddit.com/r/archlinux/comments/11dqiy5/vfio_virqfd_missing_in_linux621arch11/
-        # "vfio_virqfd" 
+        # "virtiofsd" # https://discourse.nixos.org/t/virt-manager-cannot-find-virtiofsd/26752
 
         "nvidia"
         "nvidia_modeset"
@@ -38,7 +41,10 @@ in { pkgs, lib, config, ... }: {
     };
 
     virtualisation.spiceUSBRedirection.enable = true; # Enable guest/host USB hotplug
-    
+
+    # Per Arch Wiki audio passthrough, tells qemu which users audio to pass through
+    virtualisation.libvirtd.extraConfig = "user = \"cooper\"";
+
     # From https://nixos.wiki/wiki/Virt-manager
     virtualisation.libvirtd = {
       enable = true;
