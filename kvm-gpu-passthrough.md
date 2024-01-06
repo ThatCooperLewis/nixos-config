@@ -38,3 +38,34 @@ A handful of things that need to be done first:
             </source>
             <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
         </hostdev>
+
+- Pass through Pulseaudio for sound input/output
+
+        <sound model="ich9">
+            <codec type="micro"/>
+            <audio id="1"/>
+            <address type="pci" domain="0x0000" bus="0x00" slot="0x1b" function="0x0"/>
+        </sound>
+        <audio id="1" type="pulseaudio" serverName="/run/user/1000/pulse/native">
+            <input mixingEngine="no"/>
+            <output mixingEngine="no"/>
+        </audio>
+
+- Per [this forum post](https://forums.unraid.net/topic/127639-easy-anti-cheat-launch-error-cannot-run-under-virtual-machine/) to work around EAC
+
+
+    > under `<os>` put
+
+        <smbios mode='host'/>
+
+    > directly below that put this under `<features>`
+
+        <kvm> 
+            <hidden state='on'/> 
+        </kvm>
+
+    > under `<cpu mode ='host-passthrough'`....... put
+
+        <feature policy='disable' name='hypervisor'/>
+
+    > and i also deleted any lines pertaining to hyper-v 
