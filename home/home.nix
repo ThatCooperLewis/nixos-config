@@ -75,9 +75,12 @@
   	  # kevinrose.vsc-python-indent
   	  ms-azuretools.vscode-docker
       bbenoist.nix
-  	  
+  	  dotjoshjohnson.xml
+
       # Tools
-  	  github.copilot
+  	  github.copilot      
+      eamodio.gitlens
+      ms-vscode-remote.remote-ssh
   	];
   	userSettings = {
   	  "files.autoSave" = "afterDelay";
