@@ -35,10 +35,11 @@
 
   # Local Drives 
   
-  fileSystems."/mnt/windows" =
-    { device = "/dev/disk/by-uuid/4eb14be0-730b-40a7-8ec6-056c4eeb8411";
-      fsType = "ext4";
-    };
+  # Disabling while it's detached from the host
+  # fileSystems."/mnt/windows" =
+  #   { device = "/dev/disk/by-uuid/4eb14be0-730b-40a7-8ec6-056c4eeb8411";
+  #     fsType = "ext4";
+  #   };
 
   fileSystems."/mnt/config-array" =
     # This is a RAID array that I built on an older machine, and moved over to this one.
