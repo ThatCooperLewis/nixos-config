@@ -71,8 +71,6 @@
   # Not necessary to include hytland portal if hyprland.nvidiaSettings is on
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-
-
   ### Nvidia, oh Nvidia
   # Enable OpenGL
   hardware.opengl = {
@@ -166,29 +164,33 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ]; # Obsidian uses EOL electron :( 
   environment.systemPackages = with pkgs; [
-    home-manager
 
-    # Audio
-    pavucontrol
+	# Hardware
+    networkmanagerapplet 	# Internet GUI
+    pavucontrol 			    # Pulseaudio GUI
     pipewire
     playerctl
+    usbutils
+    pciutils
 
     # Dev Tools
-    btop
     git
-    kitty
     micro
-    openssh
     vscode
     wget
-    zplug
+
+    # Essentials
+    btop
+    home-manager
+    kitty
+    openssh
     zsh
+    zplug
 
     # Display & Graphics
     dunst				  # Notifications
     libnotify
     grim 				  # Screenshots
-    networkmanagerapplet
     rofi-wayland 	# App Switcher
     swww 			  	# Wallpaper
     waybar 				# Toolbar
