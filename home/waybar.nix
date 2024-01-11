@@ -7,6 +7,7 @@
   # Helpful links
   # https://github.com/georgewhewell/nixos-host/blob/master/home/waybar.nix
   # https://github.com/MathisP75/summer-day-and-night/blob/main/waybar/everforest/config
+  # https://gitlab.com/stephan-raabe/dotfiles/-/blob/main/waybar/modules.json?ref_type=heads
 
   programs.waybar = {
     enable = true;

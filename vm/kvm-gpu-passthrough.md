@@ -2,7 +2,7 @@
 
 A handful of things that need to be done first:
 
-- Enable the VM network
+- Enable the VM network ([forum post](https://www.reddit.com/r/VFIO/comments/6iwth1/network_default_is_not_active_after_every/))
 
         sudo virsh net-start default
         sudo virsh net-autostart default

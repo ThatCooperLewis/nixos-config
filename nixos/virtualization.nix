@@ -1,4 +1,6 @@
 # Stolen mostly from Astrid https://astrid.tech/2022/09/22/0/nixos-gpu-vfio/
+# Also some config things for easy anti-cheat https://forums.unraid.net/topic/127639-easy-anti-cheat-launch-error-cannot-run-under-virtual-machine/
+# Guide on how to do this https://www.reddit.com/r/VFIO/comments/iv1yjb/setting_up_vfio_in_nixos/
 let
   gpuIDs = [
     "10de:2206" # RTX 3080 Graphics
@@ -48,6 +50,7 @@ in { pkgs, lib, config, ... }: {
     # From https://nixos.wiki/wiki/Virt-manager
     virtualisation.libvirtd = {
       enable = true;
+      # Guide to skip Win 11 TPM check during install: https://www.tomshardware.com/how-to/bypass-windows-11-tpm-requirement
       qemu.swtpm.enable = true;
     };
     programs.virt-manager.enable = true;
