@@ -185,7 +185,8 @@
     kitty
     openssh
     zsh
-    zplug
+    zplug         # Zsh plugin manager
+    neofetch      # Display system info
 
     # Display & Graphics
     dunst				  # Notifications
@@ -222,9 +223,9 @@
 
 
   ### File Browsing
-  # programs.thunar.enable = true;
-  # services.gvfs.enable = true; # Mount, trash, other stuff
-  # services.tumbler.enable = true; # Thumbnail images
+  programs.thunar.enable = true;
+  services.gvfs.enable = true; # Mount, trash, other stuff
+  services.tumbler.enable = true; # Thumbnail images
   # TODO: Configure thunar more (details in wiki)
 
 
