@@ -49,6 +49,7 @@
         "temperature" 
         "tray"
         "clock" 
+        "custom/windows"
         "custom/powermenu"
       ];
 
@@ -101,6 +102,13 @@
         interval = "once";
         format = "󰣇";
         on-click = "rofi -show drun -show-icons";
+        tooltip = false;
+      };
+
+      "custom/windows" = {
+        interval = "once";
+        format = "☰";
+        on-click = "sudo virsh start win11";
         tooltip = false;
       };
 
