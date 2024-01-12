@@ -14,28 +14,24 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";    
     };
+
+    # Star Citizen
+    nix-citizen.url = "github:LovingMelody/nix-citizen";
+    # Optional - updates underlying without waiting for nix-citizen to update
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
   };
 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
-    # defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
-
-    # By default, NixOS will try to refer the nixosConfiguration with
-    # its hostname, so the system named `nixos-test` will use this one.
-    # However, the configuration name can also be specified using:
-    #   sudo nixos-rebuild switch --flake /path/to/flakes/directory#<name>
-    #
-    # Run the following command in the flake's directory to
-    # deploy this configuration on any NixOS system:
-    #   sudo nixos-rebuild switch --flake .#lewis-linux
     nixosConfigurations = {
       "lewis-linux" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         # Set all input parameters as specialArgs of all sub-modules
         # so that we can use the `helix`(an attribute in inputs) in
         # sub-modules directly.
-        specialArgs = inputs;
+        specialArgs = {inherit inputs;};
         modules = [
           # KVM, QEMU, and other virtualization configs
           ./virtualization.nix

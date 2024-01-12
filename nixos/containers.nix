@@ -17,9 +17,10 @@ let
   plexConfigDir = "/mnt/config-array/plex/config";
   plexTranscodeDir = "/mnt/config-array/plex/transcode";
 
-  containerGpus = "all";
+  # TODO: Split this into separate option
+  # containerGpus = "all";
   # When using the second GPU, but the primary is still nix-visible
-  # containerGpus = "\"device=1\"";
+  containerGpus = "\"device=1\"";
 
   ports = {
   	bazarr = 6767;

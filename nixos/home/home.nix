@@ -48,7 +48,7 @@
     QT_AUTO_SCREEN_SCALE_FACTOR = "1";
     QT_QPA_PLATFORM = "wayland;xcb";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    SDL_VIDEODRIVER = "wayland";
+    # SDL_VIDEODRIVER = "wayland"; # Disabling because it breaks Star Citizen 
     WLR_BACKEND = "vulkan";
     WLR_DRM_NO_ATOMIC = "1";
     # WLR_NO_HARDWARE_CURSORS = "1";
@@ -93,6 +93,8 @@
       "workbench.colorTheme"=  "Kimbie Dark";
       # Change font to nerdfont
       "editor.fontFamily" = "FiraCode Nerd Font";
+      # Stop it from bothering me with update notifs
+      "update.mode" = "manual";
   	};
   };
 
