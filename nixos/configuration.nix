@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [];
+  imports = [
+
+    # Fancy audio fix for Star Citizen
+    inputs.nix-gaming.nixosModules.pipewireLowLatency
+
+  ];
 
   ### Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -15,8 +20,14 @@
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # Enable Flakes and the new command-line tool
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+  nix.settings = {
+    # Enable flakes and new CLI
+    experimental-features = [ "nix-command" "flakes" ];
+    # Cache for nix-gaming
+    # https://github.com/fufexan/nix-gaming
+    substituters = ["https://nix-gaming.cachix.org"];
+    trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="];
+  };
   ### Networking
   networking.networkmanager.enable = true;
   networking.hostName = "lewis-linux";
@@ -185,6 +196,9 @@
     steam
     tidal-hifi
     obsidian
+
+    # Star Citizen
+    inputs.nix-gaming.packages.${system}.star-citizen 
   ];
 
   nixpkgs.overlays = [
