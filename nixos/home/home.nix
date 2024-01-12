@@ -89,8 +89,9 @@
       "editor.accessibilitySupport" = "off";
       # VSCode needs this to run in Wayland
       "window.titleBarStyle" = "custom";
-  	  # One Monokai Theme can't be installed here because it's not in the nixpkgs repo
-      "workbench.colorTheme"=  "Kimbie Dark";
+  	  # These themes can't be installed here because they're not in the nixpkgs repo
+      "workbench.colorTheme" = "Kimbie Dark";
+      "workbench.iconTheme" = "file-icons";
       # Change font to nerdfont
       "editor.fontFamily" = "FiraCode Nerd Font";
       # Stop it from bothering me with update notifs
