@@ -103,6 +103,7 @@
     WLR_NO_HARDWARE_CURSORS = "1";
     
     # Define which GPU to use 
+    # TODO: Split this into separate boot option
     WLR_DRM_DEVICES = "/dev/dri/card0";
     # WLR_DRM_DEVICES = "/dev/dri/card1"; If you're using second GPU and it's not detached from the host
     
