@@ -12,7 +12,17 @@
   # Update 1/11/23: Downgraded from linuxPackages_latest because nvidia drivers wouldn't download
   # https://discourse.nixos.org/t/issues-with-my-nvidia-gpu-config/35327
   # https://search.nixos.org/packages?channel=23.11&show=linuxKernel.kernels.linux_6_6_hardened&from=0&size=50&sort=relevance&type=packages&query=linuxKernel.kernels
-  boot.kernelPackages = pkgs.linuxPackages_6_6_hardened;
+  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_6_6.override {
+    argsOverride = rec {
+      src = pkgs.fetchurl {
+        url = "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-6.6.8.tar.gz";
+        sha256 = "58f99dca240d2adb8a1d4a54104057b87d0d14072af6a910ee9ce4444566c14b";
+      };
+      version = "6.6.8";
+      modDirVersion = "6.6.8";
+    };
+  });
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable Flakes and the new command-line tool
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
