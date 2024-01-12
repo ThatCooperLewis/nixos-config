@@ -1,23 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-
-      # All docker containers
-      ./containers.nix
-
-      # KVM, QEMU, and other virtualization configs
-      ./virtualization.nix
-
-      # Home Manager
-      # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nixos-module
-      # See unpure-commands.md for initial setup
-      <home-manager/nixos>
-    ];
-
+  imports = [];
 
   ### Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -25,9 +9,13 @@
 
   # Define linux kernel
   # Vanilla NixOS 23.11 had an older kernel that caused some Hyprland/Nvidia issues
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Update 1/11/23: Downgraded from linuxPackages_latest because nvidia drivers wouldn't download
+  # https://discourse.nixos.org/t/issues-with-my-nvidia-gpu-config/35327
+  # https://search.nixos.org/packages?channel=23.11&show=linuxKernel.kernels.linux_6_6_hardened&from=0&size=50&sort=relevance&type=packages&query=linuxKernel.kernels
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
 
-  
+  # Enable Flakes and the new command-line tool
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   ### Networking
   networking.networkmanager.enable = true;
@@ -151,15 +139,6 @@
   };
 
 
-
-  ### Home Manager
-  # Install packages to /etc/profile instead of ~/.nix-profile – Per the docs, this may become the default in the future
-  home-manager.useUserPackages = true;
-  # Import everything else directly from file
-  home-manager.users.cooper = import /home/cooper/.config/home-manager/home.nix;
-
-
-
   ### Packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ]; # Obsidian uses EOL electron :( 
@@ -178,6 +157,7 @@
     micro
     vscode
     wget
+    curl
 
     # Essentials
     btop
@@ -246,6 +226,9 @@
 
   # If setting default user shell to zsh, this is necessary
   programs.zsh.enable = true;
+
+  # Set the default editor.
+  environment.variables.EDITOR = "micro";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
