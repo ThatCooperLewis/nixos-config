@@ -31,7 +31,7 @@
   ### Networking
   networking.networkmanager.enable = true;
   networking.hostName = "lewis-linux";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.extraHosts = "127.0.0.1 modules-cdn.eac-prod.on.epicgames.com"; # Anticheat Fix
  
 
 
@@ -156,7 +156,7 @@
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ]; # Obsidian uses EOL electron :( 
   environment.systemPackages = with pkgs; [
 
-	# Hardware
+	  # Hardware
     networkmanagerapplet 	# Internet GUI
     pavucontrol 			    # Pulseaudio GUI
     pipewire
@@ -193,11 +193,11 @@
     discord
     firefox
     spotify
-    steam
     tidal-hifi
     obsidian
-
-    # Star Citizen
+    
+    # Gaming
+    steam
     inputs.nix-gaming.packages.${system}.star-citizen 
   ];
 
