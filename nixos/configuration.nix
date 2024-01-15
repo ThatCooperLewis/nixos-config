@@ -170,6 +170,9 @@
     vscode
     wget
     curl
+    (python3.withPackages(ps: with ps; [
+      pyserial # Detect devices with serial ports (octoprint)
+    ]))
 
     # Essentials
     btop
