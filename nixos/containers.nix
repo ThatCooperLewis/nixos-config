@@ -41,11 +41,11 @@ let
 
   dockerPorts = {
   	bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
- 	nzbget = [
- 	  "${toString ports.nzbget}:${toString ports.nzbget}"
- 	  "${toString ports.nzbgetSSL}:${toString ports.nzbgetSSL}"
- 	];
- 	overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
+    nzbget = [
+      "${toString ports.nzbget}:${toString ports.nzbget}"
+      "${toString ports.nzbgetSSL}:${toString ports.nzbgetSSL}"
+    ];
+    overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
     plex = [
       "${toString ports.plex}:${toString ports.plex}"
       "${toString ports.plexUDP}:${toString ports.plexUDP}"
@@ -56,7 +56,10 @@ let
     requestrr = ["${toString ports.requestrr}:${toString ports.requestrr}"];
     sonarr = ["${toString ports.sonarr}:${toString ports.sonarr}"];
     sonarr4k = ["${toString ports.sonarr4k}:${toString ports.sonarr}"];
-    tdarr = [ "${toString ports.tdarrWeb}:${toString ports.tdarrWeb}" "${toString ports.tdarrServer}:${toString ports.tdarrServer}" ];
+    tdarr = [ 
+      "${toString ports.tdarrWeb}:${toString ports.tdarrWeb}" 
+      "${toString ports.tdarrServer}:${toString ports.tdarrServer}" 
+    ];
  };
   
 in {
@@ -230,26 +233,26 @@ in {
     #### Overseerr & Requestrr ####
     ###############################
 
-	overseerr = {
-	  image = "ghcr.io/hotio/overseerr";
-	  ports = dockerPorts.overseerr;
-	  environmentFiles = [ ./plexDefault.env ];
-	  volumes = [
-	    "${arrConfigDir}/overseerr/config:/config"
-	  	"${dataDir}:/data"
-	  	"${dataFallbackDir}:/data-fallback"
-	  	"${data4kDir}:/data-4k"
-	  ];
-      extraOptions = [ "--network=plex-stack" ];
-	};
+    overseerr = {
+      image = "ghcr.io/hotio/overseerr";
+      ports = dockerPorts.overseerr;
+      environmentFiles = [ ./plexDefault.env ];
+      volumes = [
+        "${arrConfigDir}/overseerr/config:/config"
+        "${dataDir}:/data"
+        "${dataFallbackDir}:/data-fallback"
+        "${data4kDir}:/data-4k"
+      ];
+        extraOptions = [ "--network=plex-stack" ];
+    };
 
-	requestrr = {
-	  image = "darkalfx/requestrr";
-	  ports = dockerPorts.requestrr;
-	  volumes = [
-	    "${arrConfigDir}/requestrr/config:/config"
-	  ];
-	};
+    requestrr = {
+      image = "darkalfx/requestrr";
+      ports = dockerPorts.requestrr;
+      volumes = [
+        "${arrConfigDir}/requestrr/config:/config"
+      ];
+    };
 
     ########################
     #### Tdarr & Bazarr ####
@@ -319,20 +322,20 @@ in {
     };
 
     bazarr = {
-	  image = "ghcr.io/hotio/bazarr";
-	  ports = dockerPorts.bazarr;
-	  environmentFiles = [ ./plexDefault.env ];
-	  environment = {
-	  	UMASK_SET = "022";
-	  };
-	  volumes = [
-	    "${arrConfigDir}/bazarr/config:/config"
-	    "${arrConfigDir}/bazarr/logs:/logs"
-	  	"${dataDir}/movies:/data/movies"
-	  	"${dataFallbackDir}/shows:/data/shows-fallback"
-	  	"${dataDir}/shows:/data/shows"
-	  ];
+      image = "ghcr.io/hotio/bazarr";
+      ports = dockerPorts.bazarr;
+      environmentFiles = [ ./plexDefault.env ];
+      environment = {
+        UMASK_SET = "022";
+      };
+      volumes = [
+        "${arrConfigDir}/bazarr/config:/config"
+        "${arrConfigDir}/bazarr/logs:/logs"
+        "${dataDir}/movies:/data/movies"
+        "${dataFallbackDir}/shows:/data/shows-fallback"
+        "${dataDir}/shows:/data/shows"
+      ];
       extraOptions = [ "--network=plex-stack" ];
-	};
+    };
   };
 }
