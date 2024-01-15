@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
 
@@ -22,7 +22,11 @@ let
   # When using the second GPU, but the primary is still nix-visible
   containerGpus = "\"device=1\"";
 
+  # Use `sudo python -m serial.tools.miniterm` to find the dev path
+  printerUsbPath = "/dev/ttyUSB0";
+
   ports = {
+    octoprint = 5000;
   	bazarr = 6767;
   	nzbget = 6789; # 6789 for HTTP, 6791 for HTTPS
   	nzbgetSSL = 6791;
@@ -40,6 +44,7 @@ let
   };
 
   dockerPorts = {
+    octoprint = ["${toString ports.octoprint}:${toString ports.octoprint}"];
   	bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
     nzbget = [
       "${toString ports.nzbget}:${toString ports.nzbget}"
@@ -68,10 +73,7 @@ in {
   config.networking.firewall = {
     enable = true;
     # Containers don't get their ports exposed by default
-    allowedTCPPorts = [ ports.bazarr ports.nzbget ports.nzbgetSSL ports.overseerr 
-      					ports.plex ports.prowlarr ports.radarr ports.radarr4k ports.requestrr 
-      					ports.sonarr ports.sonarr4k ports.tdarrServer ports.tdarrWeb 
-    				];
+    allowedTCPPorts = lib.attrValues ports;
     allowedUDPPorts = [ ports.plexUDP ];
     interfaces.docker1 = {
       # Allow ports to query each other
@@ -117,6 +119,28 @@ in {
 
   config.virtualisation.oci-containers.containers = {
 
+    ###################
+    #### Octoprint ####
+    ###################
+
+    octoprint = {
+      image = "octoprint/octoprint";
+      ports = dockerPorts.octoprint;
+      environment = {
+      	PUID = "950";
+      	PGID = "950";
+      	UMASK_SET = "022";
+      	TZ = "America/Los_Angeles";
+        ENABLE_MJPG_STREAMER = "true";
+      };
+      volumes = [
+        "${arrConfigDir}/octoprint:/octoprint"
+      ];
+      extraOptions = [
+        "--device=${printerUsbPath}"          
+      ];
+    };
+
     ###########################
     #### Plex Media Server ####
     ###########################
@@ -153,7 +177,7 @@ in {
     sonarr = {
       image = "ghcr.io/hotio/sonarr";
       ports = dockerPorts.sonarr;
-      environmentFiles = [ ./plexDefault.env ];
+      environmentFiles = [ ./container-default.env ];
       volumes = [
 	    "${arrConfigDir}/sonarr/config:/config"
  	    "${dataDir}/shows:/data/shows"
@@ -167,7 +191,7 @@ in {
     sonarr4k = {
       image = "ghcr.io/hotio/sonarr";
       ports = dockerPorts.sonarr4k;
-      environmentFiles = [ ./plexDefault.env ];
+      environmentFiles = [ ./container-default.env ];
       volumes = [
 	    "${arrConfigDir}/sonarr-4k/config:/config"
  	    "${data4kDir}/shows:/data-4k/shows"
@@ -180,7 +204,7 @@ in {
     radarr = {
       image = "ghcr.io/hotio/radarr";
       ports = dockerPorts.radarr;
-      environmentFiles = [ ./plexDefault.env ];
+      environmentFiles = [ ./container-default.env ];
       volumes = [
 	    "${arrConfigDir}/radarr/config:/config"
  	    "${dataDir}/movies:/data/movies"
@@ -193,7 +217,7 @@ in {
     radarr4k = {
       image = "ghcr.io/hotio/radarr";
       ports = dockerPorts.radarr4k;
-      environmentFiles = [ ./plexDefault.env ];
+      environmentFiles = [ ./container-default.env ];
       volumes = [
 	    "${arrConfigDir}/radarr-4k/config:/config"
  	    "${data4kDir}/movies:/data-4k/movies"
@@ -209,22 +233,9 @@ in {
     prowlarr = {
       image = "ghcr.io/hotio/prowlarr";
       ports = dockerPorts.prowlarr;
-      environmentFiles = [ ./plexDefault.env ];
+      environmentFiles = [ ./container-default.env ];
       volumes = [
         "${arrConfigDir}/prowlarr/config:/config"        
-      ];
-      extraOptions = [ "--network=plex-stack" ];
-    };
-
-    nzbget = {
-      image = "lscr.io/linuxserver/nzbget:latest";
-      ports = dockerPorts.nzbget;
-      environmentFiles = [ ./plexDefault.env ];
-      volumes = [
-        "${arrConfigDir}/nzbget/config:/config"
-        "${usenetDownloads}:/data/usenet"
-        "${usenet4kDownloads}:/data-4k/usenet"
-        # Path to SSL certs used to be provided, but they're dead now       
       ];
       extraOptions = [ "--network=plex-stack" ];
     };
@@ -236,7 +247,7 @@ in {
     overseerr = {
       image = "ghcr.io/hotio/overseerr";
       ports = dockerPorts.overseerr;
-      environmentFiles = [ ./plexDefault.env ];
+      environmentFiles = [ ./container-default.env ];
       volumes = [
         "${arrConfigDir}/overseerr/config:/config"
         "${dataDir}:/data"
@@ -324,7 +335,7 @@ in {
     bazarr = {
       image = "ghcr.io/hotio/bazarr";
       ports = dockerPorts.bazarr;
-      environmentFiles = [ ./plexDefault.env ];
+      environmentFiles = [ ./container-default.env ];
       environment = {
         UMASK_SET = "022";
       };
