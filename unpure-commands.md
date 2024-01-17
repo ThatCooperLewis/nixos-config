@@ -25,3 +25,7 @@ These commands needed to be run separately before Nix could do its thing. Maybe 
 #### Misc Impurities
 
 - VSCode's One Monokai Theme is not accesible via Nix Packages, and I'm not bothered to import it manually. Instead, I installed it in-app despite the home-manager settings already defining it. Honestly, I have no idea what happens if you set a theme that isn't installed yet. Presumably it just defaults to basic theme.
+
+- When running nix-citizen (or star citizen via proton/lutris in general) with multiple joysticks/controllers, odds are you'll need to override their connection state in order to have them detected in-game. Running this command will open the control panel GUI for the game's specific wine instance:
+
+        WINEPREFIX=~/Games/star-citizen nix run github:fufexan/nix-gaming#wine-ge -- control

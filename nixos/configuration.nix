@@ -1,23 +1,12 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+  imports = [
 
-      # All docker containers
-      ./containers.nix
+    # Fancy audio fix for Star Citizen
+    inputs.nix-gaming.nixosModules.pipewireLowLatency
 
-      # KVM, QEMU, and other virtualization configs
-      ./virtualization.nix
-
-      # Home Manager
-      # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nixos-module
-      # See unpure-commands.md for initial setup
-      <home-manager/nixos>
-    ];
-
+  ];
 
   ### Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -25,14 +14,24 @@
 
   # Define linux kernel
   # Vanilla NixOS 23.11 had an older kernel that caused some Hyprland/Nvidia issues
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Update 1/11/23: Downgraded from linuxPackages_latest because nvidia drivers wouldn't download
+  # https://discourse.nixos.org/t/issues-with-my-nvidia-gpu-config/35327
+  # https://search.nixos.org/packages?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=linuxKernel.kernels
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  
-  
+  # Enable Flakes and the new command-line tool
+  nix.settings = {
+    # Enable flakes and new CLI
+    experimental-features = [ "nix-command" "flakes" ];
+    # Cache for nix-gaming
+    # https://github.com/fufexan/nix-gaming
+    substituters = ["https://nix-gaming.cachix.org"];
+    trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="];
+  };
   ### Networking
   networking.networkmanager.enable = true;
   networking.hostName = "lewis-linux";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.extraHosts = "127.0.0.1 modules-cdn.eac-prod.on.epicgames.com"; # Anticheat Fix
  
 
 
@@ -115,6 +114,7 @@
     WLR_NO_HARDWARE_CURSORS = "1";
     
     # Define which GPU to use 
+    # TODO: Split this into separate boot option
     WLR_DRM_DEVICES = "/dev/dri/card0";
     # WLR_DRM_DEVICES = "/dev/dri/card1"; If you're using second GPU and it's not detached from the host
     
@@ -151,21 +151,12 @@
   };
 
 
-
-  ### Home Manager
-  # Install packages to /etc/profile instead of ~/.nix-profile – Per the docs, this may become the default in the future
-  home-manager.useUserPackages = true;
-  # Import everything else directly from file
-  home-manager.users.cooper = import /home/cooper/.config/home-manager/home.nix;
-
-
-
   ### Packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ]; # Obsidian uses EOL electron :( 
   environment.systemPackages = with pkgs; [
 
-	# Hardware
+	  # Hardware
     networkmanagerapplet 	# Internet GUI
     pavucontrol 			    # Pulseaudio GUI
     pipewire
@@ -178,6 +169,10 @@
     micro
     vscode
     wget
+    curl
+    (python3.withPackages(ps: with ps; [
+      pyserial # Detect devices with serial ports (octoprint)
+    ]))
 
     # Essentials
     btop
@@ -201,9 +196,12 @@
     discord
     firefox
     spotify
-    steam
     tidal-hifi
     obsidian
+    
+    # Gaming
+    steam
+    inputs.nix-gaming.packages.${system}.star-citizen 
   ];
 
   nixpkgs.overlays = [
@@ -246,6 +244,9 @@
 
   # If setting default user shell to zsh, this is necessary
   programs.zsh.enable = true;
+
+  # Set the default editor.
+  environment.variables.EDITOR = "micro";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
