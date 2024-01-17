@@ -48,7 +48,7 @@
     QT_AUTO_SCREEN_SCALE_FACTOR = "1";
     QT_QPA_PLATFORM = "wayland;xcb";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    SDL_VIDEODRIVER = "wayland";
+    # SDL_VIDEODRIVER = "wayland"; # Disabling because it breaks Star Citizen 
     WLR_BACKEND = "vulkan";
     WLR_DRM_NO_ATOMIC = "1";
     # WLR_NO_HARDWARE_CURSORS = "1";
@@ -89,10 +89,13 @@
       "editor.accessibilitySupport" = "off";
       # VSCode needs this to run in Wayland
       "window.titleBarStyle" = "custom";
-  	  # One Monokai Theme can't be installed here because it's not in the nixpkgs repo
-      "workbench.colorTheme"=  "Kimbie Dark";
+  	  # These themes can't be installed here because they're not in the nixpkgs repo
+      "workbench.colorTheme" = "Kimbie Dark";
+      "workbench.iconTheme" = "file-icons";
       # Change font to nerdfont
       "editor.fontFamily" = "FiraCode Nerd Font";
+      # Stop it from bothering me with update notifs
+      "update.mode" = "manual";
   	};
   };
 

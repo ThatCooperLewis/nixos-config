@@ -59,8 +59,10 @@
 
 * {
   font-family: JetBrainsMono Nerd Font, FontAwesome;
-  font-size: 12px;
+  /* Prevent modules from forcing a thicc taskbar */
+  font-size: 14px;
   font-weight: bold;
+  min-height: 0px;
 }
 
 window#waybar {

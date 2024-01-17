@@ -3,12 +3,12 @@
 # Guide on how to do this https://www.reddit.com/r/VFIO/comments/iv1yjb/setting_up_vfio_in_nixos/
 let
   gpuIDs = [
-    "10de:2206" # RTX 3080 Graphics
-    "10de:1aef" # Audio
+    # "10de:2206" # RTX 3080 Graphics
+    # "10de:1aef" # Audio
 
-    "8086:1539" # 1gig Ethernet (host keeps 2.5gig port)
+    # "8086:1539" # 1gig Ethernet (host keeps 2.5gig port)
 
-    "15b7:5017" # NVMe SSD (VM boot drive)
+    # "15b7:5017" # NVMe SSD (VM boot drive)
 
     # "10de:1b80" # GTX 1080 Graphics
     # "10de:10f0" # Audio

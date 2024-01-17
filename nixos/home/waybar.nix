@@ -12,16 +12,7 @@
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    style = ''
-      ${builtins.readFile "/home/cooper/Nix/waybar/forest-style.css"}
-      * {
-        font-family: JetBrainsMono Nerd Font, FontAwesome;
-        
-        /* Prevent modules from forcing a thicc taskbar */
-        font-size: 14px;
-        min-height: 0px;
-      }
-    '';
+    style = builtins.readFile ./waybar/forest-style.css;
     settings = [{
       layer= "top";
       position = "top";

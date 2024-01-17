@@ -21,6 +21,11 @@
   boot.swraid.enable = true;
   boot.swraid.mdadmConf = "MAILADDR=steve@apple.com"; # silence warning during install
 
+  # Star Citizen swap settings
+  boot.kernel.sysctl = {
+    "vm.max_map_count" = 16777216;
+    "fs.file-max" = 524288;
+  };
   # Boot Drive
 
   fileSystems."/" =
