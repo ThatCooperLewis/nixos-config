@@ -61,7 +61,7 @@ in {
       	INFLUXDB_ADMIN_USER = "admin";
       	INFLUXDB_ADMIN_PASSWORD = "admin";
       };
-      volumes = "/home/cooper/tig-stack/influxdb/data:/var/lib/influxdb";
+      volumes = [ "/home/cooper/tig-stack/influxdb/data:/var/lib/influxdb" ];
     };
   	
   };
