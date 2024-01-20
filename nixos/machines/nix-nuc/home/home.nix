@@ -10,7 +10,8 @@
 
   home.file = {};
 
-  progams.home-manager.enable = true;
+  programs.home-manager.enable = true;
+  nixpkgs.config.allowUnfree = true;
 
   programs.git = {
   	enable = true;

@@ -10,11 +10,11 @@
 
   home.file = {};
 
-  progams.home-manager.enable = true;
+  programs.home-manager.enable = true;
 
-  # programs.git = {
-  # 	enable = true;
-  # 	userName = "Cooper Lewis";
-  # 	userEmail = "thatcooperlewis@gmail.com";
-  # };
+  programs.git = {
+  	enable = true;
+  	userName = "Cooper Lewis";
+  	userEmail = "thatcooperlewis@gmail.com";
+  };
 }
