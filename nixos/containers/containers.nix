@@ -66,6 +66,13 @@ let
       "${toString ports.tdarrServer}:${toString ports.tdarrServer}" 
     ];
  };
+
+ defaultEnvironment = {
+    TZ = "America/Los_Angeles";
+    UMASK_SET = "022";
+    PUID = "950";
+    PGID = "950";
+ };
   
 in {
 
@@ -177,7 +184,7 @@ in {
     sonarr = {
       image = "ghcr.io/hotio/sonarr";
       ports = dockerPorts.sonarr;
-      environmentFiles = [ ./container-default.env ];
+      environment = defaultEnvironment;
       volumes = [
 	    "${arrConfigDir}/sonarr/config:/config"
  	    "${dataDir}/shows:/data/shows"
@@ -191,7 +198,7 @@ in {
     sonarr4k = {
       image = "ghcr.io/hotio/sonarr";
       ports = dockerPorts.sonarr4k;
-      environmentFiles = [ ./container-default.env ];
+      environment = defaultEnvironment;
       volumes = [
 	    "${arrConfigDir}/sonarr-4k/config:/config"
  	    "${data4kDir}/shows:/data-4k/shows"
@@ -204,7 +211,7 @@ in {
     radarr = {
       image = "ghcr.io/hotio/radarr";
       ports = dockerPorts.radarr;
-      environmentFiles = [ ./container-default.env ];
+      environment = defaultEnvironment;
       volumes = [
 	    "${arrConfigDir}/radarr/config:/config"
  	    "${dataDir}/movies:/data/movies"
@@ -217,7 +224,7 @@ in {
     radarr4k = {
       image = "ghcr.io/hotio/radarr";
       ports = dockerPorts.radarr4k;
-      environmentFiles = [ ./container-default.env ];
+      environment = defaultEnvironment;
       volumes = [
 	    "${arrConfigDir}/radarr-4k/config:/config"
  	    "${data4kDir}/movies:/data-4k/movies"
@@ -233,7 +240,7 @@ in {
     prowlarr = {
       image = "ghcr.io/hotio/prowlarr";
       ports = dockerPorts.prowlarr;
-      environmentFiles = [ ./container-default.env ];
+      environment = defaultEnvironment;
       volumes = [
         "${arrConfigDir}/prowlarr/config:/config"        
       ];
@@ -247,7 +254,7 @@ in {
     overseerr = {
       image = "ghcr.io/hotio/overseerr";
       ports = dockerPorts.overseerr;
-      environmentFiles = [ ./container-default.env ];
+      environment = defaultEnvironment;
       volumes = [
         "${arrConfigDir}/overseerr/config:/config"
         "${dataDir}:/data"
@@ -335,10 +342,7 @@ in {
     bazarr = {
       image = "ghcr.io/hotio/bazarr";
       ports = dockerPorts.bazarr;
-      environmentFiles = [ ./container-default.env ];
-      environment = {
-        UMASK_SET = "022";
-      };
+      environment = defaultEnvironment;
       volumes = [
         "${arrConfigDir}/bazarr/config:/config"
         "${arrConfigDir}/bazarr/logs:/logs"
