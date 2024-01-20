@@ -64,12 +64,12 @@
 
           ./containers/tig-stack.nix
           
-          # home-manager.nixosModules.home-manager
-          # {
-          # 	home-manager.useGlobalPkgs = true;
-          # 	home-manager.useUserPackages = true;
-          	# home-manager.users.cooper = import ./machines/monitor-pi/home/home.nix;
-          # }
+          home-manager.nixosModules.home-manager
+          {
+          	home-manager.useGlobalPkgs = true;
+          	home-manager.useUserPackages = true;
+          	home-manager.users.cooper = import ./machines/monitor-pi/home/home.nix;
+          }
         ];
       };
 
@@ -81,12 +81,12 @@
           ./machines/nix-nuc/hardware-configuration.nix
           ./machines/nix-nuc/configuration.nix
 
-          # home-manager.nixosModules.home-manager
-          # {
-          # 	home-manager.useGlobalPkgs = true;
-          # 	home-manager.useUserPackages = true;
-          # 	home-manager.users.cooper = import ./machines/nix-nuc/home/home.nix;
-          # }
+          home-manager.nixosModules.home-manager
+          {
+          	home-manager.useGlobalPkgs = true;
+          	home-manager.useUserPackages = true;
+          	home-manager.users.cooper = import ./machines/nix-nuc/home/home.nix;
+          }
         ];
       };
     };
