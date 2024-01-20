@@ -9,12 +9,13 @@ These commands needed to be run separately before Nix could do its thing. Maybe 
 
 - The files in this repo are all symlinked to their relevant locations. There are other ways of doing this (e.g. defining the nix config path) but I prefer this.
 
-        home-manager init            # Initialize for first time
-        rm r ~/.config/home-manager  # Delete default config
-        ln -s ~/Nix/home ~/.config   # Symlink home/ dir from repo
-        home-manager switch          # Build with new config
+        home-manager init            
+        rm -r ~/.config/home-manager 
+        mkdir ~/.config/home-manager
+        ln -s <path-to-machine-home>/home.nix ~/.config/home-manager/home.nix
+        home-manager switch          
 
-        rm r ~/.config/hypr          # Do the same with Hyprland
+        rm -r ~/.config/hypr          # Do the same with Hyprland
         ln -s ~/Nix/hypr ~/.config
 
 - **Backup your existing configuration.nix before this step!**
