@@ -1,0 +1,20 @@
+{ config, pkgs, ... }:
+
+{
+  # imports = [];
+
+  home.username = "cooper";
+  home.homeDirectory = "/home/cooper";
+
+  home.stateVersion = "23.11";
+
+  home.file = {};
+
+  progams.home-manager.enable = true;
+
+  programs.git = {
+  	enable = true;
+  	userName = "Cooper Lewis";
+  	userEmail = "thatcooperlewis@gmail.com";
+  };
+}

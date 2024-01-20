@@ -33,14 +33,14 @@
         # sub-modules directly.
         specialArgs = {inherit inputs;};
         modules = [
+          # Hardware config
+          ./machines/lewis-linux/hardware-configuration.nix
+          # Primary configuration
+          ./machines/lewis-linux/configuration.nix
           # KVM, QEMU, and other virtualization configs
           ./virtualization.nix
-          # Hardware config
-          ./hardware-configuration.nix
           # All docker containers
-          ./containers.nix
-          # Primary configuration
-          ./configuration.nix
+          ./containers/containers.nix
 
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
@@ -49,8 +49,44 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.cooper = import ./home/home.nix;
+            home-manager.users.cooper = import ./machines/lewis-linux/home/home.nix;
           }
+        ];
+      };
+
+      "monitor-pi" = nixpkgs.lib.nixosSystem {
+      	system = "aarch64-linux";
+
+        specialArgs = {inherit inputs;};
+        modules = [
+          # Generic Pi config
+          ./machines/monitor-pi/configuration.nix
+
+          ./containers/tig-stack.nix
+          
+          # home-manager.nixosModules.home-manager
+          # {
+          # 	home-manager.useGlobalPkgs = true;
+          # 	home-manager.useUserPackages = true;
+          	# home-manager.users.cooper = import ./machines/monitor-pi/home/home.nix;
+          # }
+        ];
+      };
+
+      "nix-nuc" = nixpkgs.lib.nixosSystem {
+      	system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
+        modules = [
+
+          ./machines/nix-nuc/hardware-configuration.nix
+          ./machines/nix-nuc/configuration.nix
+
+          # home-manager.nixosModules.home-manager
+          # {
+          # 	home-manager.useGlobalPkgs = true;
+          # 	home-manager.useUserPackages = true;
+          # 	home-manager.users.cooper = import ./machines/nix-nuc/home/home.nix;
+          # }
         ];
       };
     };
