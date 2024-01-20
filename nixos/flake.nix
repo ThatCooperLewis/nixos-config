@@ -40,7 +40,7 @@
           # KVM, QEMU, and other virtualization configs
           ./virtualization.nix
           # All docker containers
-          ./containers.nix
+          ./containers/containers.nix
 
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
