@@ -80,6 +80,7 @@
 
           ./machines/nix-nuc/hardware-configuration.nix
           ./machines/nix-nuc/configuration.nix
+          ./containers/plex-stack.nix
 
           home-manager.nixosModules.home-manager
           {
