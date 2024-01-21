@@ -73,6 +73,7 @@
     btop
     home-manager
     neofetch
+    intel-gpu-tools
   ];
 
   services.openssh.enable = true;
