@@ -11,7 +11,25 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
+  # Resolve tdarr/quicksync error https://www.reddit.com/r/jellyfin/comments/ulw3ct/comment/i87o67b/
+  boot.kernelParams = [ "i915.enable_guc=2" ]; 
   boot.extraModulePackages = [ ];
+
+  # Enable VAAPI / Quicksync for transcode work
+  # https://nixos.wiki/wiki/Accelerated_Video_Playback
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  };
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/bbce77f5-91bf-48ed-87e0-adc75bd566a4";
@@ -27,6 +45,38 @@
     device = "/var/lib/swapfile";
     size = 16*1024;
   } ];
+
+  # NAS Remote Drives
+
+  fileSystems."/mnt/primary-backup" =
+    { device = "10.0.50.2:/mnt/shawn/primary-backup";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/plex-content" =
+    { device = "10.0.50.2:/mnt/chidi/data";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/plex-content-4k" =
+    { device = "10.0.50.2:/mnt/tahani/data-4k";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/plex-content-fallback" =
+    { device = "10.0.50.2:/mnt/tahani/data";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/plex-downloads" =
+    { device = "10.0.50.2:/mnt/downloads/plex";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/nas-containers" =
+    { device = "10.0.50.2:/mnt/apps";
+      fsType = "nfs";
+    };
 
   networking.hostName = "nix-nuc";
   networking.networkmanager.enable = true;

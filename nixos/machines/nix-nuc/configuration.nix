@@ -46,6 +46,15 @@
     ];
   };
 
+  # Define user/group for Plex Stack
+  users.users.multimedia = {
+    uid = 950;
+    group = "multimedia";
+  	description = "Plex Stack";
+  	extraGroups = [ "docker" "networkmanager" "wheel" ];
+  };
+  users.groups.multimedia.gid = 950;
+
   # Enable automatic login
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "cooper";
