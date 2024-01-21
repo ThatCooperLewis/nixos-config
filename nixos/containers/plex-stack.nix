@@ -26,11 +26,6 @@ let
   
   arrConfigDir = "/home/cooper/Homelab/plex-stack";
 
-  # TODO: Split this into separate option
-  containerGpus = "all";
-  # When using the second GPU, but the primary is still nix-visible
-  # containerGpus = "\"device=1\"";
-
   ports = {
     octoprint = 5000;
   	bazarr = 6767;
@@ -68,6 +63,8 @@ let
     PGID = "950";
   };
 
+  defaultOptions = [ "--network=plex-stack" ];
+
 in {
   # Configure firewall to allow containers access to each other and external internet
   config.networking.firewall = {
@@ -102,6 +99,8 @@ in {
       "${backend}-radarr4k.service" 
       "${backend}-prowlarr.service" 
       "${backend}-overseerr.service"
+      "${backend}-tdarr.service"      
+      "${backend}-tdarrNode.service"
     ];
     script = ''${pkgs.docker}/bin/docker network create --driver bridge plex-stack || true'';
   };
@@ -119,7 +118,7 @@ in {
  	    "${dataDir}/anime:/data/anime"
  	    "${usenetDownloads}:/data/usenet"
       ];
-      extraOptions = [ "--network=plex-stack" ];
+      extraOptions = defaultOptions;
     };
 
     sonarr4k = {
@@ -145,7 +144,7 @@ in {
  	    "${dataFallbackDir}/movies:/data/movies-fallback"
  	    "${usenetDownloads}:/data/usenet"
       ];    	
-      extraOptions = [ "--network=plex-stack" ];
+      extraOptions = defaultOptions;
     };
 
     radarr4k = {
@@ -157,7 +156,7 @@ in {
  	    "${data4kDir}/movies:/data-4k/movies"
  	    "${usenet4kDownloads}:/data-4k/usenet"
       ];    	
-      extraOptions = [ "--network=plex-stack" ];
+      extraOptions = defaultOptions;
     };
  
     prowlarr = {
@@ -167,7 +166,7 @@ in {
       volumes = [
         "${arrConfigDir}/prowlarr/config:/config"        
       ];
-      extraOptions = [ "--network=plex-stack" ];
+      extraOptions = defaultOptions;
     };
 
     overseerr = {
@@ -202,7 +201,7 @@ in {
         "${dataFallbackDir}/shows:/data/shows-fallback"
         "${dataDir}/shows:/data/shows"
       ];
-      extraOptions = [ "--network=plex-stack" ];
+      extraOptions = defaultOptions;
     };
 
     tdarr = {
@@ -218,7 +217,6 @@ in {
       	webUIPort = "${toString ports.tdarrWeb}";
       	internalNode = "false";
       	inContainer = "true";
-      	# nodeName = "MyInternalNode";
       };
       volumes = [
         "${arrConfigDir}/tdarr/server:/app/server"
@@ -228,14 +226,9 @@ in {
         "${dataDir}:/data"
         "${tdarrTranscodeDir}:/temp"
       ];
-      extraOptions = [
-      	# "--runtime=nvidia"
-      	# "--device=/dev/dri"
-      	# "--gpus=${containerGpus}"
-      	"--network=plex-stack"
-      ];
+      extraOptions = defaultOptions;
     };
-# 
+ 
     tdarrNode = {
       image = "ghcr.io/haveagitgat/tdarr_node:latest";
       environment = {
@@ -259,9 +252,7 @@ in {
         "${tdarrTranscodeDir}:/temp"
       ];
       extraOptions = [
-      	# "--runtime=intel"
       	"--device=/dev/dri"
-      	# "--gpus=${containerGpus}"
       	"--network=plex-stack"
       ];
     };

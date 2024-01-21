@@ -11,6 +11,8 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
+  # Resolve tdarr/quicksync error https://www.reddit.com/r/jellyfin/comments/ulw3ct/comment/i87o67b/
+  boot.kernelParams = [ "i915.enable_guc=2" ]; 
   boot.extraModulePackages = [ ];
 
   # Enable VAAPI / Quicksync for transcode work
