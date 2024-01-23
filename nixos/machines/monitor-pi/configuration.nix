@@ -22,6 +22,11 @@ in {
     };
   };
 
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 8*1024;
+  } ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking = {
@@ -45,11 +50,33 @@ in {
   services.openssh.enable = true;
   
   users = {
+ 
     mutableUsers = true;
-    users.cooper = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ];
+    users= {
+      cooper = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "tig" ];
+      };
+
+      tig = {
+        uid = 950;
+        description = "Telegraf/Influx/Grafana Monitoring";
+      	isNormalUser = false;
+      	group = "tig";
+      	extraGroups = [ "wheel" ];
+      };
+
+      uptime = {
+      	uid = 900;
+      	description = "Uptime Kuma";
+      	isNormalUser = false;
+      	group = "uptime";
+      	extraGroups = [ "wheel" ];
+      };	
     };
+    groups.tig.gid = 950;
+    groups.uptime.gid = 900;
+
   };
 
   system.stateVersion = "23.11";

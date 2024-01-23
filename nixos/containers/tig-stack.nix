@@ -3,18 +3,22 @@
 let
 
   tigConfigDir = "/home/cooper/tig-stack";
+  kumaConfigDir = "/home/cooper/uptime-stack";
 
   ports = {
   	influxdb = 8086;
   	telegraf = 8125;
   	grafana = 3000;
+  	uptimeKuma = 3001;
+  	nginx = 7070;
   };
 
   dockerPorts = {
   	influxdb = ["${toString ports.influxdb}:${toString ports.influxdb}"];
   	telegraf = ["${toString ports.telegraf}:${toString ports.telegraf}"];
   	grafana = ["${toString ports.grafana}:${toString ports.grafana}"];
-
+  	uptimeKuma = ["${toString ports.uptimeKuma}:${toString ports.uptimeKuma}"];
+  	nginx = ["${toString ports.influxdb}:80"];
   };
 
 in {
@@ -99,6 +103,12 @@ in {
       	GF_INSTALL_PLUGINS = "grafana-clock-panel";
       };
       volumes = [ "${tigConfigDir}/grafana/data:/var/lib/grafana" ];
+    };
+
+    uptimeKuma = {
+      image = "louislam/uptime-kuma:1";
+      ports = dockerPorts.uptimeKuma;
+      volumes = ["${kumaConfigDir}/config:/app/data"];
     };
     
   };
