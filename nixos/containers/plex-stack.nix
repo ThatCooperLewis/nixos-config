@@ -25,6 +25,7 @@ let
   tdarrTranscodeDir = "/mnt/nas-containers/tdarr/temp";
   
   arrConfigDir = "/home/cooper/Homelab/plex-stack";
+  palworldConfigDir = "/home/cooper/Homelab/palworld";
 
   ports = {
     octoprint = 5000;
@@ -38,6 +39,9 @@ let
   	sonarr4k = 8990;
   	tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
   	tdarrWeb = 8265;
+
+    palworld = 8211;
+    palworldSecondary = 27015;
   };
 
   dockerPorts = {
@@ -53,6 +57,13 @@ let
     tdarr = [ 
       "${toString ports.tdarrWeb}:${toString ports.tdarrWeb}" 
       "${toString ports.tdarrServer}:${toString ports.tdarrServer}" 
+    ];
+
+    palworld = [
+      "${toString ports.palworld}:${toString ports.palworld}/udp"
+      "${toString ports.palworld}:${toString ports.palworld}/tcp"
+      "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/udp"
+      "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/tcp"
     ];
   };
 
@@ -71,9 +82,10 @@ in {
     enable = true;
     # Containers don't get their ports exposed by default
     allowedTCPPorts = lib.attrValues ports;
+    allowedUDPPorts = [ 8211, 27015 ];
     interfaces.docker1 = {
       # Allow ports to query each other
-      allowedUDPPorts = [ 53 ];
+      allowedUDPPorts = [ 53, 8211, 27015 ];
     };
   };
 
@@ -106,6 +118,31 @@ in {
   };
 
   config.virtualisation.oci-containers.containers = {
+
+    palworld = {
+      image = "thijsvanloef/palworld-server-docker:latest";
+      ports = dockerPorts.palworld;
+      environment = {
+        PUID = "950";
+        PGID = "950";
+        PORT = "${toString ports.palworld}";
+        PLAYERS = "16";
+        MULTITHREADING = "false";
+        COMMUNITY = "false";
+        PUBLIC_IP = "***REMOVED***";
+        # SERVER_PASSWORD = "***REMOVED***";
+        # SERVER_NAME = "Pals Together Strong";
+        # ADMIN_PASSWORD = "***REMOVED***";
+      };
+      volumes = [
+        "${arrConfigDir}:/palworld/"
+      ];
+      extraOptions = [
+      	# "--runtime=nvidia"
+      	# "--gpus=${containerGpus}"
+      	# "--network=plex-stack"
+      ];
+    };
 
   	sonarr = {
       image = "ghcr.io/hotio/sonarr";
