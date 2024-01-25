@@ -80,7 +80,8 @@
 
           ./machines/nix-nuc/hardware-configuration.nix
           ./machines/nix-nuc/configuration.nix
-          # Cage is failing... unsure why
+          ./machines/nix-nuc/reverse-proxy.nix
+          # Cage is failing... unsure why... wayland issues?
           # ./machines/nix-nuc/kiosk.nix
           ./containers/plex-stack.nix
 
