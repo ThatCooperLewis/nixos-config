@@ -82,10 +82,10 @@ in {
     enable = true;
     # Containers don't get their ports exposed by default
     allowedTCPPorts = lib.attrValues ports;
-    allowedUDPPorts = [ 8211, 27015 ];
+    allowedUDPPorts = [ 8211 27015 ];
     interfaces.docker1 = {
       # Allow ports to query each other
-      allowedUDPPorts = [ 53, 8211, 27015 ];
+      allowedUDPPorts = [ 53 8211 27015 ];
     };
   };
 
@@ -135,7 +135,7 @@ in {
         # ADMIN_PASSWORD = "mitcheatsass_admin";
       };
       volumes = [
-        "${arrConfigDir}:/palworld/"
+        "${palworldConfigDir}:/palworld/"
       ];
       extraOptions = [
       	# "--runtime=nvidia"
