@@ -26,8 +26,13 @@ let
   
   arrConfigDir = "/home/cooper/Homelab/plex-stack";
   palworldConfigDir = "/home/cooper/Homelab/palworld";
-
+  cloudflareConfigDir = "/home/cooper/Homelab/cloudflare";
+  
   ports = {
+    # For Caddy
+    http = 80;
+    https = 443;
+  
     octoprint = 5000;
   	bazarr = 6767;
   	overseerr = 5055;
@@ -119,6 +124,8 @@ in {
 
   config.virtualisation.oci-containers.containers = {
 
+    # TODO: Move this elsewhere into a separate config
+
     palworld = {
       image = "thijsvanloef/palworld-server-docker:latest";
       ports = dockerPorts.palworld;
@@ -142,7 +149,7 @@ in {
       	# "--gpus=${containerGpus}"
       	# "--network=plex-stack"
       ];
-    };
+    };    
 
   	sonarr = {
       image = "ghcr.io/hotio/sonarr";

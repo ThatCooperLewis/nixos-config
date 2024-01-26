@@ -46,6 +46,7 @@
     pulse.enable = true;
   };
 
+  users.defaultUserShell = pkgs.zsh;
   users.users.cooper = {
     isNormalUser = true;
     description = "Cooper Lewis";
@@ -63,6 +64,15 @@
   	extraGroups = [ "docker" "networkmanager" "wheel" ];
   };
   users.groups.multimedia.gid = 950;
+
+  users.users.cloudflare = {
+    isSystemUser = true;
+  	uid = 2002;
+  	group = "cloudflare";
+  	description = "Cloudflared Tunnel";
+  	extraGroups = [ "wheel" ]; 
+  };
+  users.groups.cloudflare.gid = 2002;
 
   # Enable automatic login
   services.xserver.displayManager.autoLogin.enable = true;
@@ -86,6 +96,8 @@
   ];
 
   services.openssh.enable = true;
+
+  programs.zsh.enable = true;
 
   system.stateVersion = "23.11";
 }
