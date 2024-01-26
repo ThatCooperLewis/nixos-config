@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  # imports = [];
+  imports = [
+  	./zsh.nix
+  ];
 
   home.username = "cooper";
   home.homeDirectory = "/home/cooper";
