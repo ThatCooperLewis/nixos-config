@@ -26,7 +26,6 @@ let
   
   arrConfigDir = "/home/cooper/Homelab/plex-stack";
   palworldConfigDir = "/home/cooper/Homelab/palworld";
-  cloudflareConfigDir = "/home/cooper/Homelab/cloudflare";
   
   ports = {
     # For Caddy
@@ -143,11 +142,6 @@ in {
       };
       volumes = [
         "${palworldConfigDir}:/palworld/"
-      ];
-      extraOptions = [
-      	# "--runtime=nvidia"
-      	# "--gpus=${containerGpus}"
-      	# "--network=plex-stack"
       ];
     };    
 
