@@ -37,6 +37,7 @@ let
     influxdb = 8086;
     uptimeKuma = 3001;
     homeAss = 8123;
+    tautulli = 8181;
   };
 
   # Convenience assignments
@@ -79,6 +80,10 @@ in {
       reverse_proxy ${plexStackIP}:${toString ports.tdarrWeb}
       tls internal
     '';
+  	virtualHosts."tautulli.lewis.arpa".extraConfig = ''
+      reverse_proxy ${plexStackIP}:${toString ports.tautulli}
+      tls internal
+    '';    
 
     # TrueNAS Apps
   	virtualHosts."nas.lewis.arpa".extraConfig = ''
