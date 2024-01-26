@@ -80,13 +80,13 @@
 
           ./machines/nix-nuc/hardware-configuration.nix
           ./machines/nix-nuc/configuration.nix
-          # Caddy Reverse Proxy
-          ./machines/nix-nuc/reverse-proxy.nix
-          # Cloudflared Tunnel
-          ./machines/nix-nuc/cloudflare.nix
-          # Cage is failing... unsure why... wayland issues?
-          # ./machines/nix-nuc/kiosk.nix
           ./containers/plex-stack.nix
+          # Caddy Reverse Proxy
+          ./services/reverse-proxy.nix
+          # Cloudflared Tunnel
+          ./services/cloudflare.nix
+          # Cage is failing... unsure why... wayland issues?
+          # ./services/kiosk.nix
 
           home-manager.nixosModules.home-manager
           {
