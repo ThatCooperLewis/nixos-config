@@ -43,6 +43,7 @@ let
   	sonarr4k = 8990;
   	tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
   	tdarrWeb = 8265;
+  	tautulli = 8181;
 
     palworld = 8211;
     palworldSecondary = 27015;
@@ -58,6 +59,7 @@ let
     requestrr = ["${toString ports.requestrr}:${toString ports.requestrr}"];
     sonarr = ["${toString ports.sonarr}:${toString ports.sonarr}"];
     sonarr4k = ["${toString ports.sonarr4k}:${toString ports.sonarr}"];
+    tautulli = ["${toString ports.tautulli}:${toString ports.tautulli}"];
     tdarr = [ 
       "${toString ports.tdarrWeb}:${toString ports.tdarrWeb}" 
       "${toString ports.tdarrServer}:${toString ports.tdarrServer}" 
@@ -115,6 +117,7 @@ in {
       "${backend}-radarr4k.service" 
       "${backend}-prowlarr.service" 
       "${backend}-overseerr.service"
+      "${backend}-tautulli.service"
       "${backend}-tdarr.service"      
       "${backend}-tdarrNode.service"
     ];
@@ -144,6 +147,16 @@ in {
         "${palworldConfigDir}:/palworld/"
       ];
     };    
+
+
+    tautulli = {
+      image = "ghcr.io/tautulli/tautulli";
+      ports = dockerPorts.tautulli;
+      environment = defaultEnvironment;
+      volumes = [ 
+        "${arrConfigDir}/tautulli:/config"
+      ];
+    };
 
   	sonarr = {
       image = "ghcr.io/hotio/sonarr";
