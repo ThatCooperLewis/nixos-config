@@ -54,8 +54,6 @@
   ### Display Configuration
 
   # The following is a nice backup if Hyprland shits the bed
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
   # Enable the GNOME Desktop Environment.
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
@@ -104,7 +102,7 @@
 
   ### Hyprland
   services.xserver.displayManager.sddm.enable = true; #This line enables sddm
-  services.xserver.enable = true; # Might need this for Xwayland  
+  services.xserver.enable = true; # Might need this for Xwayland (Enable the X11 windowing system).
   programs.hyprland.enable = true;
   environment.sessionVariables = {
     # Fixes invisible mouse
