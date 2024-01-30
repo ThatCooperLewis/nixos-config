@@ -161,6 +161,7 @@
     playerctl
     usbutils
     pciutils
+    nvtop
 
     # Dev Tools
     git
