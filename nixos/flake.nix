@@ -20,11 +20,14 @@
     # Optional - updates underlying without waiting for nix-citizen to update
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
+    
+    # https://github.com/nix-community/nixos-vscode-server
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, vscode-server, home-manager, ... }: {
     nixosConfigurations = {
       "lewis-linux" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -51,6 +54,11 @@
             home-manager.useUserPackages = true;
             home-manager.users.cooper = import ./machines/lewis-linux/home/home.nix;
           }
+
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
         ];
       };
 
