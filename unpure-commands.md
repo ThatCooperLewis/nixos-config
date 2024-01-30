@@ -23,9 +23,14 @@ These commands needed to be run separately before Nix could do its thing. Maybe 
         sudo rm -rf /etc/nixos          # Delete existing configs
         sudo ln -s ~/Nix/nixos /etc     # Insert new ones
 
+- VS Code Server does not function out of the box, and needs a [separate package](https://github.com/nix-community/nixos-vscode-server) to work. This package needs a couple commands to run properly:
+
+        systemctl --user enable auto-fix-vscode-server.service  # Warnings can be ignored
+        systemctl --user start auto-fix-vscode-server.service   # Reboot also works
+
 #### Misc Impurities
 
-- VSCode's One Monokai Theme is not accesible via Nix Packages, and I'm not bothered to import it manually. Instead, I installed it in-app despite the home-manager settings already defining it. Honestly, I have no idea what happens if you set a theme that isn't installed yet. Presumably it just defaults to basic theme.
+- VSCode's One Monokai Theme (among others) is not accesible via Nix Packages, and I'm not bothered to import it manually. Instead, I installed it in-app despite the home-manager settings already defining it. Honestly, I have no idea what happens if you set a theme that isn't installed yet. Presumably it just defaults to basic theme.
 
 - When running nix-citizen (or star citizen via proton/lutris in general) with multiple joysticks/controllers, odds are you'll need to override their connection state in order to have them detected in-game. Running this command will open the control panel GUI for the game's specific wine instance:
 
