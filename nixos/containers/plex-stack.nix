@@ -28,10 +28,6 @@ let
   palworldConfigDir = "/home/cooper/Homelab/palworld";
   
   ports = {
-    # For Caddy
-    http = 80;
-    https = 443;
-  
     octoprint = 5000;
   	bazarr = 6767;
   	overseerr = 5055;
