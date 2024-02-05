@@ -10,7 +10,6 @@ let
   	telegraf = 8125;
   	grafana = 3000;
   	uptimeKuma = 3001;
-  	nginx = 7070;
   };
 
   dockerPorts = {
@@ -18,7 +17,6 @@ let
   	telegraf = ["${toString ports.telegraf}:${toString ports.telegraf}"];
   	grafana = ["${toString ports.grafana}:${toString ports.grafana}"];
   	uptimeKuma = ["${toString ports.uptimeKuma}:${toString ports.uptimeKuma}"];
-  	nginx = ["${toString ports.influxdb}:80"];
   };
 
 in {
