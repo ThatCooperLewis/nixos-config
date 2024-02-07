@@ -59,9 +59,8 @@ in {
       image = "influxdb:1.8";
       ports = dockerPorts.influxdb;
       environment = {
-        # TODO Get a proper user for these
-      	PUID = "1001";
-      	PGID = "100";
+      	PUID = "950";
+      	PGID = "950";
       	INFLUX_DB = "influx";
       	INFLUXDB_ADMIN_USER = "admin";
       	INFLUXDB_ADMIN_PASSWORD = "admin";
@@ -73,6 +72,8 @@ in {
       image = "telegraf:latest";
       ports = dockerPorts.telegraf;
       environment = {
+        PUID = "950";
+        PGID = "950";
         PRIMARY_IP = "http://10.0.50.1";
         PLEX_PORT = "32400";
         TDARR_PORT = "8265";
@@ -91,11 +92,10 @@ in {
   	grafana = {
       image = "grafana/grafana:latest";
       ports = dockerPorts.grafana;
-      user = "1001";
+      user = "950";
       environment = {
-        # TODO Get a proper user for these
-      	PUID = "1001";
-      	PGID = "100";
+      	PUID = "950";
+      	PGID = "950";
       	GF_SECURITY_ADMIN_USER = "admin";
       	GF_SECURITY_ADMIN_PASSWORD = "admin";
       	GF_INSTALL_PLUGINS = "grafana-clock-panel";
@@ -106,6 +106,11 @@ in {
     uptimeKuma = {
       image = "louislam/uptime-kuma:1";
       ports = dockerPorts.uptimeKuma;
+      user = "900";
+      environment = {
+      	PUID = "900";
+      	PGID = "900";
+      };
       volumes = ["${kumaConfigDir}/config:/app/data"];
     };
     
