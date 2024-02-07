@@ -14,6 +14,13 @@ let
     octopi = "http://10.0.50.12";
   };
 
+  users = {
+    multimedia = 950;
+    tig = 950;
+    uptime = 900;
+    cloudflare = 2002;
+  };
+
   ports = {
     octoprint = 5000;
 
@@ -37,7 +44,7 @@ let
   	telegraf = 8125;
     influxdb = 8086;
   	grafana = 3000;
-  	uptimeKuma = 3001;
+  	uptime = 3001;
     
     palworld = 8211;
     palworldSecondary = 27015;
@@ -45,13 +52,15 @@ let
 
   plexStackIP = hosts.nuc; 
 
+  localTimeZone = "America/Los_Angeles";
+
 in {
 
   # Expose local variables to the rest of the config
-  inherit hosts ports plexStackIP;
+  inherit hosts users ports plexStackIP localTimeZone;
 
   systemDefaults = {
-    timeZone = "America/Los_Angeles";
+    timeZone = localTimeZone;
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
       LC_ADDRESS = "en_US.UTF-8";
@@ -64,19 +73,6 @@ in {
       LC_TELEPHONE = "en_US.UTF-8";
       LC_TIME = "en_US.UTF-8";
     };
-  };
-  
-  containerDirs = {
-    arr = "/home/cooper/Homelab/plex-stack";
-    tig = "/home/cooper/tig-stack";
-    kuma = "/home/cooper/tig-stack";
-    plexData = "/mnt/plex-content";
-    plexDataFallback = "/mnt/plex-content-fallback"; 
-    plexData4k = "/mnt/plex-content-4k";
-    usenetDownloads = "/mnt/plex-downloads/data/usenet";
-    usenet4kDownloads = "/mnt/plex-downloads/data-4k/usenet";
-    tdarrTranscode = "/mnt/nas-containers/tdarr/temp";
-    palworld = "/home/cooper/Homelab/palworld";
   };
 
   urls = {
@@ -96,7 +92,7 @@ in {
   	sab = "${hosts.nas}:${toString ports.sab}";
     scrutiny = "${hosts.nas}:${toString ports.scrutiny}";
     # Monitor Pi
-  	uptime = "${hosts.monitor}:${toString ports.uptimeKuma}";
+  	uptime = "${hosts.monitor}:${toString ports.uptime}";
   	grafana = "${hosts.monitor}:${toString ports.grafana}";
     # Home Assistant
   	ha = "${hosts.homeAss}:${toString ports.homeAss}";
@@ -106,43 +102,60 @@ in {
   	octopi = "${hosts.octopi}";   
   };
 
-  dockerPorts = {
-    octoprint = ["${toString ports.octoprint}:${toString ports.octoprint}"];
-  	bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
-    overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
-    prowlarr = ["${toString ports.prowlarr}:${toString ports.prowlarr}"];
-    radarr = ["${toString ports.radarr}:${toString ports.radarr}"];
-    radarr4k = ["${toString ports.radarr4k}:${toString ports.radarr}"];
-    requestrr = ["${toString ports.requestrr}:${toString ports.requestrr}"];
-    sonarr = ["${toString ports.sonarr}:${toString ports.sonarr}"];
-    sonarr4k = ["${toString ports.sonarr4k}:${toString ports.sonarr}"];
-    tautulli = ["${toString ports.tautulli}:${toString ports.tautulli}"];
-    tdarr = [ 
-      "${toString ports.tdarrWeb}:${toString ports.tdarrWeb}" 
-      "${toString ports.tdarrServer}:${toString ports.tdarrServer}" 
-    ];
-
-  	telegraf = ["${toString ports.telegraf}:${toString ports.telegraf}"];
-    influxdb = ["${toString ports.influxdb}:${toString ports.influxdb}"];
-  	grafana = ["${toString ports.grafana}:${toString ports.grafana}"];
-  	uptimeKuma = ["${toString ports.uptimeKuma}:${toString ports.uptimeKuma}"];
-
-
-    palworld = [
-      "${toString ports.palworld}:${toString ports.palworld}/udp"
-      "${toString ports.palworld}:${toString ports.palworld}/tcp"
-      "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/udp"
-      "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/tcp"
-    ];
-  };
-
-  dockerDefaults = {
+  docker = {
+    plexArgs = [ "--network=plex-stack" ];
     environment = {
-      TZ = "America/Los_Angeles";
+      TZ = localTimeZone;
       UMASK_SET = "022";
-      PUID = "950";
-      PGID = "950";
+      PUID = "${toString users.multimedia}";
+      PGID = "${toString users.multimedia}";
     };
-    plexStackOptions = [ "--network=plex-stack" ];
+
+    users = {
+      multimedia = "${toString users.multimedia}";
+      uptime = "${toString users.uptime}";
+      tig = "${toString users.tig}";
+      cloudflare = "${toString users.cloudflare}";
+    };
+    
+    ports = {
+      octoprint = ["${toString ports.octoprint}:${toString ports.octoprint}"];
+      bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
+      overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
+      prowlarr = ["${toString ports.prowlarr}:${toString ports.prowlarr}"];
+      radarr = ["${toString ports.radarr}:${toString ports.radarr}"];
+      radarr4k = ["${toString ports.radarr4k}:${toString ports.radarr}"];
+      requestrr = ["${toString ports.requestrr}:${toString ports.requestrr}"];
+      sonarr = ["${toString ports.sonarr}:${toString ports.sonarr}"];
+      sonarr4k = ["${toString ports.sonarr4k}:${toString ports.sonarr}"];
+      tautulli = ["${toString ports.tautulli}:${toString ports.tautulli}"];
+      tdarr = [ 
+        "${toString ports.tdarrWeb}:${toString ports.tdarrWeb}" 
+        "${toString ports.tdarrServer}:${toString ports.tdarrServer}" 
+      ];
+      telegraf = ["${toString ports.telegraf}:${toString ports.telegraf}"];
+      influxdb = ["${toString ports.influxdb}:${toString ports.influxdb}"];
+      grafana = ["${toString ports.grafana}:${toString ports.grafana}"];
+      uptime = ["${toString ports.uptime}:${toString ports.uptime}"];
+      palworld = [
+        "${toString ports.palworld}:${toString ports.palworld}/udp"
+        "${toString ports.palworld}:${toString ports.palworld}/tcp"
+        "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/udp"
+        "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/tcp"
+      ];
+    };
+
+    dirs = {
+      arr = "/home/cooper/Homelab/plex-stack";
+      tig = "/home/cooper/tig-stack";
+      uptime = "/home/cooper/Homelab/uptime-stack";
+      plexData = "/mnt/plex-content";
+      plexDataFallback = "/mnt/plex-content-fallback"; 
+      plexData4k = "/mnt/plex-content-4k";
+      usenetDownloads = "/mnt/plex-downloads/data/usenet";
+      usenet4kDownloads = "/mnt/plex-downloads/data-4k/usenet";
+      tdarrTranscode = "/mnt/nas-containers/tdarr/temp";
+      palworld = "/home/cooper/Homelab/palworld";
+    };
   };
 }

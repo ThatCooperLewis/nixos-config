@@ -72,7 +72,15 @@
   	description = "Cloudflared Tunnel";
   	extraGroups = [ "wheel" ]; 
   };
+  users.users.uptime = {
+    uid = 900;
+    description = "Uptime Kuma";
+    isNormalUser = false;
+    group = "uptime";
+    extraGroups = [ "wheel" ];
+  };	
   users.groups.cloudflare.gid = 2002;
+  users.groups.uptime.gid = 900;
 
   # Enable automatic login
   services.xserver.displayManager.autoLogin.enable = true;
