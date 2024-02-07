@@ -1,4 +1,71 @@
-{
+let
+
+  hosts = {
+    firewall = "https://10.0.30.30";
+    wap = "http://10.0.50.0";
+
+    primary = "http://10.0.50.1";	
+    nas = "http://10.0.50.2";
+    nuc = "http://10.0.50.4";
+    
+    # Rasp Pi's
+    monitor = "http://10.0.50.3";
+    homeAss = "http://10.0.50.10";
+    octopi = "http://10.0.50.11";
+  };
+
+  ports = {
+    octoprint = 5000;
+
+    plex = 32400;
+    bazarr = 6767;
+  	overseerr = 5055;
+  	prowlarr = 9696;
+  	radarr = 7878;
+  	radarr4k = 7879;
+  	requestrr = 4545;
+  	sonarr = 8989;
+  	sonarr4k = 8990;
+  	tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
+  	tdarrWeb = 8265;
+  	tautulli = 8181;
+    sab = 30055;
+    scrutiny = 10151;
+    
+    homeAss = 8123;
+
+  	telegraf = 8125;
+    influxdb = 8086;
+  	grafana = 3000;
+  	uptimeKuma = 3001;
+    
+    palworld = 8211;
+    palworldSecondary = 27015;
+  };
+
+  plexStackIP = hosts.nuc; 
+
+in {
+
+  # Expose local variables to the rest of the config
+  inherit hosts ports plexStackIP;
+
+  systemDefaults = {
+    timeZone = "America/Los_Angeles";
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "en_US.UTF-8";
+      LC_IDENTIFICATION = "en_US.UTF-8";
+      LC_MEASUREMENT = "en_US.UTF-8";
+      LC_MONETARY = "en_US.UTF-8";
+      LC_NAME = "en_US.UTF-8";
+      LC_NUMERIC = "en_US.UTF-8";
+      LC_PAPER = "en_US.UTF-8";
+      LC_TELEPHONE = "en_US.UTF-8";
+      LC_TIME = "en_US.UTF-8";
+    };
+  };
+  
   containerDirs = {
     arr = "/home/cooper/Homelab/plex-stack";
     tig = "/home/cooper/tig-stack";
@@ -12,29 +79,31 @@
     palworld = "/home/cooper/Homelab/palworld";
   };
 
-  ports = {
-    octoprint = 5000;
-  	
-    bazarr = 6767;
-  	overseerr = 5055;
-  	prowlarr = 9696;
-  	radarr = 7878;
-  	radarr4k = 7879;
-  	requestrr = 4545;
-  	sonarr = 8989;
-  	sonarr4k = 8990;
-  	tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
-  	tdarrWeb = 8265;
-  	tautulli = 8181;
-    
-    
-  	telegraf = 8125;
-    influxdb = 8086;
-  	grafana = 3000;
-  	uptimeKuma = 3001;
-    
-    palworld = 8211;
-    palworldSecondary = 27015;
+  urls = {
+    # NUC Mini PC
+    sonarr = "${plexStackIP}:${toString ports.sonarr}";
+    sonarr4k = "${plexStackIP}:${toString ports.sonarr4k}";
+    radarr = "${plexStackIP}:${toString ports.radarr}";
+    radarr4k = "${plexStackIP}:${toString ports.radarr4k}";
+    prowlarr = "${plexStackIP}:${toString ports.prowlarr}";
+    overseerr = "${plexStackIP}:${toString ports.overseerr}";
+    requestrr = "${plexStackIP}:${toString ports.requestrr}";
+    tdarr = "${plexStackIP}:${toString ports.tdarrWeb}";
+    tautulli = "${plexStackIP}:${toString ports.tautulli}"; 
+    # TrueNAS Apps
+  	nas = "${hosts.nas}";
+  	plex = "${hosts.nas}:${toString ports.plex}";
+  	sab = "${hosts.nas}:${toString ports.sab}";
+    scrutiny = "${hosts.nas}:${toString ports.scrutiny}";
+    # Monitor Pi
+  	uptime = "${hosts.monitor}:${toString ports.uptimeKuma}";
+  	grafana = "${hosts.monitor}:${toString ports.grafana}";
+    # Home Assistant
+  	ha = "${hosts.homeAss}:${toString ports.homeAss}";
+    # Wifi AP
+  	wifi = "${hosts.wap}";
+    # Octoprint RasPi
+  	octopi = "${hosts.octopi}";   
   };
 
   dockerPorts = {
