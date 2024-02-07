@@ -103,16 +103,7 @@ in {
       volumes = [ "${tigConfigDir}/grafana/data:/var/lib/grafana" ];
     };
 
-    uptimeKuma = {
-      image = "louislam/uptime-kuma:1";
-      ports = dockerPorts.uptimeKuma;
-      user = "900";
-      environment = {
-      	PUID = "900";
-      	PGID = "900";
-      };
-      volumes = ["${kumaConfigDir}/config:/app/data"];
-    };
+
     
   };
 }
