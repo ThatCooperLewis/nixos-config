@@ -28,13 +28,15 @@
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
   outputs = inputs@{ self, nixpkgs, vscode-server, home-manager, ... }: {
-    nixosConfigurations = {
+    nixosConfigurations = let
+      constants = import ./constants.nix;
+    in {
       "lewis-linux" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         # Set all input parameters as specialArgs of all sub-modules
         # so that we can use the `helix`(an attribute in inputs) in
         # sub-modules directly.
-        specialArgs = {inherit inputs;};
+        specialArgs = { inherit inputs constants; };
         modules = [
           # Hardware config
           ./machines/lewis-linux/hardware-configuration.nix
@@ -65,7 +67,7 @@
       "monitor-pi" = nixpkgs.lib.nixosSystem {
       	system = "aarch64-linux";
 
-        specialArgs = {inherit inputs;};
+        specialArgs = { inherit inputs constants; };
         modules = [
           # Generic Pi config
           ./machines/monitor-pi/configuration.nix
@@ -83,7 +85,7 @@
 
       "nix-nuc" = nixpkgs.lib.nixosSystem {
       	system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
+        specialArgs = { inherit inputs constants; };
         modules = [
 
           ./machines/nix-nuc/hardware-configuration.nix
