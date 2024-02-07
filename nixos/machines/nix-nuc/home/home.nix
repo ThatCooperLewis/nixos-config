@@ -20,4 +20,32 @@
   	userName = "Cooper Lewis";
   	userEmail = "thatcooperlewis@gmail.com";
   };
+
+  #### VS Code
+  programs.vscode = {
+    # https://nixos.wiki/wiki/Visual_Studio_Code
+  	enable = true;
+  	extensions = with pkgs.vscode-extensions; [
+      # Languages
+  	  ms-python.python
+  	  # kevinrose.vsc-python-indent
+  	  ms-azuretools.vscode-docker
+      bbenoist.nix
+  	  dotjoshjohnson.xml
+
+      # Tools
+  	  github.copilot      
+      eamodio.gitlens
+      ms-vscode-remote.remote-ssh
+  	];
+  	userSettings = {
+  	  "files.autoSave" = "afterDelay";
+      "git.confirmSync" = false;
+      "git.autofetch" = true;
+      "editor.accessibilitySupport" = "off";
+      "remote.SSH.useLocalServer" = false;
+  	  # These themes can't be installed here because they're not in the nixpkgs repo
+      "update.mode" = "manual";
+  	};
+  };
 }
