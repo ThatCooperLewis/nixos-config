@@ -1,132 +1,73 @@
-{ pkgs, app, user, ... }:
-let
-  # Device IPs
-  
+{ pkgs, app, user, constants, ... }:
 
-  hosts = {
-    firewall = "https://10.0.30.30";
-
-    wap = "http://10.0.50.0";
-    primary = "http://10.0.50.1";	
-    nas = "http://10.0.50.2";
-    monitor = "http://10.0.50.3";
-    nuc = "http://10.0.50.4";
-
-    homeAss = "http://10.0.50.10";
-    octopi = "http://10.0.50.12";
-  };
-
-  ports = {
-    plex = 32400;
-    octoprint = 5000;
-    bazarr = 6767;
-    overseerr = 5055;
-    prowlarr = 9696;
-    radarr = 7878;
-    radarr4k = 7879;
-    requestrr = 4545;
-    sonarr = 8989;
-    sonarr4k = 8990;
-    tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
-    tdarrWeb = 8265;
-    sab = 30055;
-    palworld = 8211;
-    palworldSecondary = 27015;
-    scrutiny = 10151;
-    grafana = 3000;
-    influxdb = 8086;
-    uptimeKuma = 3001;
-    homeAss = 8123;
-    tautulli = 8181;
-  };
-
-  # Convenience assignments
-  plexStackIP = hosts.nuc; 
-  
-in {
+{
   services.caddy = {
   	enable = true;
 
   	# NUC Mini PC
-  	virtualHosts."sonarr.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.sonarr}
-      tls internal
+  	virtualHosts."http://sonarr.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.sonarr}
   	'';
-  	virtualHosts."sonarr4k.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.sonarr4k}
-      tls internal
+  	virtualHosts."http://sonarr4k.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.sonarr4k}
   	'';
-  	virtualHosts."radarr.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.radarr}
-      tls internal
+  	virtualHosts."http://radarr.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.radarr}
     '';
-  	virtualHosts."radarr4k.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.radarr4k}
-      tls internal
+  	virtualHosts."http://radarr4k.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.radarr4k}
     '';
-  	virtualHosts."prowlarr.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.prowlarr}
-      tls internal
+  	virtualHosts."http://prowlarr.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.prowlarr}
     '';
-  	virtualHosts."overseerr.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.overseerr}
-      tls internal
+  	virtualHosts."http://overseerr.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.overseerr}
     '';
-  	virtualHosts."requestrr.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.requestrr}
-      tls internal
+  	virtualHosts."http://requestrr.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.requestrr}
     '';
-  	virtualHosts."tdarr.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.tdarrWeb}
-      tls internal
+  	virtualHosts."http://tdarr.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.tdarr}
     '';
-  	virtualHosts."tautulli.lewis.arpa".extraConfig = ''
-      reverse_proxy ${plexStackIP}:${toString ports.tautulli}
-      tls internal
+  	virtualHosts."http://tautulli.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.tautulli}
     '';    
 
     # TrueNAS Apps
-  	virtualHosts."nas.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.nas}
+  	virtualHosts."http://nas.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.nas}
     '';
-  	virtualHosts."plex.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.nas}:${toString ports.plex}
-      tls internal
+  	virtualHosts."http://plex.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.plex}
     '';
-  	virtualHosts."sab.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.nas}:${toString ports.sab}
-      tls internal
+  	virtualHosts."http://sab.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.sab}
     '';
-    virtualHosts."scrutiny.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.nas}:${toString ports.scrutiny}
-      tls internal
+    virtualHosts."http://scrutiny.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.scrutiny}
     '';
 
     # Monitor Pi
-  	virtualHosts."uptime.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.monitor}:${toString ports.uptimeKuma}
-      tls internal
+  	virtualHosts."http://uptime.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.uptime}
     '';
-  	virtualHosts."grafana.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.monitor}:${toString ports.grafana}
-      tls internal
+  	virtualHosts."http://grafana.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.grafana}
     '';
 
     # Home Assistant
-  	virtualHosts."ha.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.homeAss}:${toString ports.homeAss}
-      tls internal
+  	virtualHosts."http://ha.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.ha}
     '';
 
     # Wifi AP
   	virtualHosts."http://wifi.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.wap}
+      reverse_proxy ${constants.urls.wifi}
     '';
 
     # Octoprint RasPi
-  	virtualHosts."octopi.lewis.arpa".extraConfig = ''
-      reverse_proxy ${hosts.octopi}
-      tls internal
+  	virtualHosts."http://octopi.lewis.arpa".extraConfig = ''
+      reverse_proxy ${constants.urls.octopi}
     '';        
   };
 }
