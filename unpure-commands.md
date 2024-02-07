@@ -35,3 +35,11 @@ These commands needed to be run separately before Nix could do its thing. Maybe 
 - When running nix-citizen (or star citizen via proton/lutris in general) with multiple joysticks/controllers, odds are you'll need to override their connection state in order to have them detected in-game. Running this command will open the control panel GUI for the game's specific wine instance:
 
         WINEPREFIX=~/Games/star-citizen nix run github:fufexan/nix-gaming#wine-ge -- control
+
+### VSCode Server
+
+- The [nixos-vscode-server](https://github.com/nix-community/nixos-vscode-server) flake needs the following to be run post-install
+
+        systemctl --user enable auto-fix-vscode-server.service # Ignore follow-up warning
+        systemctl --user start auto-fix-vscode-server.service
+        ln -sfT /run/current-system/etc/systemd/user/auto-fix-vscode-server.service ~/.config/systemd/user/auto-fix-vscode-server.service
