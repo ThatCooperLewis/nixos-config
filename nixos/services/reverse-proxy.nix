@@ -13,7 +13,7 @@ let
     nuc = "http://10.0.50.4";
 
     homeAss = "http://10.0.50.10";
-    octopi = "http://10.0.50.11";
+    octopi = "http://10.0.50.12";
   };
 
   ports = {
