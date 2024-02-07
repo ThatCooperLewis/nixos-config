@@ -11,7 +11,7 @@ let
     # Rasp Pi's
     monitor = "http://10.0.50.3";
     homeAss = "http://10.0.50.10";
-    octopi = "http://10.0.50.11";
+    octopi = "http://10.0.50.12";
   };
 
   ports = {
