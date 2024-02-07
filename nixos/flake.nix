@@ -104,6 +104,11 @@
           	home-manager.useUserPackages = true;
           	home-manager.users.cooper = import ./machines/nix-nuc/home/home.nix;
           }
+
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
         ];
       };
     };

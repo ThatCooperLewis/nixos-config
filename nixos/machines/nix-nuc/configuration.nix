@@ -93,6 +93,7 @@
     home-manager
     neofetch
     intel-gpu-tools
+    vscode
   ];
 
   services.openssh.enable = true;
