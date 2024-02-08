@@ -41,6 +41,7 @@ in {
     libraspberrypi
     openssh
     btop
+    tmux
     home-manager
     neofetch
   ];
