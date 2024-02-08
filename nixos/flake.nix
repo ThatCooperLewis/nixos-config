@@ -90,8 +90,11 @@
 
           ./machines/nix-nuc/hardware-configuration.nix
           ./machines/nix-nuc/configuration.nix
+          
           ./containers/plex-stack.nix
           ./containers/uptime-kuma.nix
+          ./containers/palworld-server.nix
+          
           # Caddy Reverse Proxy
           ./services/reverse-proxy.nix
           # Cloudflared Tunnel

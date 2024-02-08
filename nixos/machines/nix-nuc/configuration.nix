@@ -78,9 +78,17 @@
     isNormalUser = false;
     group = "uptime";
     extraGroups = [ "wheel" ];
-  };	
+  };
+  users.users.palworld = {
+    uid = 1400;
+    description = "Palworld dedicated server";
+    isSystemUser = true;
+    group = "palworld";
+    extraGroups = [ "wheel" ];
+  };
   users.groups.cloudflare.gid = 2002;
   users.groups.uptime.gid = 900;
+  users.groups.palworld.gid = 1400;
 
   # Enable automatic login
   services.xserver.displayManager.autoLogin.enable = true;
