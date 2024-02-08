@@ -122,29 +122,6 @@ in {
 
   config.virtualisation.oci-containers.containers = {
 
-    # TODO: Move this elsewhere into a separate config
-
-    palworld = {
-      image = "thijsvanloef/palworld-server-docker:latest";
-      ports = dockerPorts.palworld;
-      environment = {
-        PUID = "950";
-        PGID = "950";
-        PORT = "${toString ports.palworld}";
-        PLAYERS = "16";
-        MULTITHREADING = "false";
-        COMMUNITY = "false";
-        PUBLIC_IP = "67.160.136.187";
-        # SERVER_PASSWORD = "mitcheatsass";
-        # SERVER_NAME = "Pals Together Strong";
-        # ADMIN_PASSWORD = "mitcheatsass_admin";
-      };
-      volumes = [
-        "${palworldConfigDir}:/palworld/"
-      ];
-    };    
-
-
     tautulli = {
       image = "ghcr.io/tautulli/tautulli";
       ports = dockerPorts.tautulli;

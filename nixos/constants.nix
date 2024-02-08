@@ -19,6 +19,7 @@ let
     tig = 950;
     uptime = 900;
     cloudflare = 2002;
+    palworld = 1400;
   };
 
   ports = {
@@ -116,6 +117,7 @@ in {
       uptime = "${toString users.uptime}";
       tig = "${toString users.tig}";
       cloudflare = "${toString users.cloudflare}";
+      palworld = "${toString users.palworld}";
     };
     
     ports = {
