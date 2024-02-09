@@ -49,7 +49,7 @@ in {
   time.timeZone = "America/Los_Angeles";
 
   services.openssh.enable = true;
-  # services.openssh.settings.permitRootLogin = "yes";
+  services.openssh.settings.PermitRootLogin = "yes";
   
   users = {
  
@@ -60,6 +60,8 @@ in {
         openssh.authorizedKeys.keys = [
           # Primary machine
       	  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFc7oy576jPgeUwNrOyoPIC/4pyQDwEFiqy9cL0fxjx9 thatcooperlewis@gmail.com"
+      	  # Nix NUC
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ6iW/l9eTDYdGO80t/witkAPrUtUsUcQildOoHJwUX thatcooperlewis@gmail.com"
         ];
       };
     
