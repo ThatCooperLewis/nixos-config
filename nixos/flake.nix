@@ -72,7 +72,8 @@
           # Generic Pi config
           ./machines/monitor-pi/configuration.nix
 
-          # ./containers/tig-stack.nix
+          ./containers/base.nix
+          ./containers/influxdb.nix
           
           home-manager.nixosModules.home-manager
           {
