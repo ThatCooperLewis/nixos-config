@@ -72,7 +72,7 @@
           # Generic Pi config
           ./machines/monitor-pi/configuration.nix
 
-          ./containers/tig-stack.nix
+          # ./containers/tig-stack.nix
           
           home-manager.nixosModules.home-manager
           {
