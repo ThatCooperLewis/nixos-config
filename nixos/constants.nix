@@ -150,6 +150,7 @@ in {
     dirs = {
       arr = "/home/cooper/Homelab/plex-stack";
       tig = "/home/cooper/tig-stack";
+      grafana = "/home/cooper/Homelab/grafana";
       uptime = "/home/cooper/Homelab/uptime-stack";
       plexData = "/mnt/plex-content";
       plexDataFallback = "/mnt/plex-content-fallback"; 
