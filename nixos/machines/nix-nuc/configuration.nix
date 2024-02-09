@@ -50,7 +50,7 @@
   users.users.cooper = {
     isNormalUser = true;
     description = "Cooper Lewis";
-    extraGroups = [ "docker" "networkmanager" "wheel" ];
+    extraGroups = [ "docker" "networkmanager" "wheel" "telegraf" ];
     packages = with pkgs; [
       firefox
     ];
@@ -86,9 +86,17 @@
     group = "palworld";
     extraGroups = [ "wheel" ];
   };
+  users.users.telegraf = {
+    uid = 1200;
+    description = "Telegraf metrics emitter";
+    isNormalUser = true;
+    group = "telegraf";
+    extraGroups = [ "wheel" ];
+  };
   users.groups.cloudflare.gid = 2002;
   users.groups.uptime.gid = 900;
   users.groups.palworld.gid = 1400;
+  users.groups.telegraf.gid = 1200;
 
   # Enable automatic login
   services.xserver.displayManager.autoLogin.enable = true;

@@ -96,6 +96,7 @@
           ./containers/uptime-kuma.nix
           ./containers/palworld-server.nix
           ./containers/grafana.nix
+          ./containers/telegraf.nix
           
           # Caddy Reverse Proxy
           ./services/reverse-proxy.nix
