@@ -14,6 +14,8 @@
   # Resolve tdarr/quicksync error https://www.reddit.com/r/jellyfin/comments/ulw3ct/comment/i87o67b/
   boot.kernelParams = [ "i915.enable_guc=2" ]; 
   boot.extraModulePackages = [ ];
+  # Allow for cross-compiling Nix builds to Raspberry Pi's
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # Enable VAAPI / Quicksync for transcode work
   # https://nixos.wiki/wiki/Accelerated_Video_Playback
