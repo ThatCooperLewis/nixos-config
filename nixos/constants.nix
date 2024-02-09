@@ -17,6 +17,7 @@ let
   users = {
     multimedia = 950;
     tig = 950;
+    telegraf = 1200;
     uptime = 900;
     cloudflare = 2002;
     palworld = 1400;
@@ -95,6 +96,7 @@ in {
     # Monitor Pi
   	uptime = "${hosts.monitor}:${toString ports.uptime}";
   	grafana = "${hosts.monitor}:${toString ports.grafana}";
+    influxdb = "${hosts.monitor}:${toString ports.influxdb}";
     # Home Assistant
   	ha = "${hosts.homeAss}:${toString ports.homeAss}";
     # Wifi AP
@@ -118,6 +120,7 @@ in {
       tig = "${toString users.tig}";
       cloudflare = "${toString users.cloudflare}";
       palworld = "${toString users.palworld}";
+      telegraf = "${toString users.telegraf}";
     };
     
     ports = {
@@ -150,6 +153,7 @@ in {
     dirs = {
       arr = "/home/cooper/Homelab/plex-stack";
       tig = "/home/cooper/tig-stack";
+      telegraf = "/home/telegraf";
       grafana = "/home/cooper/Homelab/grafana";
       uptime = "/home/cooper/Homelab/uptime-stack";
       plexData = "/mnt/plex-content";
