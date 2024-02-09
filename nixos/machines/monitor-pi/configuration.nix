@@ -49,11 +49,20 @@ in {
   time.timeZone = "America/Los_Angeles";
 
   services.openssh.enable = true;
+  # services.openssh.settings.permitRootLogin = "yes";
   
   users = {
  
     mutableUsers = true;
     users= {
+
+      root = {
+        openssh.authorizedKeys.keys = [
+          # Primary machine
+      	  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFc7oy576jPgeUwNrOyoPIC/4pyQDwEFiqy9cL0fxjx9 thatcooperlewis@gmail.com"
+        ];
+      };
+    
       cooper = {
         isNormalUser = true;
         extraGroups = [ "wheel" "tig" ];
