@@ -139,7 +139,7 @@ in {
 	    "${arrConfigDir}/sonarr/config:/config"
  	    "${dataDir}/shows:/data/shows"
  	    "${dataFallbackDir}/shows:/data/shows-fallback"
- 	    "${dataDir}/anime:/data/anime"
+ 	    "${dataFallbackDir}/anime:/data/anime"
  	    "${usenetDownloads}:/data/usenet"
       ];
       extraOptions = defaultOptions;
