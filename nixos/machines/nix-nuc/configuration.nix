@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   time.timeZone = "America/Los_Angeles";
@@ -118,6 +118,8 @@
     neofetch
     intel-gpu-tools
     vscode
+    python3
+    inputs.fix-python
   ];
 
   services.openssh.enable = true;
