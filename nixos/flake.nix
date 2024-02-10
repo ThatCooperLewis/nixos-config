@@ -23,6 +23,8 @@
     
     # https://github.com/nix-community/nixos-vscode-server
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+
+    fix-python.url = "github:GuillaumeDesforges/fix-python";
   };
 
   # The `@` syntax here is used to alias the attribute set of the

@@ -43,3 +43,7 @@ These commands needed to be run separately before Nix could do its thing. Maybe 
         systemctl --user enable auto-fix-vscode-server.service # Ignore follow-up warning
         systemctl --user start auto-fix-vscode-server.service
         ln -sfT /run/current-system/etc/systemd/user/auto-fix-vscode-server.service ~/.config/systemd/user/auto-fix-vscode-server.service
+
+### Python Development
+
+To make python venv's less painful, the [fix-python](https://github.com/GuillaumeDesforges/fix-python/tree/master) flake is available. With that installed, run `fix-python --venv venv` in a Python environment to get pip installations working properly without a nix-shell.
