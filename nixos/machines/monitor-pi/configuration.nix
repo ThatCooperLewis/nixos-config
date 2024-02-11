@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, constants, ... }:
 
 let
   user = "cooper";
@@ -71,7 +71,7 @@ in {
       };
 
       tig = {
-        uid = 950;
+        uid = constants.users.tig;
         description = "Telegraf/Influx/Grafana Monitoring";
       	isNormalUser = false;
       	group = "tig";
@@ -79,15 +79,15 @@ in {
       };
 
       uptime = {
-      	uid = 900;
+      	uid = constants.users.uptime;
       	description = "Uptime Kuma";
       	isNormalUser = false;
       	group = "uptime";
       	extraGroups = [ "wheel" ];
       };	
     };
-    groups.tig.gid = 950;
-    groups.uptime.gid = 900;
+    groups.tig.gid = constants.users.tig;
+    groups.uptime.gid = constants.users.uptime;
 
   };
 
