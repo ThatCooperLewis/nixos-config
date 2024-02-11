@@ -106,6 +106,7 @@ in {
   };
 
   docker = {
+    tdarrServerIP = "10.0.50.4";
     plexArgs = [ "--network=plex-stack" ];
     environment = {
       TZ = localTimeZone;

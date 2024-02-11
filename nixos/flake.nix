@@ -94,6 +94,7 @@
           ./machines/nix-nuc/hardware-configuration.nix
           ./machines/nix-nuc/configuration.nix
           
+          ./containers/base.nix
           ./containers/plex-stack.nix
           ./containers/uptime-kuma.nix
           ./containers/palworld-server.nix
