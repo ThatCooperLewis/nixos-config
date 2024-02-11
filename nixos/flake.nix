@@ -105,8 +105,8 @@
           ./services/reverse-proxy.nix
           # Cloudflared Tunnel
           ./services/cloudflare.nix
-          # Cage is failing... unsure why... wayland issues?
-          # ./services/kiosk.nix
+          # Grafana kiosk
+          ./services/kiosk.nix
 
           home-manager.nixosModules.home-manager
           {
