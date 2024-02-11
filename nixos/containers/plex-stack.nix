@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, constants, ... }:
 
 ##########################
 ####### PLEX STACK #######
@@ -12,107 +12,38 @@ All surrounding microservices are set here, so Plex can run on a separate machin
 */
 
 let
-
-  hostIP = "10.0.50.4";
-
-  dataDir = "/mnt/plex-content";
-  dataFallbackDir = "/mnt/plex-content-fallback";
-  data4kDir = "/mnt/plex-content-4k";
-
-  usenetDownloads = "/mnt/plex-downloads/data/usenet";
-  usenet4kDownloads = "/mnt/plex-downloads/data-4k/usenet";
-
-  tdarrTranscodeDir = "/mnt/nas-containers/tdarr/temp";
   
-  arrConfigDir = "/home/cooper/Homelab/plex-stack";
-  palworldConfigDir = "/home/cooper/Homelab/palworld";
-  
-  ports = {
-    octoprint = 5000;
-  	bazarr = 6767;
-  	overseerr = 5055;
-  	prowlarr = 9696;
-  	radarr = 7878;
-  	radarr4k = 7879;
-  	requestrr = 4545;
-  	sonarr = 8989;
-  	sonarr4k = 8990;
-  	tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
-  	tdarrWeb = 8265;
-  	tautulli = 8181;
-
-    palworld = 8211;
-    palworldSecondary = 27015;
-  };
-
-  dockerPorts = {
-    octoprint = ["${toString ports.octoprint}:${toString ports.octoprint}"];
-  	bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
-    overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
-    prowlarr = ["${toString ports.prowlarr}:${toString ports.prowlarr}"];
-    radarr = ["${toString ports.radarr}:${toString ports.radarr}"];
-    radarr4k = ["${toString ports.radarr4k}:${toString ports.radarr}"];
-    requestrr = ["${toString ports.requestrr}:${toString ports.requestrr}"];
-    sonarr = ["${toString ports.sonarr}:${toString ports.sonarr}"];
-    sonarr4k = ["${toString ports.sonarr4k}:${toString ports.sonarr}"];
-    tautulli = ["${toString ports.tautulli}:${toString ports.tautulli}"];
-    tdarr = [ 
-      "${toString ports.tdarrWeb}:${toString ports.tdarrWeb}" 
-      "${toString ports.tdarrServer}:${toString ports.tdarrServer}" 
-    ];
-
-    palworld = [
-      "${toString ports.palworld}:${toString ports.palworld}/udp"
-      "${toString ports.palworld}:${toString ports.palworld}/tcp"
-      "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/udp"
-      "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/tcp"
-    ];
-  };
-
-  defaultEnvironment = {
-    TZ = "America/Los_Angeles";
-    UMASK_SET = "022";
-    PUID = "950";
-    PGID = "950";
-  };
-
-  defaultOptions = [ "--network=plex-stack" ];
+  docker = constants.docker;
 
 in {
-  # Configure firewall to allow containers access to each other and external internet
-  config.networking.firewall = {
-    enable = true;
-    # Containers don't get their ports exposed by default
-    allowedTCPPorts = lib.attrValues ports;
-    allowedUDPPorts = [ 8211 27015 ];
-    interfaces.docker1 = {
-      # Allow ports to query each other
-      allowedUDPPorts = [ 53 8211 27015 ];
-    };
-  };
 
-  # Install docker
-  config.virtualisation.oci-containers.backend = "docker";
-  config.virtualisation.docker = {
-  	enable = true;
-  	enableOnBoot = true;
-  	rootless = {
-  	  enable = true;
-  	  setSocketVariable = true;	
-  	};
-  };
+  config.networking.firewall.allowedTCPPorts = [
+    constants.ports.bazarr
+    constants.ports.overseerr
+    constants.ports.prowlarr
+    constants.ports.radarr
+    constants.ports.radarr4k
+    constants.ports.requestrr
+    constants.ports.sonarr
+    constants.ports.sonarr4k
+    constants.ports.tautulli
+    constants.ports.tdarrServer
+    constants.ports.tdarrWeb
+  ];
 
   # From: https://madison-technologies.com/take-your-nixos-container-config-and-shove-it/
   # Create a shared network so containers can talk to each other
   config.systemd.services.create-plex-network = with config.virtualisation.oci-containers; {
     serviceConfig.Type = "oneshot";
     wantedBy = [ 
-      "${backend}-sonarr.service"
-      "${backend}-sonarr4k.service" 
+      "${backend}-bazarr.service"
+      "${backend}-overseerr.service"
+      "${backend}-prowlarr.service" 
       "${backend}-radarr.service" 
       "${backend}-radarr4k.service" 
-      "${backend}-prowlarr.service" 
-      "${backend}-overseerr.service"
+      "${backend}-requestrr.service" 
+      "${backend}-sonarr.service"
+      "${backend}-sonarr4k.service" 
       "${backend}-tautulli.service"
       "${backend}-tdarr.service"      
       "${backend}-tdarrNode.service"
@@ -122,164 +53,163 @@ in {
 
   config.virtualisation.oci-containers.containers = {
 
-    tautulli = {
-      image = "ghcr.io/tautulli/tautulli";
-      ports = dockerPorts.tautulli;
-      environment = defaultEnvironment;
-      volumes = [ 
-        "${arrConfigDir}/tautulli:/config"
+    bazarr = {
+      image = "ghcr.io/hotio/bazarr";
+      ports = docker.ports.bazarr;
+      environment = docker.environment;
+      volumes = [
+        "${docker.dirs.arr}/bazarr/config:/config"
+        "${docker.dirs.arr}/bazarr/logs:/logs"
+        "${docker.dirs.plexData}/movies:/data/movies"
+        "${docker.dirs.plexDataFallback}/shows:/data/shows-fallback"
+        "${docker.dirs.plexData}/shows:/data/shows"
+      ];
+      extraOptions = docker.plexArgs;
+    };
+
+    overseerr = {
+      image = "ghcr.io/hotio/overseerr";
+      ports = docker.ports.overseerr;
+      environment = docker.environment;
+      volumes = [
+        "${docker.dirs.arr}/overseerr/config:/config"
+        "${docker.dirs.plexData}:/data"
+        "${docker.dirs.plexDataFallback}:/data-fallback"
+        "${docker.dirs.plexData4k}:/data-4k"
+      ];
+      extraOptions = docker.plexArgs;
+    };
+ 
+    prowlarr = {
+      image = "ghcr.io/hotio/prowlarr";
+      ports = docker.ports.prowlarr;
+      environment = docker.environment;
+      volumes = [
+        "${docker.dirs.arr}/prowlarr/config:/config"        
+      ];
+      extraOptions = docker.plexArgs;
+    };
+
+    radarr = {
+      image = "ghcr.io/hotio/radarr";
+      ports = docker.ports.radarr;
+      environment = docker.environment;
+      volumes = [
+	    "${docker.dirs.arr}/radarr/config:/config"
+ 	    "${docker.dirs.plexData}/movies:/data/movies"
+ 	    "${docker.dirs.plexDataFallback}/movies:/data/movies-fallback"
+ 	    "${docker.dirs.usenetDownloads}:/data/usenet"
+      ];    	
+      extraOptions = docker.plexArgs;
+    };
+
+    radarr4k = {
+      image = "ghcr.io/hotio/radarr";
+      ports = docker.ports.radarr4k;
+      environment = docker.environment;
+      volumes = [
+	    "${docker.dirs.arr}/radarr-4k/config:/config"
+ 	    "${docker.dirs.plexData4k}/movies:/data-4k/movies"
+ 	    "${docker.dirs.usenet4kDownloads}:/data-4k/usenet"
+      ];    	
+      extraOptions = docker.plexArgs;
+    };
+
+    requestrr = {
+      image = "darkalfx/requestrr";
+      ports = docker.ports.requestrr;
+      volumes = [
+        "${docker.dirs.arr}/requestrr/config:/config"
       ];
     };
 
   	sonarr = {
       image = "ghcr.io/hotio/sonarr";
-      ports = dockerPorts.sonarr;
-      environment = defaultEnvironment;
+      ports = docker.ports.sonarr;
+      environment = docker.environment;
       volumes = [
-	    "${arrConfigDir}/sonarr/config:/config"
- 	    "${dataDir}/shows:/data/shows"
- 	    "${dataFallbackDir}/shows:/data/shows-fallback"
- 	    "${dataFallbackDir}/anime:/data/anime"
- 	    "${usenetDownloads}:/data/usenet"
+	    "${docker.dirs.arr}/sonarr/config:/config"
+ 	    "${docker.dirs.plexData}/shows:/data/shows"
+ 	    "${docker.dirs.plexDataFallback}/shows:/data/shows-fallback"
+ 	    "${docker.dirs.plexDataFallback}/anime:/data/anime"
+ 	    "${docker.dirs.usenetDownloads}:/data/usenet"
       ];
-      extraOptions = defaultOptions;
+      extraOptions = docker.plexArgs;
     };
 
     sonarr4k = {
       image = "ghcr.io/hotio/sonarr";
-      ports = dockerPorts.sonarr4k;
-      environment = defaultEnvironment;
+      ports = docker.ports.sonarr4k;
+      environment = docker.environment;
       volumes = [
-	    "${arrConfigDir}/sonarr-4k/config:/config"
- 	    "${data4kDir}/shows:/data-4k/shows"
- 	    "${data4kDir}/anime:/data-4k/anime"
- 	    "${usenet4kDownloads}:/data-4k/usenet"
+	    "${docker.dirs.arr}/sonarr-4k/config:/config"
+ 	    "${docker.dirs.plexData4k}/shows:/data-4k/shows"
+ 	    "${docker.dirs.plexData4k}/anime:/data-4k/anime"
+ 	    "${docker.dirs.usenet4kDownloads}:/data-4k/usenet"
       ];
-      extraOptions = [ "--network=plex-stack" ];
+      extraOptions = docker.plexArgs;
     };
 
-    radarr = {
-      image = "ghcr.io/hotio/radarr";
-      ports = dockerPorts.radarr;
-      environment = defaultEnvironment;
-      volumes = [
-	    "${arrConfigDir}/radarr/config:/config"
- 	    "${dataDir}/movies:/data/movies"
- 	    "${dataFallbackDir}/movies:/data/movies-fallback"
- 	    "${usenetDownloads}:/data/usenet"
-      ];    	
-      extraOptions = defaultOptions;
-    };
-
-    radarr4k = {
-      image = "ghcr.io/hotio/radarr";
-      ports = dockerPorts.radarr4k;
-      environment = defaultEnvironment;
-      volumes = [
-	    "${arrConfigDir}/radarr-4k/config:/config"
- 	    "${data4kDir}/movies:/data-4k/movies"
- 	    "${usenet4kDownloads}:/data-4k/usenet"
-      ];    	
-      extraOptions = defaultOptions;
-    };
- 
-    prowlarr = {
-      image = "ghcr.io/hotio/prowlarr";
-      ports = dockerPorts.prowlarr;
-      environment = defaultEnvironment;
-      volumes = [
-        "${arrConfigDir}/prowlarr/config:/config"        
+    tautulli = {
+      image = "ghcr.io/tautulli/tautulli";
+      ports = docker.ports.tautulli;
+      environment = docker.environment;
+      volumes = [ 
+        "${docker.dirs.arr}/tautulli:/config"
       ];
-      extraOptions = defaultOptions;
-    };
-
-    overseerr = {
-      image = "ghcr.io/hotio/overseerr";
-      ports = dockerPorts.overseerr;
-      environment = defaultEnvironment;
-      volumes = [
-        "${arrConfigDir}/overseerr/config:/config"
-        "${dataDir}:/data"
-        "${dataFallbackDir}:/data-fallback"
-        "${data4kDir}:/data-4k"
-      ];
-      extraOptions = [ "--network=plex-stack" ];
-    };
-
-    requestrr = {
-      image = "darkalfx/requestrr";
-      ports = dockerPorts.requestrr;
-      volumes = [
-        "${arrConfigDir}/requestrr/config:/config"
-      ];
-    };
-
-    bazarr = {
-      image = "ghcr.io/hotio/bazarr";
-      ports = dockerPorts.bazarr;
-      environment = defaultEnvironment;
-      volumes = [
-        "${arrConfigDir}/bazarr/config:/config"
-        "${arrConfigDir}/bazarr/logs:/logs"
-        "${dataDir}/movies:/data/movies"
-        "${dataFallbackDir}/shows:/data/shows-fallback"
-        "${dataDir}/shows:/data/shows"
-      ];
-      extraOptions = defaultOptions;
     };
 
     tdarr = {
       image = "ghcr.io/haveagitgat/tdarr:latest";
-      ports = dockerPorts.tdarr;
+      ports = docker.ports.tdarr;
       environment = {
-      	PUID = "950";
-      	PGID = "950";
-      	UMASK_SET = "022";
-      	TZ = "America/Los_Angeles";
-      	serverIP = hostIP;
-      	serverPort = "${toString ports.tdarrServer}";
-      	webUIPort = "${toString ports.tdarrWeb}";
+      	PUID = docker.users.multimedia;
+      	PGID = docker.users.multimedia;
+      	UMASK_SET = docker.environment.UMASK_SET;
+      	TZ = constants.localTimeZone;
+      	serverIP = docker.tdarrServerIP;
+      	serverPort = "${toString constants.ports.tdarrServer}";
+      	webUIPort = "${toString constants.ports.tdarrWeb}";
       	internalNode = "false";
       	inContainer = "true";
       };
       volumes = [
-        "${arrConfigDir}/tdarr/server:/app/server"
-        "${arrConfigDir}/tdarr/configs:/app/configs"
-        "${arrConfigDir}/tdarr/logs:/app/logs"
-        "${data4kDir}:/data-4k"
-        "${dataDir}:/data"
-        "${tdarrTranscodeDir}:/temp"
+        "${docker.dirs.arr}/tdarr/server:/app/server"
+        "${docker.dirs.arr}/tdarr/configs:/app/configs"
+        "${docker.dirs.arr}/tdarr/logs:/app/logs"
+        "${docker.dirs.plexData4k}:/data-4k"
+        "${docker.dirs.plexData}:/data"
+        "${docker.dirs.tdarrTranscode}:/temp"
       ];
-      extraOptions = defaultOptions;
+      extraOptions = docker.plexArgs;
     };
  
     tdarrNode = {
       image = "ghcr.io/haveagitgat/tdarr_node:latest";
       environment = {
-      	PUID = "950";
-      	PGID = "950";
-      	UMASK_SET = "022";
-      	TZ = "America/Los_Angeles";
-      	serverIP = hostIP;
-      	serverPort = "${toString ports.tdarrServer}";
+      	PUID = docker.users.multimedia;
+      	PGID = docker.users.multimedia;
+      	UMASK_SET = docker.environment.UMASK_SET;
+      	TZ = constants.localTimeZone;
+      	serverIP = docker.tdarrServerIP;
+      	serverPort = "${toString constants.ports.tdarrServer}";
       	inContainer = "true";
       	max_old_space_size = "8152";
       	maxOldSpaceSize = "8152";
       	nodeName = "PrimaryNode";
       };
       volumes = [
-        "${arrConfigDir}/tdarr/server:/app/server"
-        "${arrConfigDir}/tdarr/configs:/app/configs"
-        "${arrConfigDir}/tdarr/logs:/app/logs"
-        "${data4kDir}:/data-4k"
-        "${dataDir}:/data"
-        "${tdarrTranscodeDir}:/temp"
+        "${docker.dirs.arr}/tdarr/server:/app/server"
+        "${docker.dirs.arr}/tdarr/configs:/app/configs"
+        "${docker.dirs.arr}/tdarr/logs:/app/logs"
+        "${docker.dirs.plexData4k}:/data-4k"
+        "${docker.dirs.plexData}:/data"
+        "${docker.dirs.tdarrTranscode}:/temp"
       ];
       extraOptions = [
       	"--device=/dev/dri"
       	"--network=plex-stack"
       ];
     };
-
   };
 }

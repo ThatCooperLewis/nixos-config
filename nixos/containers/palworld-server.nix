@@ -7,8 +7,15 @@ https://github.com/louislam/uptime-kuma
 */
 let 
   docker = constants.docker;
+  portsList = [
+    constants.ports.palworld 
+    constants.ports.palworldSecondary
+  ];
 in
 {
+  config.networking.firewall.allowedUDPPorts = portsList;
+  config.networking.firewall.interfaces.docker1.allowedUDPPorts = portsList;
+  
   config.virtualisation.oci-containers.containers = {
     palworld = {
       image = "thijsvanloef/palworld-server-docker:latest";
@@ -16,7 +23,7 @@ in
       environment = {
         PUID = docker.users.palworld;
         PGID = docker.users.palworld;
-        PORT = "${toString docker.ports.palworld}";
+        PORT = "${toString constants.ports.palworld}";
         PLAYERS = "16";
         MULTITHREADING = "false";
         COMMUNITY = "false";
