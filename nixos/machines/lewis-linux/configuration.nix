@@ -32,14 +32,11 @@
   networking.networkmanager.enable = true;
   networking.hostName = "lewis-linux";
   networking.extraHosts = "127.0.0.1 modules-cdn.eac-prod.on.epicgames.com"; # Anticheat Fix
- 
-
 
   ### Locale
   time.timeZone = constants.systemDefaults.timeZone;
   i18n.defaultLocale = constants.systemDefaults.defaultLocale;
   i18n.extraLocaleSettings = constants.systemDefaults.extraLocaleSettings;
-
 
   ### Display Configuration
 
@@ -89,7 +86,6 @@
     nvidiaSettings = true;
   };
 
-
   ### Hyprland
   services.xserver.displayManager.sddm.enable = true; #This line enables sddm
   services.xserver.enable = true; # Might need this for Xwayland (Enable the X11 windowing system).
@@ -110,8 +106,6 @@
     NIXOS_OZONE_WL = "1";
   };
   
-
-  
   ### Audio
   # Enable sound with pipewire.
   sound.enable = true;
@@ -125,8 +119,6 @@
     jack.enable = true;
   };
 
-
-
   ### Users
   users = {
   	defaultUserShell = pkgs.zsh;
@@ -137,7 +129,6 @@
       extraGroups = [ "networkmanager" "input" "wheel" "docker" "libvirtd" ];
     };
   };
-
 
   ### Packages
   nixpkgs.config.allowUnfree = true;
@@ -207,15 +198,11 @@
     nerdfonts
   ];
 
-
-
   ### File Browsing
   programs.thunar.enable = true;
   services.gvfs.enable = true; # Mount, trash, other stuff
   services.tumbler.enable = true; # Thumbnail images
   # TODO: Configure thunar more (details in wiki)
-
-
 
   ### Make server reachable via SSH
   services.openssh = {
@@ -224,8 +211,6 @@
   	  PasswordAuthentication = true;
   	};
   };
-
-
 
   ### Miscellaneous
   # Enable CUPS to print documents.
