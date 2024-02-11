@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, constants ... }:
+{ config, pkgs, inputs, constants, ... }:
 
 {
   ### Locale
@@ -58,36 +58,36 @@
 
   users.users.cloudflare = {
     isSystemUser = true;
-  	uid = 2002;
+  	uid = constants.users.cloudflare;
   	group = "cloudflare";
   	description = "Cloudflared Tunnel";
   	extraGroups = [ "wheel" ]; 
   };
   users.users.uptime = {
-    uid = 900;
+    uid = constants.users.uptime;
     description = "Uptime Kuma";
     isNormalUser = false;
     group = "uptime";
     extraGroups = [ "wheel" ];
   };
   users.users.palworld = {
-    uid = 1400;
+    uid = constants.users.palworld;
     description = "Palworld dedicated server";
     isSystemUser = true;
     group = "palworld";
     extraGroups = [ "wheel" ];
   };
   users.users.telegraf = {
-    uid = 1200;
+    uid = constants.users.telegraf;
     description = "Telegraf metrics emitter";
     isNormalUser = true;
     group = "telegraf";
     extraGroups = [ "wheel" ];
   };
-  users.groups.cloudflare.gid = 2002;
-  users.groups.uptime.gid = 900;
-  users.groups.palworld.gid = 1400;
-  users.groups.telegraf.gid = 1200;
+  users.groups.cloudflare.gid = constants.users.cloudflare;
+  users.groups.uptime.gid = constants.users.uptime;
+  users.groups.palworld.gid = constants.users.palworld;
+  users.groups.telegraf.gid = constants.users.telegraf;
 
   # Enable automatic login
   services.xserver.displayManager.autoLogin.enable = true;
