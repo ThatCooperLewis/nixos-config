@@ -20,6 +20,7 @@ let
     uptime = 900;
     cloudflare = 2002;
     palworld = 1400;
+    influxdb = 125;
   };
 
   ports = {
@@ -93,9 +94,9 @@ in {
   	sab = "${hosts.nas}:${toString ports.sab}";
     scrutiny = "${hosts.nas}:${toString ports.scrutiny}";
     # Monitor Pi
-  	uptime = "${hosts.monitor}:${toString ports.uptime}";
-  	grafana = "${hosts.monitor}:${toString ports.grafana}";
-    influxdb = "${hosts.monitor}:${toString ports.influxdb}";
+  	uptime = "${hosts.nuc}:${toString ports.uptime}";
+  	grafana = "${hosts.nuc}:${toString ports.grafana}";
+    influxdb = "${hosts.nuc}:${toString ports.influxdb}";
     # Home Assistant
   	ha = "${hosts.homeAss}:${toString ports.homeAss}";
     # Wifi AP

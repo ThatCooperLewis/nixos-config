@@ -113,6 +113,8 @@
           ./services/kiosk.nix
           # Telegraf metrics
           ./services/telegraf.nix
+          # Metrics database
+          ./services/influxdb.nix
 
           home-manager.nixosModules.home-manager
           {
