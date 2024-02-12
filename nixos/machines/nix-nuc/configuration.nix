@@ -109,6 +109,7 @@
     vscode
     python3
     inputs.fix-python
+    influxdb
   ];
 
   services.openssh.enable = true;
