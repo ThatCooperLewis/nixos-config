@@ -35,11 +35,15 @@
           report_active = false;
         };
         diskio = { };
+        disk = { };
         kernel = { };
         mem = { };
         swap = { };
         system = { };
         net = { };
+        temp = {
+          name_override = "temp_cpu";
+        };
       };
     };
   };

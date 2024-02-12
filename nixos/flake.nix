@@ -101,7 +101,6 @@
           ./containers/uptime-kuma.nix
           ./containers/palworld-server.nix
           ./containers/grafana.nix
-          ./containers/telegraf.nix
           
           # Caddy Reverse Proxy
           ./services/reverse-proxy.nix
@@ -109,6 +108,8 @@
           ./services/cloudflare.nix
           # Grafana kiosk
           ./services/kiosk.nix
+          # Telegraf metrics
+          ./services/telegraf.nix
 
           home-manager.nixosModules.home-manager
           {
