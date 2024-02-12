@@ -212,6 +212,9 @@
   	};
   };
 
+  # Define hostname for telegraf
+  services.telegraf.extraConfig.agent.hostname = "primary";
+
   ### Miscellaneous
   # Enable CUPS to print documents.
   # services.printing.enable = true;
