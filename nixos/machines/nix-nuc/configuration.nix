@@ -110,6 +110,7 @@
     python3
     inputs.fix-python
     influxdb
+    unclutter
   ];
 
   services.openssh.enable = true;

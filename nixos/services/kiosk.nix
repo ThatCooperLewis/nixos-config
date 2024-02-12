@@ -16,15 +16,20 @@ let
   autostart = ''
     #!${pkgs.bash}/bin/bash
 
+    xrandr --output HDMI-1 --rotate right
+    
     xset -dpms     # Disable DPMS (Energy Star) features
     xset s off     # Disable screensaver
     xset s noblank # Don't blank video device
 
-    sleep 10
+    # Give the computer time to connect to network
+    sleep 5
 
-    xrandr --output HDMI-1 --rotate right
+    # Hide mouse cursor
+    unclutter -idle 0.5 -root &
 
-    firefox --kiosk http://10.0.50.4:3000/d/c1a342bc-6383-4d52-8485-3459d21412cf/mission-control?orgId=1&refresh=30s &
+    # Load grafana dash
+    firefox --kiosk ${constants.urls.grafana}/d/c1a342bc-6383-4d52-8485-3459d21412cf/mission-control?orgId=1&refresh=30s &
   '';
 
   inherit (pkgs) writeScript;
