@@ -17,7 +17,6 @@ let
   users = {
     multimedia = 950;
     tig = 950;
-    telegraf = 1200;
     uptime = 900;
     cloudflare = 2002;
     palworld = 1400;
@@ -121,7 +120,6 @@ in {
       tig = "${toString users.tig}";
       cloudflare = "${toString users.cloudflare}";
       palworld = "${toString users.palworld}";
-      telegraf = "${toString users.telegraf}";
     };
     
     ports = {

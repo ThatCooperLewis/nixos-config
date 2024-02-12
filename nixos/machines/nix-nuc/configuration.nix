@@ -86,16 +86,14 @@
     extraGroups = [ "wheel" ];
   };
   users.users.telegraf = {
-    uid = constants.users.telegraf;
-    description = "Telegraf metrics emitter";
-    isNormalUser = true;
+    uid = 256;
+    isSystemUser = true;
     group = "telegraf";
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "docker" ];
   };
   users.groups.cloudflare.gid = constants.users.cloudflare;
   users.groups.uptime.gid = constants.users.uptime;
   users.groups.palworld.gid = constants.users.palworld;
-  users.groups.telegraf.gid = constants.users.telegraf;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -114,6 +112,19 @@
   ];
 
   services.openssh.enable = true;
+
+  services.telegraf.extraConfig = { 
+    agent.hostname = "nix-nuc";
+    inputs.http_response.urls = [ 
+      constants.urls.plex
+      constants.urls.tdarr
+      constants.urls.overseerr
+      constants.urls.sab
+      constants.urls.radarr
+      constants.urls.sonarr
+      constants.urls.ha
+    ];
+  };
 
   programs.zsh.enable = true;
 

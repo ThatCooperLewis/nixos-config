@@ -26,5 +26,5 @@ Use in conjunction with an actual container.
 
   config.virtualisation.oci-containers.backend = "docker";
   # Emit docker metrics to telegraf
-  service.telegraf.extraConfig.inputs.docker = {};
+  config.services.telegraf.extraConfig.inputs.docker = {};
 }
