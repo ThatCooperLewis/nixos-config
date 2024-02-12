@@ -32,7 +32,7 @@
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
-
+  powerManagement.enable = false;
   
   # Audio settings
   sound.enable = true;
@@ -124,6 +124,8 @@
       constants.urls.radarr
       constants.urls.sonarr
       constants.urls.ha
+      constants.urls.octopi
+      constants.urls.uptime
     ];
   };
 
