@@ -16,6 +16,12 @@ let
   autostart = ''
     #!${pkgs.bash}/bin/bash
 
+    xset -dpms     # Disable DPMS (Energy Star) features
+    xset s off     # Disable screensaver
+    xset s noblank # Don't blank video device
+
+    sleep 10
+
     xrandr --output HDMI-1 --rotate right
 
     firefox --kiosk http://10.0.50.4:3000/d/c1a342bc-6383-4d52-8485-3459d21412cf/mission-control?orgId=1&refresh=30s &
