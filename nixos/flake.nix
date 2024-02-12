@@ -78,6 +78,9 @@
 
           ./containers/base.nix
           ./containers/influxdb.nix
+
+          # Telegraf metrics
+          ./services/telegraf.nix
           
           home-manager.nixosModules.home-manager
           {

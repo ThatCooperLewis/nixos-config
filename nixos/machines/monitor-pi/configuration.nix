@@ -91,5 +91,8 @@ in {
 
   };
 
+  # Define hostname for telegraf
+  services.telegraf.extraConfig.agent.hostname = "monitor-pi";
+
   system.stateVersion = "23.11";
 }
