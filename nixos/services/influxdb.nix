@@ -7,7 +7,7 @@
   };
   config.users.groups.influxdb.gid = constants.users.influxdb;
 
-  config.networking.firewall.allowedTCPPorts = [ constants.ports.grafana ];
+  config.networking.firewall.allowedTCPPorts = [ constants.ports.influxdb ];
 
   config.services.influxdb = {
     enable = true;
