@@ -16,7 +16,7 @@ let
 
   users = {
     multimedia = 950;
-    tig = 950;
+    grafana = 950;
     uptime = 900;
     cloudflare = 2002;
     palworld = 1400;
@@ -118,7 +118,7 @@ in {
     users = {
       multimedia = "${toString users.multimedia}";
       uptime = "${toString users.uptime}";
-      tig = "${toString users.tig}";
+      grafana = "${toString users.grafana}";
       cloudflare = "${toString users.cloudflare}";
       palworld = "${toString users.palworld}";
     };
@@ -152,7 +152,6 @@ in {
 
     dirs = {
       arr = "/home/cooper/Homelab/plex-stack";
-      tig = "/home/cooper/tig-stack";
       telegraf = "/home/telegraf";
       grafana = "/home/cooper/Homelab/grafana";
       uptime = "/home/cooper/Homelab/uptime-stack";

@@ -9,10 +9,10 @@ in
     grafana = {
       image = "grafana/grafana:latest";
       ports = docker.ports.grafana;
-      user = docker.users.tig;
+      user = docker.users.grafana;
       environment = {
-      	PUID = docker.users.tig;
-      	PGID = docker.users.tig;
+      	PUID = docker.users.grafana;
+      	PGID = docker.users.grafana;
       	GF_SECURITY_ADMIN_USER = "admin";
       	GF_SECURITY_ADMIN_PASSWORD = "admin";
       	GF_INSTALL_PLUGINS = "grafana-clock-panel";

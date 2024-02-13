@@ -71,7 +71,7 @@ in {
       };
 
       tig = {
-        uid = constants.users.tig;
+        uid = constants.users.grafana;
         description = "Telegraf/Influx/Grafana Monitoring";
       	isNormalUser = false;
       	group = "tig";
@@ -86,7 +86,7 @@ in {
       	extraGroups = [ "wheel" ];
       };	
     };
-    groups.tig.gid = constants.users.tig;
+    groups.tig.gid = constants.users.grafana;
     groups.uptime.gid = constants.users.uptime;
 
   };
