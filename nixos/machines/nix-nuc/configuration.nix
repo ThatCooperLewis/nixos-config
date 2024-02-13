@@ -64,36 +64,12 @@
   };
   users.groups.multimedia.gid = 950;
 
-  users.users.cloudflare = {
-    isSystemUser = true;
-  	uid = constants.users.cloudflare;
-  	group = "cloudflare";
-  	description = "Cloudflared Tunnel";
-  	extraGroups = [ "wheel" ]; 
-  };
-  users.users.uptime = {
-    uid = constants.users.uptime;
-    description = "Uptime Kuma";
-    isNormalUser = false;
-    group = "uptime";
-    extraGroups = [ "wheel" ];
-  };
-  users.users.palworld = {
-    uid = constants.users.palworld;
-    description = "Palworld dedicated server";
-    isSystemUser = true;
-    group = "palworld";
-    extraGroups = [ "wheel" ];
-  };
   users.users.telegraf = {
     uid = 256;
     isSystemUser = true;
     group = "telegraf";
     extraGroups = [ "wheel" "docker" ];
   };
-  users.groups.cloudflare.gid = constants.users.cloudflare;
-  users.groups.uptime.gid = constants.users.uptime;
-  users.groups.palworld.gid = constants.users.palworld;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
