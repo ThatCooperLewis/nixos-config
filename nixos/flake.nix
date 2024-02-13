@@ -77,6 +77,7 @@
           ./machines/monitor-pi/configuration.nix
 
           ./containers/base.nix
+          ./containers/uptime-kuma.nix
 
           # Telegraf metrics
           ./services/telegraf.nix
@@ -100,7 +101,6 @@
           
           ./containers/base.nix
           ./containers/plex-stack.nix
-          ./containers/uptime-kuma.nix
           ./containers/palworld-server.nix
           ./containers/grafana.nix
           
