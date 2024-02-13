@@ -154,7 +154,7 @@ in {
       arr = "/home/cooper/Homelab/plex-stack";
       telegraf = "/home/telegraf";
       grafana = "/home/cooper/Homelab/grafana";
-      uptime = "/home/cooper/Homelab/uptime-stack";
+      uptime = "/home/cooper/uptime-stack";
       plexData = "/mnt/plex-content";
       plexDataFallback = "/mnt/plex-content-fallback"; 
       plexData4k = "/mnt/plex-content-4k";
