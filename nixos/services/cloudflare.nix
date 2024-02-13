@@ -1,6 +1,17 @@
-{ pkgs, app, user, ... }:
+{ pkgs, app, user, constants, ... }:
 
 {
+  users = {
+    users.cloudflare = {
+      isSystemUser = true;
+      uid = constants.users.cloudflare;
+      group = "cloudflare";
+      description = "Cloudflared Tunnel";
+      extraGroups = [ "wheel" ]; 
+    };
+    groups.cloudflare.gid = constants.users.cloudflare;
+  };
+
   services.cloudflared = {
     enable = true;
     user = "cloudflare";
