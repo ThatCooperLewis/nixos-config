@@ -88,15 +88,15 @@ in {
     requestrr = "${plexStackIP}:${toString ports.requestrr}";
     tdarr = "${plexStackIP}:${toString ports.tdarrWeb}";
     tautulli = "${plexStackIP}:${toString ports.tautulli}"; 
+  	grafana = "${hosts.nuc}:${toString ports.grafana}";
+    influxdb = "${hosts.nuc}:${toString ports.influxdb}";
     # TrueNAS Apps
   	nas = "${hosts.nas}";
   	plex = "${hosts.nas}:${toString ports.plex}";
   	sab = "${hosts.nas}:${toString ports.sab}";
     scrutiny = "${hosts.nas}:${toString ports.scrutiny}";
     # Monitor Pi
-  	uptime = "${hosts.nuc}:${toString ports.uptime}";
-  	grafana = "${hosts.nuc}:${toString ports.grafana}";
-    influxdb = "${hosts.nuc}:${toString ports.influxdb}";
+  	uptime = "${hosts.monitor}:${toString ports.uptime}";
     # Home Assistant
   	ha = "${hosts.homeAss}:${toString ports.homeAss}";
     # Wifi AP
