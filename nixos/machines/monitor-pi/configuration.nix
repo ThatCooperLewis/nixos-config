@@ -92,7 +92,20 @@ in {
   };
 
   # Define hostname for telegraf
-  services.telegraf.extraConfig.agent.hostname = "monitor-pi";
+  services.telegraf.extraConfig = {
+    agent.hostname = "monitor-pi";
+    inputs.http_response.urls = [ 
+      constants.urls.plex
+      constants.urls.tdarr
+      constants.urls.overseerr
+      constants.urls.sab
+      constants.urls.radarr
+      constants.urls.sonarr
+      constants.urls.ha
+      constants.urls.octopi
+      constants.urls.uptime
+    ];
+  };
 
   system.stateVersion = "23.11";
 }

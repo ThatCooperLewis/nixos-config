@@ -91,20 +91,7 @@
 
   services.openssh.enable = true;
 
-  services.telegraf.extraConfig = { 
-    agent.hostname = "nix-nuc";
-    inputs.http_response.urls = [ 
-      constants.urls.plex
-      constants.urls.tdarr
-      constants.urls.overseerr
-      constants.urls.sab
-      constants.urls.radarr
-      constants.urls.sonarr
-      constants.urls.ha
-      constants.urls.octopi
-      constants.urls.uptime
-    ];
-  };
+  services.telegraf.extraConfig.agent.hostname = "nix-nuc";
 
   programs.zsh.enable = true;
 
