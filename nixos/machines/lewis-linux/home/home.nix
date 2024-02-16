@@ -58,6 +58,10 @@
     __GL_GSYNC_ALLOWED = "0";
     __GL_VRR_ALLOWED = "0";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __GL_SHADER_DISK_CACHE= "true";
+    __GL_SHADER_DISK_CACHE_PATH="/home/cooper/.cache/star-citizen";
+    __GL_SHADER_DISK_CACHE_SKIP_CLEANUP="true";
+    DXVK_CONFIG_FILE="/home/cooper/Nix/misc/dxvk.conf";
   };
 
   # Let Home Manager install and manage itself.
