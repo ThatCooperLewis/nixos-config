@@ -113,4 +113,11 @@
     userName = "Cooper Lewis";
     userEmail = "thatcooperlewis@gmail.com";
   };
+
+  programs.zoxide = {
+    # A better `cd`
+    enable = true;
+    enableZshIntegration = true;
+    options = [ "--cmd cd" ]; 
+  };
 }
