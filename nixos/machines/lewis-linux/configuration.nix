@@ -66,11 +66,11 @@
   services.xserver.videoDrivers = ["nvidia"];
   # Add nvidia to kernel module manually
   boot.initrd.kernelModules = [ "nvidia" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  # boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   # Other configs
   hardware.nvidia = {
     # Define driver version
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
     # Modesetting is required.
     modesetting.enable = true;
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
@@ -80,7 +80,7 @@
     powerManagement.finegrained = false;
     # Use the NVidia open source kernel module
     # Known to be buggy
-    open = true;
+    open = false;
     # Enable the Nvidia settings menu,
 	# accessible via `nvidia-settings`.
     nvidiaSettings = true;
