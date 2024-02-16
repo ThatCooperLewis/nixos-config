@@ -48,4 +48,11 @@
       "update.mode" = "manual";
   	};
   };
+
+  programs.zoxide = {
+    # A better `cd`
+    enable = true;
+    enableZshIntegration = true;
+    options = [ "--cmd cd" ]; 
+  };
 }
