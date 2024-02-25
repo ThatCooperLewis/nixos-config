@@ -1,6 +1,8 @@
 { config, lib, pkgs, inputs, constants, ... }:
 
-{
+let 
+     tokyo-night-sddm = pkgs.libsForQt5.callPackage ./sddm-theme.nix { };
+in {
   imports = [
 
     # Fancy audio fix for Star Citizen
@@ -87,7 +89,9 @@
   };
 
   ### Hyprland
-  services.xserver.displayManager.sddm.enable = true; #This line enables sddm
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.sddm.theme = "tokyo-night-sddm";
+
   services.xserver.enable = true; # Might need this for Xwayland (Enable the X11 windowing system).
   programs.hyprland.enable = true;
   environment.sessionVariables = {
@@ -179,6 +183,9 @@
     tidal-hifi
     obsidian
     
+    # SDDM Theme
+    tokyo-night-sddm
+
     # Gaming
     steam
     inputs.nix-gaming.packages.${system}.star-citizen 
