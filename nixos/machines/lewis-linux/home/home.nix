@@ -12,6 +12,12 @@
 
       # Kitty terminal colors and margins
       ./kitty.nix
+
+      # Hyprland config
+      ./hyprland/hyprland.nix
+
+      # Add wallpaper symlink (called by swww in hyprland/start-applets.sh)
+      ./wallpaper/wallpaper.nix
     ];
 
   # Home Manager needs a bit of information about you and the paths it should
