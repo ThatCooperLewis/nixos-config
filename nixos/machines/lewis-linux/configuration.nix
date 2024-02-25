@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, constants, ... }:
 
 let 
-     tokyo-night-sddm = pkgs.libsForQt5.callPackage ./sddm-theme.nix { };
+  catppuccin-frappe = pkgs.libsForQt5.callPackage ./themes/sddm/cat-frappe.nix { };
 in {
   imports = [
 
@@ -90,7 +90,7 @@ in {
 
   ### Hyprland
   services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.sddm.theme = "tokyo-night-sddm";
+  services.xserver.displayManager.sddm.theme = "catppuccin-frappe";
 
   services.xserver.enable = true; # Might need this for Xwayland (Enable the X11 windowing system).
   programs.hyprland.enable = true;
@@ -184,7 +184,7 @@ in {
     obsidian
     
     # SDDM Theme
-    tokyo-night-sddm
+    catppuccin-frappe
 
     # Gaming
     steam
