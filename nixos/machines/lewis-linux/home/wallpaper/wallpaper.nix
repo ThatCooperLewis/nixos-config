@@ -2,7 +2,7 @@
 
 {
   home.file."wallpaper/wallpaper.jpg" = {
-    source = ./kalalau.jpg;
+    source = ./ferns.jpg;
     target = "${config.home.homeDirectory}/.config/wallpaper/wallpaper.jpg";
   };
 }
