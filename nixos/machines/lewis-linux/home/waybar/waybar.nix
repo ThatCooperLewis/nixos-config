@@ -12,7 +12,7 @@
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    style = builtins.readFile ./waybar/forest-style.css;
+    style = builtins.readFile ./cat-style.css;
     settings = [{
       layer= "top";
       position = "top";
@@ -20,13 +20,11 @@
       
       margin-top = 0;
       margin-bottom = 0;
-      margin-left = 80;
-      margin-right = 80;
 
-      spacing = 15;
+      spacing = 0;
 
       modules-left = [
-        "custom/launcher" 
+        # "custom/launcher" 
         "clock#date"
         "network" 
       ];
@@ -41,7 +39,7 @@
         "temperature" 
         "tray"
         "clock" 
-        "custom/windows"
+        # "custom/windows"
         "custom/powermenu"
       ];
 
@@ -79,6 +77,7 @@
         disable-scroll = true;
         all-outputs = true;
         separate-outputs = true;
+        format = "";
         on-scroll-up = "hyprctl dispatch workspace e-1";
         on-scroll-down = "hyprctl dispatch workspace e+1";
         persistent-workspaces = {
@@ -129,11 +128,11 @@
       };
 
       "clock" = {
-        format = " {:%H:%M}";
+        format = "{:%I:%M}";
       };
 
       "clock#date" = {
-        format = " {:%A, %B %d, %Y}";
+        format = "{:%A, %B %d, %Y}";
       };
 
       temperature = {

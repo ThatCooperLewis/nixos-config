@@ -6,10 +6,10 @@ swww init &
 swww img /home/cooper/.config/wallpaper/wallpaper.jpg &
 
 # Network manager
-nm-applet --indicator &
+nm-applet --indicator
 
 # Taskbar
-waybar &
+# waybar 
 
 # Notifs
-dunst
+# dunst

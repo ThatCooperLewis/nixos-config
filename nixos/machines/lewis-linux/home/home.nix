@@ -5,7 +5,7 @@
   imports =
     [
       # Waybar taskbar
-      ./waybar.nix
+      ./waybar/waybar.nix
 
       # zsh shell
       ./zsh.nix
