@@ -101,7 +101,7 @@
           
           ./containers/base.nix
           ./containers/plex-stack.nix
-          ./containers/palworld-server.nix
+          # ./containers/palworld-server.nix
           ./containers/grafana.nix
           
           # Caddy Reverse Proxy
