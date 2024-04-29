@@ -53,6 +53,22 @@ in {
 
   config.virtualisation.oci-containers.containers = {
 
+    kometa = {
+      image = "kometateam/kometa";
+      environment = {
+        PUID = docker.users.multimedia;
+        PGID = docker.users.multimedia;
+        UMASK_SET = docker.environment.UMASK_SET;
+        TZ = constants.localTimeZone;
+        KOMETA_CONFIG = "/config/config.yml";
+        KOMETA_RUN = "true";
+      };
+      volumes = [
+        "${docker.dirs.arr}/kometa:/config"
+      ];
+      extraOptions = docker.plexArgs;
+    };
+
     bazarr = {
       image = "ghcr.io/hotio/bazarr";
       ports = docker.ports.bazarr;
