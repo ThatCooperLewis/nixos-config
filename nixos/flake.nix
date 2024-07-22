@@ -25,11 +25,41 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
     fix-python.url = "github:GuillaumeDesforges/fix-python";
+
+    # macOS flakes
+    # https://nixcademy.com/2024/01/15/nix-on-macos/
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs@{ self, nixpkgs, vscode-server, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, nix-darwin, vscode-server, home-manager, ... }: {
+    
+    # macOS machines
+    darwinConfigurations = let
+      # TODO: Combine both the constants imports at the higher-level `outputs` declaration
+      constants = import ./constants.nix;
+    in {
+      # Square-issued M3 MBP
+      "BLKKTWPFQ13Y2" = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit self inputs; };
+        modules = [ 
+
+          ./machines/nix-square/configuration.nix
+        
+          home-manager.darwinModules.home-manager
+          {
+            # nixpkgs = nixpkgsConfig;
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.cooperl = import ./machines/nix-square/home/home.nix;
+          }
+        ];
+      };
+    };
+
+    # nixOS machines
     nixosConfigurations = let
       constants = import ./constants.nix;
     in {
