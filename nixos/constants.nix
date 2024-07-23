@@ -17,6 +17,7 @@ let
   users = {
     multimedia = 950;
     grafana = 950;
+    navidrome = 950;
     uptime = 900;
     cloudflare = 2002;
     palworld = 1400;
@@ -48,6 +49,8 @@ let
   	grafana = 3000;
   	uptime = 3001;
     
+    navidrome = 4533;
+
     palworld = 8211;
     palworldSecondary = 27015;
   };
@@ -155,6 +158,7 @@ in {
       telegraf = "/home/telegraf";
       grafana = "/home/cooper/Homelab/grafana";
       uptime = "/home/cooper/uptime-stack";
+      navidrome = "/home/cooper/navidrome-stack";
       plexData = "/mnt/plex-content";
       plexDataFallback = "/mnt/plex-content-fallback"; 
       plexData4k = "/mnt/plex-content-4k";

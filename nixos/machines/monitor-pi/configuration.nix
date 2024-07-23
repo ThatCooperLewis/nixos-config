@@ -67,15 +67,7 @@ in {
     
       cooper = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "tig" ];
-      };
-
-      tig = {
-        uid = constants.users.grafana;
-        description = "Telegraf/Influx/Grafana Monitoring";
-      	isNormalUser = false;
-      	group = "tig";
-      	extraGroups = [ "wheel" ];
+        extraGroups = [ "wheel" ];
       };
 
       uptime = {
@@ -86,7 +78,6 @@ in {
       	extraGroups = [ "wheel" ];
       };	
     };
-    groups.tig.gid = constants.users.grafana;
     groups.uptime.gid = constants.users.uptime;
 
   };

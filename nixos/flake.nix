@@ -112,6 +112,9 @@
           # Telegraf metrics
           ./services/telegraf.nix
           
+          # Modipy music server
+          ./services/navidrome.nix
+
           home-manager.nixosModules.home-manager
           {
           	home-manager.useGlobalPkgs = true;
