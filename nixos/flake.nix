@@ -108,12 +108,13 @@
 
           ./containers/base.nix
           ./containers/uptime-kuma.nix
+          ./containers/navidrome.nix
 
           # Telegraf metrics
           ./services/telegraf.nix
           
           # Modipy music server
-          ./services/navidrome.nix
+          # ./services/navidrome.nix
 
           home-manager.nixosModules.home-manager
           {
