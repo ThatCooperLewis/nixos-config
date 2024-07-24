@@ -16,9 +16,9 @@
     openFirewall = true;
     settings = {
       Port = constants.ports.navidrome;
-      DataFolder = "${constants.docker.dirs.navidrome}/data";
-      MusicFolder = "${constants.docker.dirs.navidrome}/music";
-      CacheFolder = "${constants.docker.dirs.navidrome}/cache";
+      # DataFolder = "./data/appData";
+      # MusicFolder = "./data/music";
+      # CacheFolder = "./data/cache";
     };
   };
 }
