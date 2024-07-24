@@ -141,6 +141,7 @@ in {
         "${toString ports.tdarrWeb}:${toString ports.tdarrWeb}" 
         "${toString ports.tdarrServer}:${toString ports.tdarrServer}" 
       ];
+      navidrome = ["${toString ports.navidrome}:${toString ports.navidrome}"];
       telegraf = ["${toString ports.telegraf}:${toString ports.telegraf}"];
       influxdb = ["${toString ports.influxdb}:${toString ports.influxdb}"];
       grafana = ["${toString ports.grafana}:${toString ports.grafana}"];
