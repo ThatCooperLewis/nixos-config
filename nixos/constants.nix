@@ -124,6 +124,7 @@ in {
       grafana = "${toString users.grafana}";
       cloudflare = "${toString users.cloudflare}";
       palworld = "${toString users.palworld}";
+      navidrome = "${toString users.navidrome}";
     };
     
     ports = {
