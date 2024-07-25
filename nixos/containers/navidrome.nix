@@ -20,7 +20,7 @@ https://www.navidrome.org/docs/installation/docker/
   
   config.virtualisation.oci-containers.containers = {
    navidrome = {
-      image = "deluann/navidrome:latest";
+      image = "deluan/navidrome:latest";
       ports = constants.docker.ports.navidrome;
       environment = {
       	PUID = constants.docker.users.navidrome;
