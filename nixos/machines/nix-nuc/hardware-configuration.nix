@@ -50,33 +50,28 @@
 
   # NAS Remote Drives
 
-  fileSystems."/mnt/primary-backup" =
-    { device = "10.0.50.2:/mnt/shawn/primary-backup";
-      fsType = "nfs";
-    };
-
-  fileSystems."/mnt/plex-content" =
-    { device = "10.0.50.2:/mnt/chidi/data";
-      fsType = "nfs";
-    };
+  # fileSystems."/mnt/primary-backup" =
+  #   { device = "10.0.50.2:/mnt/tahani/primary-backup";
+  #     fsType = "nfs";
+  #   };
 
   fileSystems."/mnt/plex-content-4k" =
     { device = "10.0.50.2:/mnt/tahani/data-4k";
       fsType = "nfs";
     };
 
-  fileSystems."/mnt/plex-content-fallback" =
+  fileSystems."/mnt/plex-content" =
     { device = "10.0.50.2:/mnt/tahani/data";
       fsType = "nfs";
     };
 
   fileSystems."/mnt/plex-downloads" =
-    { device = "10.0.50.2:/mnt/downloads/plex";
+    { device = "10.0.50.2:/mnt/tahani/escrow-data/plex";
       fsType = "nfs";
     };
-
-  fileSystems."/mnt/nas-containers" =
-    { device = "10.0.50.2:/mnt/apps";
+# 
+  fileSystems."/mnt/nas-tdarr" =
+    { device = "10.0.50.2:/mnt/apps/tdarr";
       fsType = "nfs";
     };
 

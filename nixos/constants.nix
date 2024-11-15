@@ -19,6 +19,7 @@ let
     grafana = 950;
     navidrome = 950;
     uptime = 900;
+    octoprint = 333;
     cloudflare = 2002;
     palworld = 1400;
     influxdb = 125;
@@ -31,6 +32,7 @@ let
     bazarr = 6767;
   	overseerr = 5055;
   	prowlarr = 9696;
+  	lidarr = 8686;
   	radarr = 7878;
   	radarr4k = 7879;
   	requestrr = 4545;
@@ -82,6 +84,7 @@ in {
 
   urls = {
     # NUC Mini PC
+    lidarr = "${plexStackIP}:${toString ports.lidarr}";
     sonarr = "${plexStackIP}:${toString ports.sonarr}";
     sonarr4k = "${plexStackIP}:${toString ports.sonarr4k}";
     radarr = "${plexStackIP}:${toString ports.radarr}";
@@ -125,6 +128,7 @@ in {
       cloudflare = "${toString users.cloudflare}";
       palworld = "${toString users.palworld}";
       navidrome = "${toString users.navidrome}";
+      octoprint = "${toString users.octoprint}";
     };
     
     ports = {
@@ -132,7 +136,8 @@ in {
       bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
       overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
       prowlarr = ["${toString ports.prowlarr}:${toString ports.prowlarr}"];
-      radarr = ["${toString ports.radarr}:${toString ports.radarr}"];
+      lidarr = ["${toString ports.lidarr}:${toString ports.lidarr}"];
+	  radarr = ["${toString ports.radarr}:${toString ports.radarr}"];
       radarr4k = ["${toString ports.radarr4k}:${toString ports.radarr}"];
       requestrr = ["${toString ports.requestrr}:${toString ports.requestrr}"];
       sonarr = ["${toString ports.sonarr}:${toString ports.sonarr}"];
@@ -161,12 +166,12 @@ in {
       grafana = "/home/cooper/Homelab/grafana";
       uptime = "/home/cooper/uptime-stack";
       navidrome = "/home/cooper/navidrome-stack";
+      octoprint = "/home/cooper/octoprint";
       plexData = "/mnt/plex-content";
-      plexDataFallback = "/mnt/plex-content-fallback"; 
       plexData4k = "/mnt/plex-content-4k";
       usenetDownloads = "/mnt/plex-downloads/data/usenet";
       usenet4kDownloads = "/mnt/plex-downloads/data-4k/usenet";
-      tdarrTranscode = "/mnt/nas-containers/tdarr/temp";
+      tdarrTranscode = "/mnt/nas-tdarr/temp";
       palworld = "/home/cooper/Homelab/palworld";
     };
   };
