@@ -77,7 +77,6 @@ in {
         "${docker.dirs.arr}/bazarr/config:/config"
         "${docker.dirs.arr}/bazarr/logs:/logs"
         "${docker.dirs.plexData}/movies:/data/movies"
-        "${docker.dirs.plexDataFallback}/shows:/data/shows-fallback"
         "${docker.dirs.plexData}/shows:/data/shows"
       ];
       extraOptions = docker.plexArgs;
@@ -90,7 +89,6 @@ in {
       volumes = [
         "${docker.dirs.arr}/overseerr/config:/config"
         "${docker.dirs.plexData}:/data"
-        "${docker.dirs.plexDataFallback}:/data-fallback"
         "${docker.dirs.plexData4k}:/data-4k"
       ];
       extraOptions = docker.plexArgs;
@@ -107,20 +105,19 @@ in {
     };
 
     radarr = {
-      image = "ghcr.io/hotio/radarr";
+      image = "ghcr.io/hotio/radarr:release";
       ports = docker.ports.radarr;
       environment = docker.environment;
       volumes = [
 	    "${docker.dirs.arr}/radarr/config:/config"
  	    "${docker.dirs.plexData}/movies:/data/movies"
- 	    "${docker.dirs.plexDataFallback}/movies:/data/movies-fallback"
  	    "${docker.dirs.usenetDownloads}:/data/usenet"
       ];    	
       extraOptions = docker.plexArgs;
     };
 
     radarr4k = {
-      image = "ghcr.io/hotio/radarr";
+      image = "ghcr.io/hotio/radarr:release";
       ports = docker.ports.radarr4k;
       environment = docker.environment;
       volumes = [
@@ -140,21 +137,20 @@ in {
     };
 
   	sonarr = {
-      image = "ghcr.io/hotio/sonarr";
+      image = "ghcr.io/hotio/sonarr:release";
       ports = docker.ports.sonarr;
       environment = docker.environment;
       volumes = [
 	    "${docker.dirs.arr}/sonarr/config:/config"
  	    "${docker.dirs.plexData}/shows:/data/shows"
- 	    "${docker.dirs.plexDataFallback}/shows:/data/shows-fallback"
- 	    "${docker.dirs.plexDataFallback}/anime:/data/anime"
+ 	    "${docker.dirs.plexData}/anime:/data/anime"
  	    "${docker.dirs.usenetDownloads}:/data/usenet"
       ];
       extraOptions = docker.plexArgs;
     };
 
     sonarr4k = {
-      image = "ghcr.io/hotio/sonarr";
+      image = "ghcr.io/hotio/sonarr:release";
       ports = docker.ports.sonarr4k;
       environment = docker.environment;
       volumes = [
@@ -162,6 +158,18 @@ in {
  	    "${docker.dirs.plexData4k}/shows:/data-4k/shows"
  	    "${docker.dirs.plexData4k}/anime:/data-4k/anime"
  	    "${docker.dirs.usenet4kDownloads}:/data-4k/usenet"
+      ];
+      extraOptions = docker.plexArgs;
+    };
+
+  	lidarr = {
+      image = "ghcr.io/hotio/lidarr";
+      ports = docker.ports.lidarr;
+      environment = docker.environment;
+      volumes = [
+	    "${docker.dirs.arr}/lidarr/config:/config"
+ 	    "${docker.dirs.plexData}/music:/data/music"
+ 	    "${docker.dirs.usenetDownloads}:/data/usenet"
       ];
       extraOptions = docker.plexArgs;
     };
@@ -227,5 +235,6 @@ in {
       	"--network=plex-stack"
       ];
     };
+
   };
 }

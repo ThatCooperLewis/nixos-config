@@ -137,6 +137,7 @@
           ./containers/plex-stack.nix
           # ./containers/palworld-server.nix
           ./containers/grafana.nix
+          ./containers/octoprint.nix
           
           # Caddy Reverse Proxy
           ./services/reverse-proxy.nix
