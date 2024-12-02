@@ -93,6 +93,8 @@
 
   services.telegraf.extraConfig.agent.hostname = "nix-nuc";
 
+  services.vscode-server.enable = true;
+
   programs.zsh.enable = true;
 
   system.stateVersion = "23.11";
