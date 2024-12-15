@@ -17,6 +17,35 @@ let
 
 in {
 
+  config.systemd.services.start-kometa = {
+    description = "Start Kometa container";
+    serviceConfig = {
+      ExecStart = "${pkgs.docker}/bin/docker start kometa";
+    };
+  };
+
+  config.systemd.services.stop-kometa = {
+    description = "Stop Kometa container";
+    serviceConfig = {
+      ExecStart = "${pkgs.docker}/bin/docker stop kometa";
+    };
+  };
+
+  config.systemd.timers.start-kometa-timer = {
+    description = "Run Kometa container for 1 hour every 24 hours";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 00:00:00"; # Adjust to your desired start time
+    };
+  };
+
+  config.systemd.timers.stop-kometa-timer = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 01:00:00"; # 1 hour after start
+    };
+  };
+
   config.networking.firewall.allowedTCPPorts = [
     constants.ports.bazarr
     constants.ports.overseerr
@@ -54,6 +83,7 @@ in {
   config.virtualisation.oci-containers.containers = {
 
     kometa = {
+      autoStart = false;
       image = "kometateam/kometa";
       environment = {
         PUID = docker.users.multimedia;
