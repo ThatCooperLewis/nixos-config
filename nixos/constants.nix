@@ -23,6 +23,7 @@ let
     cloudflare = 2002;
     palworld = 1400;
     influxdb = 125;
+    minecraft = 1776;
   };
 
   ports = {
@@ -55,6 +56,7 @@ let
 
     palworld = 8211;
     palworldSecondary = 27015;
+    minecraft = 6900;
   };
 
   plexStackIP = hosts.nuc; 
@@ -173,6 +175,7 @@ in {
       usenet4kDownloads = "/mnt/plex-downloads/data-4k/usenet";
       tdarrTranscode = "/mnt/nas-tdarr/temp";
       palworld = "/home/cooper/Homelab/palworld";
+      minecraft = "/var/lib/minecraft";
     };
   };
 }

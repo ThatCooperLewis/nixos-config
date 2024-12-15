@@ -49,7 +49,7 @@
   users.users.cooper = {
     isNormalUser = true;
     description = "Cooper Lewis";
-    extraGroups = [ "docker" "networkmanager" "wheel" "telegraf" ];
+    extraGroups = [ "docker" "networkmanager" "wheel" "telegraf" "minecraft" ];
     packages = with pkgs; [
       firefox
     ];
