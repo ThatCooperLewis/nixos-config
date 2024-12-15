@@ -149,6 +149,8 @@
           ./services/telegraf.nix
           # Metrics database
           ./services/influxdb.nix
+          # Minecraft server
+          ./services/minecraft.nix
 
           home-manager.nixosModules.home-manager
           {
