@@ -139,6 +139,8 @@
           ./containers/grafana.nix
           ./containers/octoprint.nix
           
+          # Arr Config Backup
+          ./services/plex-stack-backup.nix
           # Caddy Reverse Proxy
           ./services/reverse-proxy.nix
           # Cloudflared Tunnel

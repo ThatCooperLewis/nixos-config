@@ -50,10 +50,6 @@
 
   # NAS Remote Drives
 
-  # fileSystems."/mnt/primary-backup" =
-  #   { device = "10.0.50.2:/mnt/tahani/primary-backup";
-  #     fsType = "nfs";
-  #   };
 
   fileSystems."/mnt/plex-content-4k" =
     { device = "10.0.50.2:/mnt/tahani/data-4k";
@@ -72,6 +68,11 @@
 # 
   fileSystems."/mnt/nas-tdarr" =
     { device = "10.0.50.2:/mnt/apps/tdarr";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/primary-backup" =
+    { device = "10.0.50.2:/mnt/tahani/backup-data/nix-nuc";
       fsType = "nfs";
     };
 

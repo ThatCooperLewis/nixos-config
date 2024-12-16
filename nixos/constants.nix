@@ -84,6 +84,13 @@ in {
     };
   };
 
+  nuc = {
+    dirs = {
+      plexStack = "/home/cooper/Homelab/plex-stack";
+      plexStackBackup = "/mnt/primary-backup/plex-stack";
+    };
+  };
+
   urls = {
     # NUC Mini PC
     lidarr = "${plexStackIP}:${toString ports.lidarr}";
