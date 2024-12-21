@@ -15,15 +15,16 @@ let
   };
 
   users = {
-    multimedia = 950;
-    grafana = 950;
-    navidrome = 950;
-    uptime = 900;
-    octoprint = 333;
     cloudflare = 2002;
-    palworld = 1400;
     influxdb = 125;
+    grafana = 950;
     minecraft = 1776;
+    multimedia = 950;
+    navidrome = 950;
+    octoprint = 333;
+    palworld = 1400;
+    tailscale = 1984;
+    uptime = 900;
   };
 
   ports = {
@@ -47,6 +48,7 @@ let
     
     homeAss = 8123;
 
+    tailscale = 41641;
   	telegraf = 8125;
     influxdb = 8086;
   	grafana = 3000;
