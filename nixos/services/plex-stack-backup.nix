@@ -10,7 +10,7 @@ in {
     description = "Periodic rsync backup of the Plex stack";
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.rsync}/bin/rsync -av --delete ${backupSource}/ ${backupDestination}/";
+      ExecStart = "${pkgs.rsync}/bin/rsync -a --delete ${backupSource}/ ${backupDestination}/";
       User = "root";  # Ensures it runs as root
       Group = "root"; # Ensures it runs as root
       SuccessExitStatus = [ 0 23 ]; # Error 23 should be ignored (some files couldn't be copied)
