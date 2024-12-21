@@ -153,6 +153,8 @@
           ./services/influxdb.nix
           # Minecraft server
           ./services/minecraft.nix
+          # Tailscale VPN
+          ./services/tailscale.nix
 
           home-manager.nixosModules.home-manager
           {
