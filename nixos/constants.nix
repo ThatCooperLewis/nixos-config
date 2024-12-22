@@ -44,7 +44,7 @@ let
   	tdarrWeb = 8265;
   	tautulli = 8181;
     sab = 30055;
-    scrutiny = 10151;
+    scrutiny = 31054;
     
     homeAss = 8123;
 
