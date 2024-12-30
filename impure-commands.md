@@ -1,5 +1,9 @@
 ## Unpure Commands
 
+This line must be added to `configuration.nix` for Flakes to be recognized:
+
+        nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
 These commands needed to be run separately before Nix could do its thing. Maybe one day I'll figure out how to import/link them properly
 
 - `home-manager` needed to be added to nix-channel
