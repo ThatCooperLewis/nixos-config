@@ -43,6 +43,8 @@ in
         }
       }
 
+      ## Tailscale
+
       nas.tail.lewisho.me {
         reverse_proxy ${constants.tails.nas}
         import cloudflare
@@ -78,6 +80,73 @@ in
         import cloudflare
       }
 
+
+      ## Local
+
+      sonarr.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.sonarr}
+        import cloudflare
+      }
+
+      sonarr4k.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.sonarr4k}
+        import cloudflare
+      }
+      radarr.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.radarr}
+        import cloudflare
+      }
+      radarr4k.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.radarr4k}
+        import cloudflare
+      }
+      prowlarr.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.prowlarr}
+        import cloudflare
+      }
+      overseerr.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.overseerr}
+        import cloudflare
+      }
+      requestrr.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.requestrr}
+        import cloudflare
+      }
+      tdarr.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.tdarrWeb}
+        import cloudflare
+      }
+      tautulli.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.tautulli}
+        import cloudflare
+      }
+      octoprint.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.octoprint}
+        import cloudflare
+      }
+      nas.local.lewisho.me {
+        reverse_proxy ${constants.ips.nas}:443
+        import cloudflare
+      }
+      plex.local.lewisho.me {
+        reverse_proxy ${constants.ips.nas}:${toString constants.ports.plex}
+        import cloudflare
+      }
+      sab.local.lewisho.me {
+        reverse_proxy ${constants.ips.nas}:${toString constants.ports.sab}
+        import cloudflare
+      }
+      scrutiny.local.lewisho.me {
+        reverse_proxy ${constants.ips.nas}:${toString constants.ports.scrutiny}
+        import cloudflare
+      }
+      wifi.local.lewisho.me {
+        reverse_proxy ${constants.ips.wap}
+        import cloudflare
+      }
+      ha.local.lewisho.me {
+        reverse_proxy ${constants.urls.ha}
+      }
     '';
     mode = "0644";
     user = "caddy";
@@ -85,16 +154,14 @@ in
   };
 
   networking.firewall.allowedTCPPorts = [ constants.ports.caddypi constants.ports.caddypiSSH ];
+  networking.firewall.allowedUDPPorts = [ constants.ports.caddypiSSH ];
+
   virtualisation.oci-containers.containers = {
     caddy = {
       image = "ghcr.io/caddybuilds/caddy-cloudflare:latest";
       ports = docker.ports.caddypi;
       user = docker.users.caddypi;
-      environmentFiles = ["/var/lib/cloudflared/dns.env"]; # Pass the secret API Token
-      environment = {
-      	PUID = docker.users.caddypi;
-      	PGID = docker.users.caddypi;
-      };
+      environmentFiles = ["/etc/caddy/caddy.env"]; # Pass the secret API Token
       volumes = [ 
         "${docker.dirs.caddypi}/data:/data"
         "${docker.dirs.caddypi}/Caddyfile:/etc/caddy/Caddyfile"
