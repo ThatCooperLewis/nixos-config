@@ -98,6 +98,32 @@
         ];
       };
 
+
+      "caddy-pi" = nixpkgs.lib.nixosSystem {
+      	system = "aarch64-linux";
+
+        specialArgs = { inherit inputs constants; };
+        modules = [
+
+          ./containers/base.nix
+          # Pi-specific configuration
+          ./machines/caddy-pi/configuration.nix
+          # Caddy Cloudflare config 
+          ./containers/cloudflare-caddy.nix
+          # Tailscale VPN
+          ./services/tailscale.nix
+          # Cloudflare Tunnel
+          ./services/cloudflare.nix
+
+          home-manager.nixosModules.home-manager
+          {
+          	home-manager.useGlobalPkgs = true;
+          	home-manager.useUserPackages = true;
+          	home-manager.users.cooper = import ./machines/caddy-pi/home/home.nix;
+          }
+        ];
+      };
+
       "monitor-pi" = nixpkgs.lib.nixosSystem {
       	system = "aarch64-linux";
 
@@ -143,8 +169,6 @@
           ./services/plex-stack-backup.nix
           # Caddy Reverse Proxy
           ./services/reverse-proxy.nix
-          # Cloudflared Tunnel
-          ./services/cloudflare.nix
           # Grafana kiosk
           ./services/kiosk.nix
           # Telegraf metrics

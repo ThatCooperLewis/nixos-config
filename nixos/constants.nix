@@ -12,9 +12,18 @@ let
     monitor = "http://10.0.50.3";
     homeAss = "http://10.0.50.10";
     octopi = "http://10.0.50.12";
+    caddypi = "http://10.0.50.30";
+  };
+
+  tails = {
+    nas = "http://100.86.97.79";
+    nuc = "http://100.81.70.111";
+    windows = "http://100.88.50.101";
+    caddypi = "http://100.69.31.128";
   };
 
   users = {
+    caddypi = 2222;
     cloudflare = 2002;
     influxdb = 125;
     grafana = 950;
@@ -59,6 +68,9 @@ let
     palworld = 8211;
     palworldSecondary = 27015;
     minecraft = 6900;
+
+    caddypi = 80;
+    caddypiSSH = 443;
   };
 
   plexStackIP = hosts.nuc; 
@@ -68,7 +80,7 @@ let
 in {
 
   # Expose local variables to the rest of the config
-  inherit hosts users ports plexStackIP localTimeZone;
+  inherit hosts users ports plexStackIP localTimeZone tails;
 
   systemDefaults = {
     timeZone = localTimeZone;
@@ -119,7 +131,9 @@ in {
     # Wifi AP
   	wifi = "${hosts.wap}";
     # Octoprint RasPi
-  	octopi = "${hosts.octopi}";   
+  	octopi = "${hosts.octopi}";
+    # Caddy-Cloudflare RasPi   
+    caddypi = "${hosts.caddypi}";
   };
 
   docker = {
@@ -136,6 +150,7 @@ in {
       multimedia = "${toString users.multimedia}";
       uptime = "${toString users.uptime}";
       grafana = "${toString users.grafana}";
+      caddypi = "${toString users.caddypi}";
       cloudflare = "${toString users.cloudflare}";
       palworld = "${toString users.palworld}";
       navidrome = "${toString users.navidrome}";
@@ -143,6 +158,11 @@ in {
     };
     
     ports = {
+      caddypi = [ 
+        "${toString ports.caddypi}:${toString ports.caddypi}" 
+        "${toString ports.caddypiSSH}:${toString ports.caddypiSSH}" 
+        "${toString ports.caddypiSSH}:${toString ports.caddypiSSH}/udp" 
+      ];
       octoprint = ["${toString ports.octoprint}:${toString ports.octoprint}"];
       bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
       overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
@@ -185,6 +205,7 @@ in {
       tdarrTranscode = "/mnt/nas-tdarr/temp";
       palworld = "/home/cooper/Homelab/palworld";
       minecraft = "/var/lib/minecraft";
+      caddypi = "/etc/caddy";
     };
   };
 }
