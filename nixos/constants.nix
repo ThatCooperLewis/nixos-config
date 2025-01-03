@@ -1,5 +1,12 @@
 let
 
+  ips = {
+    wap = "10.0.50.100";
+    nuc = "10.0.50.4";
+    nas = "10.0.50.2";
+    homeAss = "10.0.50.10";
+  };
+
   hosts = {
     firewall = "https://10.0.30.30";
     wap = "http://10.0.50.0";
@@ -80,7 +87,7 @@ let
 in {
 
   # Expose local variables to the rest of the config
-  inherit hosts users ports plexStackIP localTimeZone tails;
+  inherit ips hosts users ports plexStackIP localTimeZone tails;
 
   systemDefaults = {
     timeZone = localTimeZone;
