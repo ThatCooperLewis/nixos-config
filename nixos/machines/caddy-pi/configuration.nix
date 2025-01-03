@@ -1,7 +1,6 @@
 { config, pkgs, lib, inputs, constants, ... }:
 
 let
-  user = "cooper";
   hostname = "caddy-pi";
 in {
 
