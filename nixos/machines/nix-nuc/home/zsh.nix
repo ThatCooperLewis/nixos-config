@@ -9,6 +9,7 @@
       update = "sudo nixos-rebuild";
       update-home = "home-manager init --switch";
       update-monitor = "update switch --flake .#monitor-pi --target-host root@10.0.50.3 --verbose --fast";
+      update-caddy = "update switch --flake .#caddy-pi --target-host root@10.0.50.30 --verbose --fast";
     };
     history = {
     	size = 30000;
