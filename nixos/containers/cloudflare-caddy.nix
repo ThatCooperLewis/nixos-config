@@ -125,7 +125,7 @@ in
         import cloudflare
       }
       nas.local.lewisho.me {
-        reverse_proxy ${constants.ips.nas}:443
+        reverse_proxy ${constants.ips.nas}
         import cloudflare
       }
       plex.local.lewisho.me {
