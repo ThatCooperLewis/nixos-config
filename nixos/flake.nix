@@ -172,6 +172,27 @@
         ];
       };
 
+      "fortress-pi" = nixpkgs.lib.nixosSystem {
+      	system = "aarch64-linux";
+
+        specialArgs = { inherit inputs constants; };
+        modules = [
+
+          ./containers/base.nix
+          # Pi-specific configuration
+          ./machines/fortress-pi/configuration.nix
+          # Overseerr - Public website
+          ./containers/overseerr.nix
+
+          home-manager.nixosModules.home-manager
+          {
+          	home-manager.useGlobalPkgs = true;
+          	home-manager.useUserPackages = true;
+          	home-manager.users.cooper = import ./machines/fortress-pi/home/home.nix;
+          }
+        ];
+      };
+
       "nix-nuc" = nixpkgs.lib.nixosSystem {
       	system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
