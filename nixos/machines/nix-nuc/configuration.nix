@@ -87,6 +87,7 @@
     inputs.fix-python
     influxdb
     unclutter
+    nixos-generators
   ];
 
   services.openssh.enable = true;
