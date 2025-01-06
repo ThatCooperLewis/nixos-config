@@ -118,8 +118,6 @@ in {
       environment = docker.environment;
       volumes = [
         "${docker.dirs.arr}/overseerr/config:/config"
-        "${docker.dirs.plexData}:/data"
-        "${docker.dirs.plexData4k}:/data-4k"
       ];
       extraOptions = docker.plexArgs;
     };
