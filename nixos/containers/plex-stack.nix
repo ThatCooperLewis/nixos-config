@@ -48,7 +48,6 @@ in {
 
   config.networking.firewall.allowedTCPPorts = [
     constants.ports.bazarr
-    constants.ports.overseerr
     constants.ports.prowlarr
     constants.ports.radarr
     constants.ports.radarr4k
@@ -66,7 +65,6 @@ in {
     serviceConfig.Type = "oneshot";
     wantedBy = [ 
       "${backend}-bazarr.service"
-      "${backend}-overseerr.service"
       "${backend}-prowlarr.service" 
       "${backend}-radarr.service" 
       "${backend}-radarr4k.service" 
@@ -108,16 +106,6 @@ in {
         "${docker.dirs.arr}/bazarr/logs:/logs"
         "${docker.dirs.plexData}/movies:/data/movies"
         "${docker.dirs.plexData}/shows:/data/shows"
-      ];
-      extraOptions = docker.plexArgs;
-    };
-
-    overseerr = {
-      image = "ghcr.io/hotio/overseerr";
-      ports = docker.ports.overseerr;
-      environment = docker.environment;
-      volumes = [
-        "${docker.dirs.arr}/overseerr/config:/config"
       ];
       extraOptions = docker.plexArgs;
     };
