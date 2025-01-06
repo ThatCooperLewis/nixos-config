@@ -175,7 +175,7 @@ in {
       overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
       prowlarr = ["${toString ports.prowlarr}:${toString ports.prowlarr}"];
       lidarr = ["${toString ports.lidarr}:${toString ports.lidarr}"];
-	  radarr = ["${toString ports.radarr}:${toString ports.radarr}"];
+      radarr = ["${toString ports.radarr}:${toString ports.radarr}"];
       radarr4k = ["${toString ports.radarr4k}:${toString ports.radarr}"];
       requestrr = ["${toString ports.requestrr}:${toString ports.requestrr}"];
       sonarr = ["${toString ports.sonarr}:${toString ports.sonarr}"];
