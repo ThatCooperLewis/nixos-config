@@ -124,6 +124,27 @@
         ];
       };
 
+      "cloudflare-fallback-pi" = nixpkgs.lib.nixosSystem {
+      	system = "aarch64-linux";
+
+        specialArgs = { inherit inputs constants; };
+        modules = [
+
+          ./containers/base.nix
+          # Pi-specific configuration
+          ./machines/cloudflare-fallback-pi/configuration.nix
+          # Cloudflare Tunnel
+          ./services/cloudflare.nix
+
+          home-manager.nixosModules.home-manager
+          {
+          	home-manager.useGlobalPkgs = true;
+          	home-manager.useUserPackages = true;
+          	home-manager.users.cooper = import ./machines/caddy-pi/home/home.nix;
+          }
+        ];
+      };
+
       "monitor-pi" = nixpkgs.lib.nixosSystem {
       	system = "aarch64-linux";
 

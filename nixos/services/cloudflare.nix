@@ -12,6 +12,18 @@
     groups.cloudflare.gid = constants.users.cloudflare;
   };
 
+  services.cloudflared = {
+    enable = true;
+    user = "cloudflare";
+    group = "cloudflare";
+    tunnels = {
+      "4db3f32d-06ee-4104-a515-dcbbd8fdaeb6" = {
+        credentialsFile = "/var/lib/cloudflared/4db3f32d-06ee-4104-a515-dcbbd8fdaeb6.json";
+        default = "http_status:404";
+      };
+    };
+  };
+
   # TODO: Why did I do this? What was the purpose?
   # Removed since we're now running plex through this tunnel
   # systemd.timers."cloudflared" = {
@@ -24,15 +36,4 @@
   #   };
   # };
 
-  services.cloudflared = {
-    enable = true;
-    user = "cloudflare";
-    group = "cloudflare";
-    tunnels = {
-      "4db3f32d-06ee-4104-a515-dcbbd8fdaeb6" = {
-        credentialsFile = "/var/lib/cloudflared/4db3f32d-06ee-4104-a515-dcbbd8fdaeb6.json";
-        default = "http_status:404";
-      };
-    };
-  };
 }
