@@ -168,7 +168,6 @@
           # Arr Config Backup
           ./services/plex-stack-backup.nix
           # Caddy Reverse Proxy
-          ./services/reverse-proxy.nix
           # Grafana kiosk
           ./services/kiosk.nix
           # Telegraf metrics
