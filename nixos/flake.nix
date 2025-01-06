@@ -193,6 +193,19 @@
           })
         ];
       };
+
+      # ISO File Builds
+
+      raspIso = nixpkgs.lib.nixosSystem {
+      	system = "aarch64-linux";
+        modules = [
+          ({ pkgs, modulesPath, ... }: {
+            imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix") ];
+          })
+
+          ./templates/raspi-4/configuration.nix
+        ];
+      };
     };
   };
 }
