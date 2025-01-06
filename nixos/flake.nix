@@ -145,33 +145,6 @@
         ];
       };
 
-      "monitor-pi" = nixpkgs.lib.nixosSystem {
-      	system = "aarch64-linux";
-
-        specialArgs = { inherit inputs constants; };
-        modules = [
-          # Generic Pi config
-          ./machines/monitor-pi/configuration.nix
-
-          ./containers/base.nix
-          ./containers/uptime-kuma.nix
-          ./containers/navidrome.nix
-
-          # Telegraf metrics
-          ./services/telegraf.nix
-          
-          # Modipy music server
-          # ./services/navidrome.nix
-
-          home-manager.nixosModules.home-manager
-          {
-          	home-manager.useGlobalPkgs = true;
-          	home-manager.useUserPackages = true;
-          	home-manager.users.cooper = import ./machines/monitor-pi/home/home.nix;
-          }
-        ];
-      };
-
       "fortress-pi" = nixpkgs.lib.nixosSystem {
       	system = "aarch64-linux";
 
