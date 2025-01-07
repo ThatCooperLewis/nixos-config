@@ -80,6 +80,10 @@ in
         import cloudflare
       }
 
+      ha.tail.lewisho.me {
+        reverse_proxy ${constants.tails.ha}
+        import cloudflare
+      }
 
       ## Local
 
@@ -146,6 +150,7 @@ in
       }
       ha.local.lewisho.me {
         reverse_proxy ${constants.urls.ha}
+        import cloudflare
       }
     '';
     mode = "0644";
