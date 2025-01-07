@@ -27,6 +27,7 @@ let
     nuc = "http://100.81.70.111";
     windows = "http://100.88.50.101";
     caddypi = "http://100.69.31.128";
+    ha = "http://100.102.14.66";
   };
 
   users = {
