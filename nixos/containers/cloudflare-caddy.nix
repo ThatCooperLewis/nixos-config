@@ -35,8 +35,22 @@ in
     chown -R caddy:caddy /etc/caddy/data
   '';
 
+  # Changes to Caddyfile will now autmoatically update
+  system.activationScripts.restartCaddy = ''
+    /run/current-system/sw/bin/systemctl restart docker-caddy
+  '';
+
   environment.etc."caddy/Caddyfile" = {
     text = ''
+
+
+
+      ##### !!!WARNING!!! #####
+      # This service is set to restart anytime the machine runs nixos-rebuild!
+      # Anything configured here should be for local admin only.
+
+
+
       (cloudflare) {
         tls {
             dns cloudflare {$CLOUDFLARE_DNS_TOKEN}
