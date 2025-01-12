@@ -52,11 +52,17 @@ in {
         openssh.authorizedKeys.keys = [
           # Personal MacBook
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrNKgFiKkwyNj0U340/9cUTi0uaRf65EMlJn0O0mM6y nix-ssh-key"
+          # NUC Root
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr71CE+bzLkDKdvL7iBU/gETtgMNOK449EQl9JcDokd nix-nuc-root"
         ];
         isNormalUser = true;
         extraGroups = [ "wheel" ];
       };
 
+      root.openssh.authorizedKeys.keys = [
+        # NUC Root
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr71CE+bzLkDKdvL7iBU/gETtgMNOK449EQl9JcDokd nix-nuc-root"
+      ];
     };
   };
 
