@@ -11,6 +11,8 @@
       update-caddy = "update switch --flake .#caddy-pi --target-host root@10.0.50.30 --verbose --fast";
       update-cf-fallback = "update switch --flake .#cloudflare-fallback-pi --target-host root@10.0.50.31 --verbose --fast";
       update-fortress = "update switch --flake .#fortress-pi --target-host root@10.0.50.33 --verbose --fast";
+
+      idport = "sudo netstat -tulpn | grep";
     };
     history = {
     	size = 30000;
