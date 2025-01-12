@@ -1,10 +1,11 @@
 let
 
   ips = {
-    wap = "10.0.50.100";
-    nuc = "10.0.50.4";
+    proxmox = "10.0.50.1";
     nas = "10.0.50.2";
+    nuc = "10.0.50.4";
     homeAss = "10.0.50.10";
+    wap = "10.0.50.100";
   };
 
   hosts = {
@@ -79,6 +80,7 @@ let
 
     caddypi = 80;
     caddypiSSH = 443;
+    proxmox = 8006;
   };
 
   plexStackIP = hosts.nuc; 
