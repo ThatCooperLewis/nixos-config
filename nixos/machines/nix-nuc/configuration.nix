@@ -47,6 +47,10 @@
 
   users.defaultUserShell = pkgs.zsh;
   users.users.cooper = {
+    openssh.authorizedKeys.keys = [
+      # Personal MacBook
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrNKgFiKkwyNj0U340/9cUTi0uaRf65EMlJn0O0mM6y nix-ssh-key"
+    ];
     isNormalUser = true;
     description = "Cooper Lewis";
     extraGroups = [ "docker" "networkmanager" "wheel" "telegraf" "minecraft" ];
