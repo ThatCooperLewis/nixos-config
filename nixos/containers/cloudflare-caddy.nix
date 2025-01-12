@@ -159,7 +159,7 @@ in
         import cloudflare
       }
       wifi.local.lewisho.me {
-        reverse_proxy ${constants.ips.wap}
+        reverse_proxy ${constants.ips.omada}:${toString constants.ports.omada}
         import cloudflare
       }
       ha.local.lewisho.me {
