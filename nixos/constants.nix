@@ -5,7 +5,7 @@ let
     nas = "10.0.50.2";
     nuc = "10.0.50.4";
     homeAss = "10.0.50.10";
-    wap = "10.0.50.100";
+    omada = "10.0.50.110";
   };
 
   hosts = {
@@ -81,6 +81,7 @@ let
     caddypi = 80;
     caddypiSSH = 443;
     proxmox = 8006;
+    omada = 8043;
   };
 
   plexStackIP = hosts.nuc; 
