@@ -152,6 +152,16 @@ in
         reverse_proxy ${constants.urls.ha}
         import cloudflare
       }
+
+      # Proxmox (ChatGPT told me to add the skip_verify)
+      proxmox.local.lewisho.me {
+        reverse_proxy ${constants.ips.proxmox}:${toString constants.ports.proxmox} {
+          transport http {
+            tls_insecure_skip_verify
+          }
+        }
+        import cloudflare
+      }
     '';
     mode = "0644";
     user = "caddy";
