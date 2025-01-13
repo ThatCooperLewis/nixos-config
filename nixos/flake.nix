@@ -176,8 +176,7 @@
           
           ./containers/base.nix
           ./containers/plex-stack.nix
-          # ./containers/palworld-server.nix
-          ./containers/grafana.nix
+          # ./containers/grafana.nix
           ./containers/octoprint.nix
           
           # Arr Config Backup
@@ -188,7 +187,7 @@
           # Telegraf metrics
           ./services/telegraf.nix
           # Metrics database
-          ./services/influxdb.nix
+          # ./services/influxdb.nix
           # Minecraft server
           ./services/minecraft.nix
           # Tailscale VPN
