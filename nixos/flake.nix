@@ -30,11 +30,14 @@
     # https://nixcademy.com/2024/01/15/nix-on-macos/
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Proxmox VE
+    proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
   };
 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs@{ self, nixpkgs, nix-darwin, vscode-server, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, nix-darwin, vscode-server, home-manager, proxmox-nixos, ... }: {
     
     # macOS machines
     darwinConfigurations = let
@@ -170,6 +173,10 @@
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
           ./users/root/ssh.nix
+
+          proxmox-nixos.nixosModules.proxmox-ve
+          ./virtualization/proxmox.nix
+
           # Tailscale VPN
           ./services/tailscale.nix
         ];
