@@ -15,6 +15,6 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "Cooper Lewis";
-    extraGroups = [ "docker" "wheel" ];
+    extraGroups = [ "docker" "wheel" "networkmanager" ];
   };
 }  
