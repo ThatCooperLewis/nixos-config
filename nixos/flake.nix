@@ -170,10 +170,11 @@
       	system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
         modules = [
-
-          ./machines/nix-nuc/hardware-configuration.nix
           ./machines/nix-nuc/configuration.nix
           
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+
           ./containers/base.nix
           ./containers/plex-stack.nix
           # ./containers/grafana.nix
@@ -193,13 +194,6 @@
           # Tailscale VPN
           ./services/tailscale.nix
 
-          home-manager.nixosModules.home-manager
-          {
-          	home-manager.useGlobalPkgs = true;
-          	home-manager.useUserPackages = true;
-          	home-manager.users.cooper = import ./machines/nix-nuc/home/home.nix;
-          }
-
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
@@ -212,10 +206,13 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
         modules = [
+          ./machines/proxmox-brain/configuration.nix
+          
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
-
-          ./machines/proxmox-brain/configuration.nix
+          
+          # Tailscale VPN
+          ./services/tailscale.nix
         ];
       };
 
