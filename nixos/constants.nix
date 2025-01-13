@@ -93,6 +93,11 @@ in {
   # Expose local variables to the rest of the config
   inherit ips hosts users ports plexStackIP localTimeZone tails;
 
+  sshKeys = {
+    macbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrNKgFiKkwyNj0U340/9cUTi0uaRf65EMlJn0O0mM6y nix-ssh-key";
+    nuc = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr71CE+bzLkDKdvL7iBU/gETtgMNOK449EQl9JcDokd nix-nuc-root";
+  };
+
   systemDefaults = {
     timeZone = localTimeZone;
     defaultLocale = "en_US.UTF-8";

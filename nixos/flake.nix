@@ -207,6 +207,19 @@
         ];
       };
 
+
+      "proxmox-brain" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+
+          ./machines/proxmox-brain/configuration.nix
+        ];
+      };
+
+
       # ISO File Builds
 
       raspIso = nixpkgs.lib.nixosSystem {
