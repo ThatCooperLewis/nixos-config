@@ -169,7 +169,7 @@
           
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
-          
+          ./users/root/ssh.nix
           # Tailscale VPN
           ./services/tailscale.nix
         ];
