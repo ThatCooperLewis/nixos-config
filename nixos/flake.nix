@@ -157,6 +157,31 @@
           # Tailscale VPN
           ./services/tailscale.nix
 
+          # ./containers/omada-controller.nix
+
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
+        ];
+      };
+
+
+      "nix-brain" = nixpkgs.lib.nixosSystem {
+      	system = "x86_64-linux";
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          ./machines/nix-brain/configuration.nix
+          
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+
+          ./containers/base.nix
+          # Omada Wifi Controller
+          ./containers/omada-controller.nix
+          # Tailscale VPN
+          ./services/tailscale.nix
+
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
