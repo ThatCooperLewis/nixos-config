@@ -10,16 +10,21 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5ea75332-353e-4ce3-9c40-4e1b912ab5e7";
-      fsType = "ext4";
-    };
+  fileSystems."/" = { 
+    device = "/dev/disk/by-uuid/5ea75332-353e-4ce3-9c40-4e1b912ab5e7";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/997B-91ED";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+  fileSystems."/boot" = { 
+    device = "/dev/disk/by-uuid/997B-91ED";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+
+  fileSystems."/mnt/vm-storage-alpha" = { 
+    device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S58SNM0R509699H";
+    fsType = "ext4";
+  };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/69104fa2-e0d1-4291-a621-9bf8e77fdef2"; }

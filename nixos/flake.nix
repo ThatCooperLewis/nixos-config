@@ -164,24 +164,6 @@
         ];
       };
 
-      "proxmox-brain" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs constants; };
-        modules = [
-          ./machines/proxmox-brain/configuration.nix
-          
-          home-manager.nixosModules.home-manager
-          ./users/cooper/user.nix
-          ./users/root/ssh.nix
-
-          proxmox-nixos.nixosModules.proxmox-ve
-          ./virtualization/proxmox.nix
-
-          # Tailscale VPN
-          ./services/tailscale.nix
-        ];
-      };
-
       # ISO File Builds
 
       raspIso = nixpkgs.lib.nixosSystem {
