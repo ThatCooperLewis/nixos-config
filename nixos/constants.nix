@@ -43,6 +43,7 @@ let
     palworld = 1400;
     tailscale = 1984;
     uptime = 900;
+    omada = 508;
   };
 
   ports = {
