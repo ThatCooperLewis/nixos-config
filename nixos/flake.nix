@@ -149,16 +149,15 @@
           # ./containers/grafana.nix
           ./containers/octoprint.nix
           
-          # Arr Config Backup
-          ./services/plex-stack-backup.nix
           # Telegraf metrics
           ./services/telegraf.nix
           # Minecraft server
           ./services/minecraft.nix
           # Tailscale VPN
           ./services/tailscale.nix
-
-          # ./containers/omada-controller.nix
+          
+          # Arr Config Backup
+          ./backups/backup-arr-stack.nix
 
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {

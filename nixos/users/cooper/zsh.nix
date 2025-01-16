@@ -13,7 +13,8 @@
       update-caddy          = "update switch --flake ~/Nix/nixos/#caddy-pi --target-host root@10.0.50.30 --verbose --fast";
       update-caddy-fallback = "update switch --flake ~/Nix/nixos/#cloudflare-fallback-pi --target-host root@10.0.50.31 --verbose --fast";
       update-fortress       = "update switch --flake ~/Nix/nixos/#fortress-pi --target-host root@10.0.50.33 --verbose --fast";
-      update-proxmox        = "update switch --flake ~/Nix/nixos/#proxmox-brain --target-host root@10.0.50.1 --verbose --fast ";
+      update-brain          = "update switch --flake ~/Nix/nixos/#nix-brain --target-host root@10.0.50.1 --verbose --fast ";
+      update-nuc            = "update switch --flake ~/Nix/nixos/#nix-nuc --target-host root@10.0.50.4 --verbose --fast ";
 
       idport = "sudo netstat -tulpn | grep";
     };
