@@ -6,10 +6,10 @@
   ];
 
   # Copy the Cloudflare credentials from NAS
-  system.activationScripts.populateCaddyEnv = lib.mkAfter ''
+  system.activationScripts.populateCloudflareSecrets = lib.mkAfter ''
       mkdir -p /var/lib/cloudflared
-      chown -R ${toString constants.users.cloudflare}:${toString constants.users.cloudflare} /var/lib/cloudflared
       cp /mnt/nas-secrets/cloudflare/credentials.json /var/lib/cloudflared/credentials.json
+      chown -R ${toString constants.users.cloudflare}:${toString constants.users.cloudflare} /var/lib/cloudflared
   '';
 
   users = {
