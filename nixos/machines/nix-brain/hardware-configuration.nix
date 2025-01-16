@@ -12,20 +12,30 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/017ba40a-179a-4d69-94f1-82a08dff4ac9";
+  fileSystems = {
+
+    "/" = { 
+      device = "/dev/disk/by-uuid/017ba40a-179a-4d69-94f1-82a08dff4ac9";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/EA54-CC20";
+    "/boot" = { 
+      device = "/dev/disk/by-uuid/EA54-CC20";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
+  
+    "/mnt/nas-apps" = { 
+      device = "10.0.50.2:/mnt/apps";
+      fsType = "nfs";
+    };
+    
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/012ad531-5642-477e-b77a-3a1d394bd6a7"; }
-    ];
+
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/012ad531-5642-477e-b77a-3a1d394bd6a7"; }
+  ];
 
   networking.hostName = "nix-brain";
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
