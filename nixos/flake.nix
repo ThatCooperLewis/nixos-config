@@ -142,6 +142,7 @@
           
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
+          ./users/root/ssh.nix
 
           ./containers/base.nix
           ./containers/plex-stack.nix
