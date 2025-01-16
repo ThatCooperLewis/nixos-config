@@ -1,6 +1,17 @@
-{ pkgs, app, user, constants, ... }:
+{ lib, constants, ... }:
 
 {
+  imports = [
+    ../storage/nas-secrets.nix
+  ];
+
+  # Copy the Cloudflare credentials from NAS
+  system.activationScripts.populateCaddyEnv = lib.mkAfter ''
+      mkdir -p /var/lib/cloudflared
+      chown -R ${toString constants.users.cloudflare}:${toString constants.users.cloudflare} /var/lib/cloudflared
+      cp /mnt/nas-secrets/cloudflare/credentials.json /var/lib/cloudflared/credentials.json
+  '';
+
   users = {
     users.cloudflare = {
       isSystemUser = true;
@@ -18,22 +29,9 @@
     group = "cloudflare";
     tunnels = {
       "4db3f32d-06ee-4104-a515-dcbbd8fdaeb6" = {
-        credentialsFile = "/var/lib/cloudflared/4db3f32d-06ee-4104-a515-dcbbd8fdaeb6.json";
+        credentialsFile = "/var/lib/cloudflared/credentials.json";
         default = "http_status:404";
       };
     };
   };
-
-  # TODO: Why did I do this? What was the purpose?
-  # Removed since we're now running plex through this tunnel
-  # systemd.timers."cloudflared" = {
-  #   wantedBy = [ "timers.target" ];
-  #   timerConfig = {
-  #     OnCalendar = "daily";
-  #     Persistent = true;
-  #     AccuracySec = "1h";
-  #     Unit = "cloudflared-tunnel-4db3f32d-06ee-4104-a515-dcbbd8fdaeb6.service";
-  #   };
-  # };
-
 }

@@ -181,6 +181,8 @@
           ./containers/omada-controller.nix
           # Tailscale VPN
           ./services/tailscale.nix
+          # Cloudflare Tunnel
+          ./services/cloudflare.nix
 
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
