@@ -1,10 +1,23 @@
-## Unpure Commands
+# Unpure Commands
+
+Various commands that can't be declaratively done and/or must be declared before full functionality.
+
+### Essential
 
 This line must be added to `configuration.nix` for Flakes to be recognized:
 
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-These commands needed to be run separately before Nix could do its thing. Maybe one day I'll figure out how to import/link them properly
+If you want to run nixos-rebuild on your local machine, the default configuration must be replaced. **Backup your existing configuration.nix before this step!**
+
+        sudo rm -rf /etc/nixos          # Delete existing configs
+        sudo ln -s ~/Nix/nixos /etc     # Insert new ones
+
+### Probably Not Essential
+
+These commands *might be* needed to be run separately before Nix could do its thing. 
+But, I haven't needed to run them on any new machines.
+Maybe one day I'll figure out how to import/link them properly
 
 - `home-manager` needed to be added to nix-channel
 
@@ -22,10 +35,6 @@ These commands needed to be run separately before Nix could do its thing. Maybe 
         rm -r ~/.config/hypr          # Do the same with Hyprland
         ln -s ~/Nix/hypr ~/.config
 
-- **Backup your existing configuration.nix before this step!**
-
-        sudo rm -rf /etc/nixos          # Delete existing configs
-        sudo ln -s ~/Nix/nixos /etc     # Insert new ones
 
 - VS Code Server does not function out of the box, and needs a [separate package](https://github.com/nix-community/nixos-vscode-server) to work. This package needs a couple commands to run properly:
 
