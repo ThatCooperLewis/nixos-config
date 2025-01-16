@@ -159,7 +159,11 @@ in
         import cloudflare
       }
       wifi.local.lewisho.me {
-        reverse_proxy ${constants.ips.omada}:${toString constants.ports.omada}
+        reverse_proxy ${constants.ips.brain}:${toString constants.ports.omada} {
+          transport http {
+            tls_insecure_skip_verify
+          }
+        }
         import cloudflare
       }
       ha.local.lewisho.me {
@@ -167,15 +171,6 @@ in
         import cloudflare
       }
 
-      # Proxmox (ChatGPT told me to add the skip_verify)
-      proxmox.local.lewisho.me {
-        reverse_proxy ${constants.ips.proxmox}:${toString constants.ports.proxmox} {
-          transport http {
-            tls_insecure_skip_verify
-          }
-        }
-        import cloudflare
-      }
     '';
     mode = "0644";
     user = "caddy";
