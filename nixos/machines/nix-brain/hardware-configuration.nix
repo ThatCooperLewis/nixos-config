@@ -30,11 +30,6 @@
       fsType = "nfs";
     };
 
-    "/mnt/nas-secrets" = {
-      device = "10.0.50.2:/mnt/apps/plex";
-      fsType = "nfs";
-    };
-
   };
 
 
