@@ -11,7 +11,9 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-
+  # Allow for cross-compiling Nix builds to Raspberry Pi's
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  
   fileSystems = {
 
     "/" = { 
