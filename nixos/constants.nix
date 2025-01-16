@@ -1,11 +1,10 @@
 let
 
   ips = {
-    proxmox = "10.0.50.1";
+    brain = "10.0.50.1";
     nas = "10.0.50.2";
     nuc = "10.0.50.4";
     homeAss = "10.0.50.10";
-    omada = "10.0.50.110";
   };
 
   hosts = {
@@ -24,6 +23,7 @@ let
   };
 
   tails = {
+    brain = "http://100.101.81.63";
     nas = "http://100.86.97.79";
     nuc = "http://100.81.70.111";
     windows = "http://100.88.50.101";
@@ -81,7 +81,6 @@ let
 
     caddypi = 80;
     caddypiSSH = 443;
-    proxmox = 8006;
     omada = 8043;
   };
 
