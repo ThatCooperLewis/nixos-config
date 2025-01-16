@@ -76,8 +76,8 @@
           ./containers/base.nix
           # Pi-specific configuration
           ./machines/caddy-pi/configuration.nix
-          # Caddy Cloudflare config 
-          ./containers/cloudflare-caddy.nix
+          # Caddy Reverse Proxy 
+          ./containers/caddy.nix
           # Tailscale VPN
           ./services/tailscale.nix
           # Cloudflare Tunnel

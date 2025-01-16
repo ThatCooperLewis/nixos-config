@@ -1,9 +1,9 @@
 { config, lib, constants, ...}:
 
 
-################################
-####### CLOUDFLARE-CADDY #######
-################################
+#####################
+####### CADDY #######
+#####################
 
 /*
 
@@ -17,6 +17,9 @@ let
   docker = constants.docker;
 in
 {
+  imports = [
+    ../storage/nas-secrets.nix
+  ];
 
   users = {
     users.caddy = {
@@ -33,6 +36,13 @@ in
   system.activationScripts.ensureCaddyDataDir = lib.mkAfter ''
     mkdir -p /etc/caddy/data
     chown -R caddy:caddy /etc/caddy/data
+  '';
+
+  # Copy the Caddy env file from NAS
+  system.activationScripts.populateCaddyEnv = lib.mkAfter ''
+      mkdir -p /etc/caddy
+      cp /mnt/nas-secrets/caddy/caddy.env /etc/caddy/caddy.env
+      chown -R caddy:caddy /etc/caddy
   '';
 
   # Changes to Caddyfile will now autmoatically update
