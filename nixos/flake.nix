@@ -184,6 +184,8 @@
           # Cloudflare Tunnel
           ./services/cloudflare.nix
 
+          ./backups/mirror-plex-data.nix
+
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;

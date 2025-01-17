@@ -121,6 +121,25 @@ in {
     };
   };
 
+  brain = {
+    dirs = {
+      plexMirror = "/var/lib/plex";
+    };
+  };
+
+  nfs = {
+    dirs = {
+      secrets = {
+        deviceSource = "${ips.nas}:/mnt/tahani/secrets";
+        mountPath = "/mnt/nas-secrets";
+      };
+      plex = {
+        deviceSource = "${ips.nas}:/mnt/apps/plex";
+        mountPath = "/mnt/nas-plex";
+      };
+    };
+  };
+
   urls = {
     # NUC Mini PC
     lidarr = "${plexStackIP}:${toString ports.lidarr}";

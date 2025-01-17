@@ -26,11 +26,6 @@
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
-  
-    "/mnt/nas-plex" = { 
-      device = "10.0.50.2:/mnt/apps/plex";
-      fsType = "nfs";
-    };
 
   };
 
