@@ -183,6 +183,8 @@
           ./services/tailscale.nix
           # Cloudflare Tunnel
           ./services/cloudflare.nix
+          # Driving monitoring
+          ./services/influxdb.nix
 
           ./backups/mirror-plex-data.nix
 
