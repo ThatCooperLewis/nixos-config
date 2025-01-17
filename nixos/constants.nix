@@ -34,7 +34,7 @@ let
   users = {
     caddypi = 2222;
     cloudflare = 2002;
-    influxdb = 125;
+    influxdb = 992;
     grafana = 950;
     minecraft = 1776;
     multimedia = 950;
@@ -121,12 +121,6 @@ in {
     };
   };
 
-  brain = {
-    dirs = {
-      plexMirror = "/var/lib/plex";
-    };
-  };
-
   nfs = {
     dirs = {
       secrets = {
@@ -153,7 +147,7 @@ in {
     tdarr = "${plexStackIP}:${toString ports.tdarrWeb}";
     tautulli = "${plexStackIP}:${toString ports.tautulli}"; 
   	grafana = "${hosts.nuc}:${toString ports.grafana}";
-    influxdb = "${hosts.nuc}:${toString ports.influxdb}";
+    influxdb = "${hosts.brain}:${toString ports.influxdb}";
     # TrueNAS Apps
   	nas = "${hosts.nas}";
   	plex = "${hosts.nas}:${toString ports.plex}";
@@ -169,6 +163,13 @@ in {
   	octopi = "${hosts.octopi}";
     # Caddy-Cloudflare RasPi   
     caddypi = "${hosts.caddypi}";
+  };
+
+  services = {
+    dirs = {
+      plexMirror = "/var/lib/plex";
+      influxdb = "/var/lib/influxdb-real";
+    };
   };
 
   docker = {

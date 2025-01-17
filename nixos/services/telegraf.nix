@@ -23,7 +23,7 @@
           database = "influx";
           timeout = "10s";
           username = "telegraf";
-          password = "metricsmetricsmetricsmetrics";
+          password = "telegraf";
         };
       };
       # Metrics
