@@ -1,8 +1,8 @@
 { lib, constants, ... }:
 
 let 
-  mountPath = constants.nfs.dirs.secrets.mountPath;
-  deviceSource = constants.nfs.dirs.secrets.deviceSource;
+  mountPath = constants.nfs.dirs.plex.mountPath;
+  deviceSource = constants.nfs.dirs.plex.deviceSource;
 in
 {
   fileSystems.${mountPath} = {
