@@ -14,6 +14,18 @@
   # Allow for cross-compiling Nix builds to Raspberry Pi's
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   
+  boot.swraid = {
+    enable = true;
+    mdadmConf = ''
+      MAILADDR thatcooperlewis@gmail.com
+      ARRAY /dev/md0 level=raid1 num-devices=2 UUID=32eb1e2a:752a8904:2b3dceb1:a3f82744 devices=/dev/sda,/dev/nvme2n1
+    '';
+  };
+
+  environment.systemPackages = with pkgs; [
+    mdadm
+  ];
+
   fileSystems = {
 
     "/" = { 
@@ -27,6 +39,19 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+    # [460 GB] Critical data storage
+    "/mnt/local-raid" = {
+      device = "/dev/md0";
+      fsType = "ext4";
+      options = [ "defaults" "noatime" ];
+    };
+
+    # [1 TB] non-redundant data for Plex movie/show mirror
+    "/mnt/local-mass" = {
+      device = "/dev/sdb";
+      fsType = "ext4";
+      options = [ "defaults" "noatime" ];    
+    };
   };
 
 
