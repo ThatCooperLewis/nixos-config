@@ -1,6 +1,10 @@
 { pkgs, app, user, constants, ... }:
 
 {
+  # imports = [
+  #   ../storage/nas-secrets.nix
+  # ];
+
   services.telegraf = {
     enable = true;
     extraConfig = {
@@ -18,12 +22,13 @@
       };
       # Database
       outputs = {
-        influxdb = {
+        influxdb_v2 = {
           urls = [ constants.urls.influxdb ];
-          database = "influx";
-          timeout = "10s";
-          username = "telegraf";
-          password = "telegraf";
+          # TODO: Get nix secrets going
+          token =  "telegraf";
+          organization = "lewis-homelab";
+          bucket = "influx";
+          timeout = "5s";
         };
       };
       # Metrics

@@ -11,7 +11,7 @@ let
     firewall = "https://10.0.30.30";
     wap = "http://10.0.50.0";
 
-    primary = "http://10.0.50.1";	
+    brain = "http://10.0.50.1";	
     nas = "http://10.0.50.2";
     nuc = "http://10.0.50.4";
     
