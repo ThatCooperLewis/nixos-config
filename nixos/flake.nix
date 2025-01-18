@@ -82,6 +82,8 @@
           ./services/tailscale.nix
           # Cloudflare Tunnel
           ./services/cloudflare.nix
+          # Metrics emitter
+          ./services/telegraf.nix
 
           home-manager.nixosModules.home-manager
           {
@@ -98,11 +100,13 @@
         specialArgs = { inherit inputs constants; };
         modules = [
 
-          ./containers/base.nix
+          # ./containers/base.nix
           # Pi-specific configuration
           ./machines/cloudflare-fallback-pi/configuration.nix
           # Cloudflare Tunnel
           ./services/cloudflare.nix
+          # Metrics emitter
+          ./services/telegraf.nix
 
           home-manager.nixosModules.home-manager
           {
@@ -155,7 +159,8 @@
           ./services/minecraft.nix
           # Tailscale VPN
           ./services/tailscale.nix
-          
+          # Metrics emitter
+          ./services/telegraf.nix
           # Arr Config Backup
           ./backups/backup-arr-stack.nix
 
@@ -185,6 +190,8 @@
           ./services/cloudflare.nix
           # Driving monitoring
           ./services/influxdb.nix
+          # Metrics emitter
+          ./services/telegraf.nix
 
           ./backups/mirror-plex-data.nix
 

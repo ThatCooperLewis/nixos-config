@@ -29,7 +29,7 @@ in
         passwordFile = "/var/lib/influxdb2/password.secret";
         organization = "lewis-homelab";
         bucket = "influx";
-        retention = 1500000;
+        retention = 1500001;
       };
     };
   };
@@ -44,6 +44,7 @@ in
   system.activationScripts.ensureInfluxdbDataDir = lib.mkAfter ''
     mkdir -p ${dataDir}
     cp ${secretsDir}/* ${dataDir}
+    echo "telegraf" > ${dataDir}/api.secret
     chown -R ${toString constants.users.influxdb}:${toString constants.users.influxdb} ${dataDir}
     ln -sf ${dataDir} /var/lib/influxdb2
   '';
