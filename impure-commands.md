@@ -2,7 +2,7 @@
 
 Various commands that can't be declaratively done and/or must be declared before full functionality.
 
-### Essential
+### Essential installation commands
 
 This line must be added to `configuration.nix` for Flakes to be recognized:
 
@@ -12,6 +12,43 @@ If you want to run nixos-rebuild on your local machine, the default configuratio
 
         sudo rm -rf /etc/nixos          # Delete existing configs
         sudo ln -s ~/Nix/nixos /etc     # Insert new ones
+
+
+### RAID Array
+
+This could be solved by Disko, but I haven't gotten around to it. 
+
+
+1. `mdadm` needs to be installed first.
+
+        environment.systemPackages = with pkgs; [
+          mdadm
+        ];
+
+2. Wipe any partitions from drives:
+
+        lsblk                     # Get the disk IDs
+        sudo wipefs -a /dev/sdx
+        sudo wipefs -a /dev/sdy
+
+3. Create the RAID array with `mdadm`
+
+        sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sdX /dev/sdY
+        sudo mkfs.ext4 /dev/md0
+
+4. Get the UUID of the array
+
+        sudo mdadm --detail --scan
+
+5. Add the following to the boot nix config
+
+        boot.swraid = {
+          enable = true;
+          mdadmConf = ''
+            MAILADDR thatcooperlewis@gmail.com
+            ARRAY /dev/md0 level=raid1 num-devices=2 UUID=<device-uuid> devices=/dev/sdb,/dev/nvme2n1
+          '';
+        };
 
 ### Probably Not Essential
 
