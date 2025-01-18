@@ -168,7 +168,7 @@ in {
   services = {
     dirs = {
       plexMirror = "/var/lib/plex";
-      influxdb = "/var/lib/influxdb-real";
+      influxdb = "/mnt/local-raid/influxdb";
     };
   };
 

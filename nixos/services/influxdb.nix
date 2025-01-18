@@ -1,9 +1,22 @@
 { pkgs, app, lib, user, constants, ... }:
 
+##########################
+####### InfluxDB2 ########
+##########################
+
+/*
+
+Timeseries metrics database. Table defined via NIx.
+Two quirks about this:
+- The service doesn't permit custom data directories, so a symlink is necessary
+- The service creates its own user, and gets upset if you override it. So only the UID/GID is set here.
+
+*/
+
 let
   user = "influxdb2";
   dataDir = constants.services.dirs.influxdb;
-  secretPath = "/var/lib/influxdb2/telegraf.secret";
+  secretsDir = "${constants.nfs.dirs.secrets.mountPath}/influxdb";
 in
 {
   services.influxdb2 = { 
@@ -12,8 +25,8 @@ in
       enable = true;
       initialSetup = {
         username = "telegraf";
-        tokenFile = secretPath;
-        passwordFile = secretPath;
+        tokenFile = "/var/lib/influxdb2/api.secret";
+        passwordFile = "/var/lib/influxdb2/password.secret";
         organization = "lewis-homelab";
         bucket = "influx";
         retention = 1500000;
@@ -28,16 +41,10 @@ in
 
   # Influx forces our hand for where it wants the data to be stored
   # Instead of providing a data dir, we'll just symlink it to where we want
-  # Remove the original dir, but only if it hasn't been symlinked already
   system.activationScripts.ensureInfluxdbDataDir = lib.mkAfter ''
     mkdir -p ${dataDir}
-    echo "telegraf" > ${dataDir}/telegraf.secret
+    cp ${secretsDir}/* ${dataDir}
     chown -R ${toString constants.users.influxdb}:${toString constants.users.influxdb} ${dataDir}
-    
-    if [ -d /var/lib/influxdb2 ] && [ ! -L /var/lib/influxdb2 ]; then
-        sudo rm -rf /var/lib/influxdb2
-    fi
-    
-    ln -s ${dataDir} /var/lib/influxdb2
+    ln -sf ${dataDir} /var/lib/influxdb2
   '';
 }
