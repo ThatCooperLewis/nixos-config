@@ -168,6 +168,10 @@ in
         reverse_proxy ${constants.ips.nas}:${toString constants.ports.scrutiny}
         import cloudflare
       }
+      influx.local.lewisho.me {
+        reverse_proxy ${constants.ips.brain}:${toString constants.ports.influxdb}
+        import cloudflare
+      }
       wifi.local.lewisho.me {
         reverse_proxy ${constants.ips.brain}:${toString constants.ports.omada} {
           transport http {
