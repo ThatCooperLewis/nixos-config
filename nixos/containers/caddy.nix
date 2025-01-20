@@ -172,6 +172,10 @@ in
         reverse_proxy ${constants.ips.brain}:${toString constants.ports.influxdb}
         import cloudflare
       }
+      grafana.local.lewisho.me {
+        reverse_proxy ${constants.ips.brain}:${toString constants.ports.grafana}
+        import cloudflare
+      }
       wifi.local.lewisho.me {
         reverse_proxy ${constants.ips.brain}:${toString constants.ports.omada} {
           transport http {
