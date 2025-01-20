@@ -150,7 +150,6 @@
 
           ./containers/base.nix
           ./containers/plex-stack.nix
-          # ./containers/grafana.nix
           ./containers/octoprint.nix
           
           # Telegraf metrics
@@ -159,8 +158,6 @@
           ./services/minecraft.nix
           # Tailscale VPN
           ./services/tailscale.nix
-          # Metrics emitter
-          ./services/telegraf.nix
           # Arr Config Backup
           ./backups/backup-arr-stack.nix
 
@@ -184,6 +181,8 @@
           ./containers/base.nix
           # Omada Wifi Controller
           ./containers/omada-controller.nix
+          # Metrics dashboard
+          ./containers/grafana.nix
           # Tailscale VPN
           ./services/tailscale.nix
           # Cloudflare Tunnel

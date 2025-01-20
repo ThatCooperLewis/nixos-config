@@ -35,7 +35,7 @@ let
     caddypi = 2222;
     cloudflare = 2002;
     influxdb = 992;
-    grafana = 950;
+    grafana = 472;
     minecraft = 1776;
     multimedia = 950;
     navidrome = 950;
@@ -230,7 +230,7 @@ in {
     dirs = {
       arr = "/home/cooper/Homelab/plex-stack";
       telegraf = "/home/telegraf";
-      grafana = "/home/cooper/Homelab/grafana";
+      grafana = "/var/lib/grafana";
       uptime = "/home/cooper/uptime-stack";
       navidrome = "/home/cooper/navidrome-stack";
       octoprint = "/home/cooper/octoprint";
