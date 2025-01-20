@@ -23,6 +23,8 @@
     home-manager
     neofetch
     vscode
+    cowsay
+    pipes
     python3
     inputs.fix-python
     unclutter

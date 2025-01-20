@@ -5,6 +5,8 @@
     # https://nixos.wiki/wiki/zsh
     enable = true;
     shellAliases = {
+      pipes = "pipes.sh -p 3 -r 0";
+
       ll = "ls -l";
       
       update      = "sudo nixos-rebuild";
