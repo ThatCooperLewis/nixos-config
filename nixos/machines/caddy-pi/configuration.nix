@@ -4,6 +4,8 @@ let
   hostname = "caddy-pi";
 in {
 
+  nixpkgs.hostPlatform = "aarch64-linux";
+
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_rpi4; # Needed to boot via USB drive
     initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
@@ -24,14 +26,12 @@ in {
 
   swapDevices = [ {
     device = "/var/lib/swapfile";
-    size = 4*1024;
+    size = 16*1024;
   } ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking = {
-    hostName = hostname;
-  };
+  networking.hostName = hostname;
 
   environment.systemPackages = with pkgs; [
     micro

@@ -7,7 +7,7 @@ in {
   nixpkgs.hostPlatform = "aarch64-linux";
 
   boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
+    kernelPackages = pkgs.linuxKernel.packages.linux_rpi4; # Needed to boot via USB drive
     initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
     loader = {
       grub.enable = false;
@@ -35,7 +35,13 @@ in {
 
   environment.systemPackages = with pkgs; [
     micro
+    git
+    wget
+    curl
+    libraspberrypi
+    openssh
     btop
+    tmux
     home-manager
     neofetch
   ];
