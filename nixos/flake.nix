@@ -72,7 +72,12 @@
 
         specialArgs = { inherit inputs constants; };
         modules = [
-          ./machines/caddy-pi/configuration.nix
+          ./machines/pi-base.nix
+          {
+            raspberryPi.enable = true;
+            raspberryPi.hostname = "caddy-pi";
+            raspberryPi.swapSize = 16;
+          }
 
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
@@ -99,7 +104,13 @@
           systemType = "aarch64-linux"; 
         };
         modules = [
-          ./machines/cloudflare-fallback-pi/configuration.nix
+          # Use the default RaspberryPi configuration
+          ./machines/pi-base.nix
+          {
+            raspberryPi.enable = true;
+            raspberryPi.hostname = "cloudflare-fallback-pi";
+            raspberryPi.swapSize = 16;
+          }
 
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
@@ -118,7 +129,12 @@
 
         specialArgs = { inherit inputs constants; };
         modules = [
-          ./machines/fortress-pi/configuration.nix
+          ./machines/pi-base.nix
+          {
+            raspberryPi.enable = true;
+            raspberryPi.hostname = "fortress-pi";
+            raspberryPi.swapSize = 16;
+          }
 
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
