@@ -35,7 +35,13 @@ in {
 
   environment.systemPackages = with pkgs; [
     micro
+    git
+    wget
+    curl
+    libraspberrypi
+    openssh
     btop
+    tmux
     home-manager
     neofetch
   ];
