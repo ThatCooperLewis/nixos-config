@@ -72,10 +72,13 @@
 
         specialArgs = { inherit inputs constants; };
         modules = [
+          ./machines/caddy-pi/configuration.nix
+
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
 
           ./containers/base.nix
-          # Pi-specific configuration
-          ./machines/caddy-pi/configuration.nix
           # Caddy Reverse Proxy 
           ./containers/caddy.nix
           # Tailscale VPN
@@ -85,35 +88,28 @@
           # Metrics emitter
           ./services/telegraf.nix
 
-          home-manager.nixosModules.home-manager
-          {
-          	home-manager.useGlobalPkgs = true;
-          	home-manager.useUserPackages = true;
-          	home-manager.users.cooper = import ./machines/caddy-pi/home/home.nix;
-          }
         ];
       };
 
       "cloudflare-fallback-pi" = nixpkgs.lib.nixosSystem {
       	system = "aarch64-linux";
 
-        specialArgs = { inherit inputs constants; };
+        specialArgs = { 
+          inherit inputs constants; 
+          systemType = "aarch64-linux"; 
+        };
         modules = [
-
-          # ./containers/base.nix
-          # Pi-specific configuration
           ./machines/cloudflare-fallback-pi/configuration.nix
+
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
           # Cloudflare Tunnel
           ./services/cloudflare.nix
           # Metrics emitter
           ./services/telegraf.nix
 
-          home-manager.nixosModules.home-manager
-          {
-          	home-manager.useGlobalPkgs = true;
-          	home-manager.useUserPackages = true;
-          	home-manager.users.cooper = import ./machines/caddy-pi/home/home.nix;
-          }
         ];
       };
 
@@ -122,19 +118,16 @@
 
         specialArgs = { inherit inputs constants; };
         modules = [
+          ./machines/fortress-pi/configuration.nix
+
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
 
           ./containers/base.nix
-          # Pi-specific configuration
-          ./machines/fortress-pi/configuration.nix
           # Overseerr - Public website
           ./containers/overseerr.nix
 
-          home-manager.nixosModules.home-manager
-          {
-          	home-manager.useGlobalPkgs = true;
-          	home-manager.useUserPackages = true;
-          	home-manager.users.cooper = import ./machines/fortress-pi/home/home.nix;
-          }
         ];
       };
 
