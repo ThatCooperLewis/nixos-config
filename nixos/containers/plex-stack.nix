@@ -17,6 +17,10 @@ let
 
 in {
 
+  imports = [
+    ./container-base.nix
+  ];
+
   config.systemd.services.start-kometa = {
     description = "Start Kometa container";
     serviceConfig = {

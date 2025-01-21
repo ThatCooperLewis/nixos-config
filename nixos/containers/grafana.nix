@@ -5,6 +5,10 @@ let
   dataDir = constants.docker.dirs.grafana;
 in
 {
+  imports = [
+    ./container-base.nix
+  ];
+
   users = {
     users.grafana = {
       isSystemUser = true;

@@ -18,6 +18,7 @@ let
 in
 {
   imports = [
+    ./container-base.nix
     ../storage/nas-secrets.nix
   ];
 
