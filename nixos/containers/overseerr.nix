@@ -15,6 +15,10 @@ let
   docker = constants.docker;
 
 in {
+  
+  imports = [
+    ./container-base.nix
+  ];
 
   config.networking.firewall.allowedTCPPorts = [ constants.ports.overseerr ];
   config.users.users.overseerr = {

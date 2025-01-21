@@ -83,7 +83,6 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          ./containers/base.nix
           # Caddy Reverse Proxy 
           ./containers/caddy.nix
           # Tailscale VPN
@@ -140,7 +139,6 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          ./containers/base.nix
           # Overseerr - Public website
           ./containers/overseerr.nix
 
@@ -157,7 +155,6 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          ./containers/base.nix
           ./containers/plex-stack.nix
           ./containers/octoprint.nix
           
@@ -187,7 +184,6 @@
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
 
-          ./containers/base.nix
           # Omada Wifi Controller
           ./containers/omada-controller.nix
           # Metrics dashboard
@@ -200,8 +196,6 @@
           ./services/influxdb.nix
           # Metrics emitter
           ./services/telegraf.nix
-
-          ./backups/mirror-plex-data.nix
 
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {

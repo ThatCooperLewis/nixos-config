@@ -1,6 +1,10 @@
 { lib, constants, ...}:
 
 let
+  imports = [
+    ./container-base.nix
+  ];
+
   docker = constants.docker;
   allPorts = [
     8088

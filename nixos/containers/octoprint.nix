@@ -7,6 +7,10 @@ https://github.com/OctoPrint/octoprint-docker/blob/master/docker-compose.yml
 */
 
 {
+  imports = [
+    ./container-base.nix
+  ];
+
   config.networking.firewall.allowedTCPPorts = [ constants.ports.octoprint ];
   config.users.users.octoprint = {
     uid = constants.users.octoprint;

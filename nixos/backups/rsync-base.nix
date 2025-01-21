@@ -23,7 +23,6 @@ The import should look like this:
       backupSource      = "/path/to/sourceDir";
       backupDestination = "/path/to/destDir";
       serviceName       = "customRsyncBackup";      # Optional override
-      timerName         = "customRsyncBackupTimer"; # Optional override
       schedule          = "06:00";                  # Every day at 06:00   ("*:0/10" would be every ten minutes)l
     })
   ];
