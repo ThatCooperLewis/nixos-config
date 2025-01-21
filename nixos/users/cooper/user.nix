@@ -6,6 +6,7 @@
   home-manager.users.cooper = import ./home.nix;
 
   programs.zsh.enable = true;
+  services.openssh.enable = true;
 
   users.users.cooper = {
     openssh.authorizedKeys.keys = [

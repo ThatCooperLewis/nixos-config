@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let 
+  isARM = pkgs.system == "aarch64-linux";
+in
 {
   imports = [
   	./zsh.nix
@@ -22,7 +25,8 @@
   };
 
   #### VS Code
-  programs.vscode = {
+  # Only import VSCode if on an x86 system (extensions not supported on ARM)
+  programs.vscode = if isARM then {} else {
     # https://nixos.wiki/wiki/Visual_Studio_Code
   	enable = true;
   	extensions = with pkgs.vscode-extensions; [
