@@ -120,6 +120,9 @@
           # Metrics emitter
           ./services/telegraf.nix
 
+          ./services/tailscale.nix
+
+
         ];
       };
 
