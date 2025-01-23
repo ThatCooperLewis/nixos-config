@@ -177,7 +177,6 @@
         ];
       };
 
-
       "nix-brain" = nixpkgs.lib.nixosSystem {
       	system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
@@ -192,6 +191,9 @@
           ./containers/omada-controller.nix
           # Metrics dashboard
           ./containers/grafana.nix
+
+          # Plex Fallback
+          ./services/plex-mirror.nix
           # Tailscale VPN
           ./services/tailscale.nix
           # Cloudflare Tunnel
