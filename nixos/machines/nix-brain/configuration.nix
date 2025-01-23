@@ -3,9 +3,17 @@
 {
   imports = [ 
     ./hardware-configuration.nix
+    ../home-network.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  homeNetwork = {
+    enable = true;
+    address = "10.0.50.1";
+    interface = "enp8s0";
+    hostname = "nix-brain";
+  };
 
   ### Locale
   time.timeZone = constants.systemDefaults.timeZone;
@@ -30,11 +38,6 @@
     unclutter
     nixos-generators
   ];
-
-  services.openssh = {
-    enable = true;
-    settings.PermitRootLogin = "yes";
-  };
 
   system.stateVersion = "24.11";
 }
