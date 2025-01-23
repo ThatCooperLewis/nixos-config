@@ -12,7 +12,7 @@
     enable = true;
     address = constants.ips.nuc;
     hostname = "nix-nuc";
-    interface = "enp8s0";
+    interface = "enp0s20f0u1";
   };
 
   ### Locale
