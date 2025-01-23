@@ -22,28 +22,37 @@ Example usage inside a machine's flake:
 
 */
 
+let
+  cfg = config.raspberryPi;
+in
 {
+
+  imports = [
+    ./home-network.nix
+  ];
 
   options.raspberryPi = {
     enable = lib.mkEnableOption "Enable the Raspberry Pi configuration";
     hostname = lib.mkOption {
       type = lib.types.str;
-      default = "nixos";
       example = "my-custom-pi";
-      description = ''
-        Hostname of the Raspberry Pi.
-      '';
+      description = "Hostname of the Raspberry Pi.";
+    };
+    address = lib.mkOption {
+      type = lib.types.str;
+      example = "10.0.99.99";
+      description = "The static IP address for the machine (required)";
     };
     swapSize = lib.mkOption {
       type = lib.types.int;
-      default = 16; # in GB or some unit you decide
+      default = 16;
       description = ''
-        Swap size for the Raspberry Pi (e.g., in GiB).
+        Swap size for the Raspberry Pi (GiB).
       '';
     };
   };
 
-  config = lib.mkIf config.raspberryPi.enable {
+  config = lib.mkIf cfg.enable {
     
     nixpkgs.hostPlatform = "aarch64-linux";
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -51,7 +60,13 @@ Example usage inside a machine's flake:
 
     time.timeZone = "America/Los_Angeles";
     hardware.enableRedistributableFirmware = true;
-    networking.hostName = config.raspberryPi.hostname;
+
+    homeNetwork = {
+      enable = true;
+      address = cfg.address;
+      hostname = cfg.hostname;
+      interface = "end0";
+    };
 
     boot = {
       kernelPackages = pkgs.linuxKernel.packages.linux_rpi4; # Needed to boot via USB drive
@@ -73,7 +88,7 @@ Example usage inside a machine's flake:
 
     swapDevices = [ {
       device = "/var/lib/swapfile";
-      size = config.raspberryPi.swapSize * 1024;
+      size = cfg.swapSize * 1024;
     } ];
 
     environment.systemPackages = with pkgs; [
