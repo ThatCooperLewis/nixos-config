@@ -21,36 +21,46 @@ in {
     ./container-base.nix
   ];
 
-  config.systemd.services.start-kometa = {
-    description = "Start Kometa container";
-    serviceConfig = {
-      ExecStart = "${pkgs.docker}/bin/docker start kometa";
+  users.users.multimedia = {
+    uid = 950;
+    group = "multimedia";
+  	description = "Plex Stack";
+  	extraGroups = [ "docker" "networkmanager" "wheel" ];
+  };
+  users.groups.multimedia.gid = 950;
+
+  systemd.services = {
+    start-kometa = {
+      description = "Start Kometa container";
+      serviceConfig = {
+        ExecStart = "${pkgs.docker}/bin/docker start kometa";
+      };
+    };
+    stop-kometa = {
+      description = "Stop Kometa container";
+      serviceConfig = {
+        ExecStart = "${pkgs.docker}/bin/docker stop kometa";
+      };
     };
   };
 
-  config.systemd.services.stop-kometa = {
-    description = "Stop Kometa container";
-    serviceConfig = {
-      ExecStart = "${pkgs.docker}/bin/docker stop kometa";
+  systemd.timers = {
+    start-kometa-timer = {
+      description = "Run Kometa container for 1 hour every 24 hours";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 00:00:00"; # Adjust to your desired start time
+      };
+    };
+    stop-kometa-timer = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 01:00:00"; # 1 hour after start
+      };
     };
   };
 
-  config.systemd.timers.start-kometa-timer = {
-    description = "Run Kometa container for 1 hour every 24 hours";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*-*-* 00:00:00"; # Adjust to your desired start time
-    };
-  };
-
-  config.systemd.timers.stop-kometa-timer = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*-*-* 01:00:00"; # 1 hour after start
-    };
-  };
-
-  config.networking.firewall.allowedTCPPorts = [
+  networking.firewall.allowedTCPPorts = [
     constants.ports.bazarr
     constants.ports.prowlarr
     constants.ports.radarr
@@ -65,7 +75,7 @@ in {
 
   # From: https://madison-technologies.com/take-your-nixos-container-config-and-shove-it/
   # Create a shared network so containers can talk to each other
-  config.systemd.services.create-plex-network = with config.virtualisation.oci-containers; {
+  systemd.services.create-plex-network = with config.virtualisation.oci-containers; {
     serviceConfig.Type = "oneshot";
     wantedBy = [ 
       "${backend}-bazarr.service"
@@ -82,7 +92,7 @@ in {
     script = ''${pkgs.docker}/bin/docker network create --driver bridge plex-stack || true'';
   };
 
-  config.virtualisation.oci-containers.containers = {
+  virtualisation.oci-containers.containers = {
 
     kometa = {
       autoStart = false;
