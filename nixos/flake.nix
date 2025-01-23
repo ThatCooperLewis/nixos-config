@@ -76,7 +76,7 @@
           {
             raspberryPi.enable = true;
             raspberryPi.hostname = "caddy-pi";
-            raspberryPi.swapSize = 16;
+            raspberryPi.address = "10.0.50.30";
           }
 
           home-manager.nixosModules.home-manager
@@ -108,7 +108,7 @@
           {
             raspberryPi.enable = true;
             raspberryPi.hostname = "cloudflare-fallback-pi";
-            raspberryPi.swapSize = 16;
+            raspberryPi.address = "10.0.50.31";
           }
 
           home-manager.nixosModules.home-manager
@@ -135,7 +135,7 @@
           {
             raspberryPi.enable = true;
             raspberryPi.hostname = "fortress-pi";
-            raspberryPi.swapSize = 16;
+            raspberryPi.address = "10.0.50.33";
           }
 
           home-manager.nixosModules.home-manager
@@ -186,6 +186,7 @@
           
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
+          ./users/root/ssh.nix
 
           # Omada Wifi Controller
           ./containers/omada-controller.nix
