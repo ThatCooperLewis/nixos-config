@@ -4,7 +4,12 @@ let
     brain = "10.0.50.1";
     nas = "10.0.50.2";
     nuc = "10.0.50.4";
+
     homeAss = "10.0.50.10";
+
+    caddyPi = "10.0.50.30";
+    fallbackPi = "10.0.50.31";
+    fortressPi = "10.0.50.33";
   };
 
   hosts = {
