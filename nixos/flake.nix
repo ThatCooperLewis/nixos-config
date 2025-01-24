@@ -163,8 +163,6 @@
           
           # Telegraf metrics
           ./services/telegraf.nix
-          # Minecraft server
-          ./services/minecraft.nix
           # Tailscale VPN
           ./services/tailscale.nix
           # Arr Config Backup
@@ -191,6 +189,8 @@
           ./containers/omada-controller.nix
           # Metrics dashboard
           ./containers/grafana.nix
+          # Minecraft server
+          ./containers/minecraft.nix
 
           # Plex Fallback
           ./services/plex-mirror.nix

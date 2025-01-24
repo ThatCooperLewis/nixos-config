@@ -82,7 +82,7 @@ let
 
     palworld = 8211;
     palworldSecondary = 27015;
-    minecraft = 6900;
+    minecraft = 19132;
 
     caddypi = 80;
     caddypiSSH = 443;
@@ -196,6 +196,7 @@ in {
       palworld = "${toString users.palworld}";
       navidrome = "${toString users.navidrome}";
       octoprint = "${toString users.octoprint}";
+      minecraft = "${toString users.minecraft}";
     };
     
     ports = {
@@ -230,6 +231,7 @@ in {
         "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/udp"
         "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/tcp"
       ];
+      minecraft = ["${toString ports.minecraft}:${toString ports.minecraft}/udp"];
     };
 
     dirs = {
