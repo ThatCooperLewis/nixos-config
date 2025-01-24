@@ -6,8 +6,8 @@
     enable = true;
     shellAliases = {
       pipes = "pipes.sh -p 3 -r 0";
-
       ll = "ls -l";
+      nsh = "ssh -i ~/.ssh/id_nixSSH";
       
       update      = "sudo nixos-rebuild";
       update-caddy          = "update switch --flake ~/Nix/nixos/#caddy-pi --target-host root@10.0.50.30 --verbose --fast";

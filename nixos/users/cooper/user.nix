@@ -9,10 +9,7 @@
   services.openssh.enable = true;
 
   users.users.cooper = {
-    openssh.authorizedKeys.keys = [
-      constants.sshKeys.macbook
-      constants.sshKeys.nuc
-    ];
+    openssh.authorizedKeys.keys = constants.sshKeys;
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "Cooper Lewis";
