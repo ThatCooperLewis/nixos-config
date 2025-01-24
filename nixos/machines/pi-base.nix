@@ -50,13 +50,18 @@ in
         Swap size for the Raspberry Pi (GiB).
       '';
     };
+    stateVersion = lib.mkOption {
+      type = lib.types.str;
+      default = "23.11";
+      description = "NixOS state version";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     
+    system.stateVersion = cfg.stateVersion;
     nixpkgs.hostPlatform = "aarch64-linux";
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
-    system.stateVersion = "23.11";
 
     time.timeZone = "America/Los_Angeles";
     hardware.enableRedistributableFirmware = true;
