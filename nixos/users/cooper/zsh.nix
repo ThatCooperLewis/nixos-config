@@ -10,8 +10,6 @@
       ll = "ls -l";
       
       update      = "sudo nixos-rebuild";
-      update-home = "home-manager init --switch";
-
       update-caddy          = "update switch --flake ~/Nix/nixos/#caddy-pi --target-host root@10.0.50.30 --verbose --fast";
       update-caddy-fallback = "update switch --flake ~/Nix/nixos/#cloudflare-fallback-pi --target-host root@10.0.50.31 --verbose --fast";
       update-fortress       = "update switch --flake ~/Nix/nixos/#fortress-pi --target-host root@10.0.50.33 --verbose --fast";
