@@ -98,10 +98,22 @@ in {
   # Expose local variables to the rest of the config
   inherit ips hosts users ports plexStackIP localTimeZone tails;
 
-  sshKeys = {
-    macbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrNKgFiKkwyNj0U340/9cUTi0uaRf65EMlJn0O0mM6y nix-ssh-key";
-    nuc = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr71CE+bzLkDKdvL7iBU/gETtgMNOK449EQl9JcDokd nix-nuc-root";
-  };
+  sshKeys = [
+    # ssh-keygen -t ed25519 -C "hostname"
+
+    # cooper@macbook
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB/veCx5UoXbcJagSUN0/dL8xBA6FxxeLn/h8i9xQLoJ cooper-mbp"
+    
+    # cooper@nix-brain
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkiU50BcIBPk6MsbUNw8Rmol/cApjRrVjRvAt/IlJqG nix-brain"
+    # root@nix-brain
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMuFaNqrc/rm3EHHa1ah0I/S+wxXEC9vnmkse/kfNG0H nix-brain"
+    
+    # cooper@nix-nuc
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJk/2Xmwc8tbST0xXD7uMCnEK3ys9Mgr+SfRXZMYwh2y nix-nuc"
+    # root@nix-nuc
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr71CE+bzLkDKdvL7iBU/gETtgMNOK449EQl9JcDokd nix-nuc-root"
+  ];
 
   systemDefaults = {
     timeZone = localTimeZone;
