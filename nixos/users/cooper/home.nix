@@ -48,7 +48,6 @@ in
       "git.autofetch" = true;
       "editor.accessibilitySupport" = "off";
       "remote.SSH.useLocalServer" = false;
-  	  # These themes can't be installed here because they're not in the nixpkgs repo
       "update.mode" = "manual";
   	};
   };
