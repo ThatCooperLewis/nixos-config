@@ -22,30 +22,9 @@
 
       idport = "sudo netstat -tulpn | grep";
     };
-    history = {
-    	size = 30000;
-      # path = if pkgs.stdenv.isLinux then "${config.xdg.dataHome}/zsh/history" else "";
-    };
-
-    # Source the powerlevel10k config
-    # https://discourse.nixos.org/t/zsh-zplug-powerlevel10k-zshrc-is-readonly/30333/3
-    # initExtra = ''
-    #   [[ ! -f ${./p10k.zsh} ]] || source ${./p10k.zsh}
-  
-    # '';
-
-      # export ZSH="$HOME/.oh-my-zsh"
-      # ZSH_THEME="powerlevel10k/powerlevel10k"
-      # POWERLEVEL9K_MODE="nerdfont-complete"
-      # ENABLE_CORRECTION="true"
-      # plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-      # source $ZSH/oh-my-zsh.sh
     
-    # nix run nix-darwin -- switch --flake .
+    history.size = 30000;
 
-
-
-    # ZSH_THEME="powerlevel10k/powerlevel10k"
     oh-my-zsh = {
       enable = true;
       extraConfig = ''
