@@ -41,7 +41,7 @@ in
         SERVER_NAME = "Lewis Minecraft";
         LEVEL_SEED = "-5584399987456711267";
         TZ = "America/Los_Angeles";
-        VERSION = "LATEST";
+        VERSION = "1.21.51";
         ALLOW_LIST_USERS = "Sirfwinklee,chikkynuggy2232,frogallergy";
       };
       image = "itzg/minecraft-bedrock-server";
