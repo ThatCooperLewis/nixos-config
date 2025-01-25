@@ -3,6 +3,14 @@
 let 
   isMacOS = pkgs.system == "aarch64-darwin";
   supportsCode = pkgs.system != "aarch64-linux"; # VS Code Extensions are not supported on raspberry pi
+  synthwaveTheme = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      publisher = "robbowen";
+      name      = "synthwave-vscode";
+      version   = "0.1.17";
+      sha256 = "sha256-kSBYSrS/6ySMO9WWpIRRtWgX1gZV1S8QGPOOBJ59AKo=";
+    };
+  };
 in
 {
   imports = [
@@ -51,8 +59,8 @@ in
       ms-vscode-remote.remote-ssh
 
       # Themes
-      # robbowen.synthwave-vscode
-      file-icons.file-icons
+      file-icons.file-icons # TODO: Convert this to custom extension declaration
+      synthwaveTheme
   	];
   	userSettings = {
   	  "files.autoSave" = "afterDelay";
@@ -71,6 +79,11 @@ in
       "diffEditor.ignoreTrimWhitespace" = false;
       "explorer.confirmDragAndDrop" = false;
       "editor.tabSize" = 2;
+      "synthwave84.disableGlow" = true;
+      "synthwave84.brightness" = 0;
+      "remote.SSH.remotePlatform" = {
+        "10.0.50.1" = "linux";
+      };
   	};
   };
 
