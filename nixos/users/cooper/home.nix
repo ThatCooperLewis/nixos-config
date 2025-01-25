@@ -1,32 +1,40 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let 
-  isARM = pkgs.system == "aarch64-linux";
+  isMacOS = pkgs.system == "aarch64-darwin";
+  supportsCode = pkgs.system != "aarch64-linux"; # VS Code Extensions are not supported on raspberry pi
 in
 {
   imports = [
   	./zsh.nix
   ];
 
-  home.username = "cooper";
-  home.homeDirectory = "/home/cooper";
-
-  home.stateVersion = "23.11";
-
-  home.file = {};
-
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true;
+
+  home = if isMacOS then {
+    username = "cooper";    # TODO: Pass this in as an arg from the flake-level
+    stateVersion = "24.11"; # TODO: Pass this in as an arg from the flake-level
+  } else {
+    username = "cooper";
+    stateVersion = "23.11"; # TODO: Pass this in as an arg from the flake-level
+    homeDirectory = "/home/cooper";
+  };
+
+  # Provide custom files to the home directory
+  # home.file = {};
 
   programs.git = {
   	enable = true;
   	userName = "Cooper Lewis";
   	userEmail = "thatcooperlewis@gmail.com";
+    extraConfig = {
+      fetch.prune = true;
+    };
   };
 
   #### VS Code
-  # Only import VSCode if on an x86 system (extensions not supported on ARM)
-  programs.vscode = if isARM then {} else {
+  programs.vscode = lib.mkIf supportsCode {
     # https://nixos.wiki/wiki/Visual_Studio_Code
   	enable = true;
   	extensions = with pkgs.vscode-extensions; [
@@ -41,6 +49,10 @@ in
   	  github.copilot      
       eamodio.gitlens
       ms-vscode-remote.remote-ssh
+
+      # Themes
+      # robbowen.synthwave-vscode
+      file-icons.file-icons
   	];
   	userSettings = {
   	  "files.autoSave" = "afterDelay";
@@ -49,6 +61,16 @@ in
       "editor.accessibilitySupport" = "off";
       "remote.SSH.useLocalServer" = false;
       "update.mode" = "manual";
+
+      "workbench.colorTheme" = "SynthWave '84";
+      "workbench.iconTheme" = "file-icons";
+      "editor.fontFamily" = "FiraMono Nerd Font Mono";
+      "editor.minimap.enabled" = false;
+      "terminal.integrated.commandsToSkipShell" = [ "-workbench.action.quickOpenView" ];
+      "explorer.confirmDelete" = false;
+      "diffEditor.ignoreTrimWhitespace" = false;
+      "explorer.confirmDragAndDrop" = false;
+      "editor.tabSize" = 2;
   	};
   };
 
@@ -57,5 +79,15 @@ in
     enable = true;
     enableZshIntegration = true;
     options = [ "--cmd cd" ]; 
+  };
+
+  programs.eza = { 
+    # A better `ls`
+    # https://github.com/ogham/exa (deprecated in favor of `eza`)
+    # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.eza.enable
+    enable = true;
+    enableZshIntegration = true;
+    icons = "auto";
+    colors = "auto";
   };
 }
