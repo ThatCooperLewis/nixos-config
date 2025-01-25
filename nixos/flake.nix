@@ -15,29 +15,28 @@
       inputs.nixpkgs.follows = "nixpkgs";    
     };
 
-    # Star Citizen
+    # https://github.com/LovingMelody/nix-citizen/
     nix-citizen.url = "github:LovingMelody/nix-citizen";
-    # Optional - updates underlying without waiting for nix-citizen to update
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
     
     # https://github.com/nix-community/nixos-vscode-server
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
+    # https://github.com/GuillaumeDesforges/fix-python
     fix-python.url = "github:GuillaumeDesforges/fix-python";
 
     # macOS flakes
-    # https://nixcademy.com/2024/01/15/nix-on-macos/
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Proxmox VE
-    proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
+    # https://nixcademy.com/posts/nix-on-macos/
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    # https://github.com/LnL7/nix-darwin
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs@{ self, nixpkgs, nix-darwin, vscode-server, home-manager, proxmox-nixos, ... }: {
+  outputs = inputs@{ self, nixpkgs, nix-darwin, nixpkgs-darwin, vscode-server, home-manager, ... }: {
     
     # macOS machines
     darwinConfigurations = let
@@ -58,6 +57,18 @@
             home-manager.useUserPackages = true;
             home-manager.users.cooperl = import ./machines/nix-square/home/home.nix;
           }
+        ];
+      };
+
+      cooper-mbp = nix-darwin.lib.darwinSystem {
+        system.configurationRevision = self.rev or self.dirtyRev or null;
+        modules = [
+
+          ./machines/nix-mbp/configuration.nix
+
+          home-manager.darwinModules.home-manager
+          ./users/cooper/user.nix
+
         ];
       };
     };
