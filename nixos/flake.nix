@@ -214,6 +214,8 @@
           # Metrics emitter
           ./services/telegraf.nix
 
+          ./services/remote-desktop.nix
+
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
