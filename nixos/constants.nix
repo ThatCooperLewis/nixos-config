@@ -87,6 +87,7 @@ let
     caddypi = 80;
     caddypiSSH = 443;
     omada = 8043;
+    xrdp = 3389;
   };
 
   plexStackIP = hosts.nuc; 
