@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, gnutar, autoPatchelfHook, glibc, gtk2, xorg, libgudev
+{ lib, stdenv, fetchurl, gnutar, autoPatchelfHook, glibc, gtk2, gtk3, libxkbcommon, xorg, libgudev
 , makeDesktopItem }:
 
 /*
@@ -28,7 +28,7 @@ in stdenv.mkDerivation rec {
 
    src = fetchurl {
      url = "https://www.hamrick.com/files/vuex6497.tgz";
-     hash = "sha256-jIpYBBOi7JnlT79iaV/dz9coS3Vq1sxkKdlEqQ768Fo=";
+     hash = "sha256-v8gByN7sXjO5l+xo/uogSzFlTL8rQrEx+1n37uGjGmA=";
    };
 
   # Stripping breaks the program
@@ -36,7 +36,14 @@ in stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ gnutar autoPatchelfHook ];
 
-  buildInputs = [ glibc gtk2 xorg.libSM libgudev ];
+  buildInputs = [ 
+    glibc 
+    gtk2 
+    gtk3
+    libxkbcommon
+    xorg.libSM 
+    libgudev 
+  ];
 
   unpackPhase = ''
     tar xfz $src
