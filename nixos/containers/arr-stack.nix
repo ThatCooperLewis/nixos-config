@@ -1,13 +1,12 @@
 { config, pkgs, lib, constants, ... }:
 
-##########################
-####### PLEX STACK #######
-##########################
+#########################
+####### ARR STACK #######
+#########################
 
 /*
 
-Contrary to its name, this container set defines everything except Plex.
-All surrounding microservices are set here, so Plex can run on a separate machine.
+All surrounding Plex microservices are set here.
 
 */
 

@@ -169,7 +169,7 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          ./containers/plex-stack.nix
+          ./containers/arr-stack.nix
           ./containers/octoprint.nix
           
           # Telegraf metrics
