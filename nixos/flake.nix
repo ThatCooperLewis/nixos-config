@@ -94,13 +94,10 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          # Caddy Reverse Proxy 
           ./containers/caddy.nix
-          # Tailscale VPN
+
           ./services/tailscale.nix
-          # Cloudflare Tunnel
           ./services/cloudflare.nix
-          # Metrics emitter
           ./services/telegraf.nix
 
         ];
@@ -126,14 +123,9 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          # Cloudflare Tunnel
           ./services/cloudflare.nix
-          # Metrics emitter
           ./services/telegraf.nix
-
           ./services/tailscale.nix
-
-
         ];
       };
 
@@ -153,9 +145,7 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          # Overseerr - Public website
           ./containers/overseerr.nix
-
         ];
       };
 
@@ -172,11 +162,9 @@
           ./containers/arr-stack.nix
           ./containers/octoprint.nix
           
-          # Telegraf metrics
           ./services/telegraf.nix
-          # Tailscale VPN
           ./services/tailscale.nix
-          # Arr Config Backup
+
           ./backups/backup-arr-stack.nix
 
           vscode-server.nixosModules.default
@@ -196,25 +184,17 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          # Omada Wifi Controller
           ./containers/omada-controller.nix
-          # Metrics dashboard
           ./containers/grafana.nix
-          # Minecraft server
           ./containers/minecraft.nix
 
-          # Plex Fallback
           ./services/plex-mirror.nix
-          # Tailscale VPN
           ./services/tailscale.nix
-          # Cloudflare Tunnel
           ./services/cloudflare.nix
-          # Driving monitoring
           ./services/influxdb.nix
-          # Metrics emitter
           ./services/telegraf.nix
-
           ./services/remote-desktop.nix
+
           ./programs/vuescan/vuescan.nix
           
           vscode-server.nixosModules.default
