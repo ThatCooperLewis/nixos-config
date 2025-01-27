@@ -215,7 +215,8 @@
           ./services/telegraf.nix
 
           ./services/remote-desktop.nix
-
+          ./programs/vuescan/vuescan.nix
+          
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
