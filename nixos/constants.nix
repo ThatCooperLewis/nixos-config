@@ -45,48 +45,42 @@ let
     multimedia = 950;
     navidrome = 950;
     octoprint = 333;
+    omada = 508;
     palworld = 1400;
     tailscale = 1984;
     uptime = 900;
-    omada = 508;
   };
 
   ports = {
-    octoprint = 5000;
-
-    plex = 32400;
     bazarr = 6767;
-  	overseerr = 5055;
-  	prowlarr = 9696;
+    caddypi = 80;
+    caddypiSSH = 443;
+  	grafana = 3000;
+    homeAss = 8123;
+    influxdb = 8086;
   	lidarr = 8686;
+    minecraft = 19132;
+    navidrome = 4533;
+    octoprint = 5000;
+    omada = 8043;
+  	overseerr = 5055;
+    palworld = 8211;
+    palworldSecondary = 27015;
+    plex = 32400;
+  	prowlarr = 9696;
   	radarr = 7878;
   	radarr4k = 7879;
   	requestrr = 4545;
-  	sonarr = 8989;
-  	sonarr4k = 8990;
-  	tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
-  	tdarrWeb = 8265;
-  	tautulli = 8181;
     sab = 30055;
     scrutiny = 31054;
-    
-    homeAss = 8123;
-
+  	sonarr = 8989;
+  	sonarr4k = 8990;
     tailscale = 41641;
+  	tautulli = 8181;
   	telegraf = 8125;
-    influxdb = 8086;
-  	grafana = 3000;
+  	tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
+  	tdarrWeb = 8265;
   	uptime = 3001;
-    
-    navidrome = 4533;
-
-    palworld = 8211;
-    palworldSecondary = 27015;
-    minecraft = 19132;
-
-    caddypi = 80;
-    caddypiSSH = 443;
-    omada = 8043;
     xrdp = 3389;
   };
 
