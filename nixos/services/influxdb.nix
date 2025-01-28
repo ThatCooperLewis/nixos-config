@@ -19,6 +19,11 @@ let
   secretsDir = "${constants.nfs.dirs.secrets.mountPath}/influxdb";
 in
 {
+
+  imports = [
+    ./rsync-backup.nix
+  ];
+
   services.influxdb2 = { 
     enable = true; 
     provision = {
@@ -32,6 +37,12 @@ in
         retention = 1500001;
       };
     };
+  };
+
+  services.rsyncBackup.influxdb = {
+    enable = true;
+    source = dataDir;
+    schedule = "05:40";
   };
 
   users.users.influxdb2.uid = constants.users.influxdb;

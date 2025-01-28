@@ -3,6 +3,7 @@
 let
   imports = [
     ./container-base.nix
+    ../services/rsync-backup.nix
   ];
 
   docker = constants.docker;
@@ -31,6 +32,12 @@ in {
     extraGroups = ["wheel"];
   };
   users.groups.omada.gid = constants.users.omada;
+
+  services.rsyncBackup.omada = {
+    enable = true;
+    source = "/var/lib/omada";
+    schedule = "05:50";
+  };
 
   virtualisation.oci-containers.containers.omada = {
     image = "mbentley/omada-controller:5.15";

@@ -7,6 +7,7 @@ in
 {
   imports = [
     ./container-base.nix
+    ../services/rsync-backup.nix
   ];
 
   users = {
@@ -18,6 +19,12 @@ in
       extraGroups = [ "wheel" ];
     };
     groups.grafana.gid = constants.users.grafana;
+  };
+
+  services.rsyncBackup.grafana = {
+    enable = true;
+    source = dataDir;
+    schedule = "05:10";
   };
 
   # Copy the Cloudflare credentials from NAS

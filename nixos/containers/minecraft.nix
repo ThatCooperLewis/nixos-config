@@ -8,6 +8,7 @@ in
 
   imports = [
     ./container-base.nix
+    ../services/rsync-backup.nix
   ];
 
   users = {
@@ -28,6 +29,12 @@ in
       mkdir -p ${dataDir}
       chown -R ${docker.users.minecraft}:${docker.users.minecraft} ${dataDir}
   '';
+
+  services.rsyncBackup.minecraft = {
+    enable = true;
+    source = dataDir;
+    schedule = "05:15";
+  };
 
   virtualisation.oci-containers.containers = {
     minecraft = {
