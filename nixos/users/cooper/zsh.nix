@@ -11,6 +11,10 @@
       ll = "ls -l";
       nsh = "ssh -i ~/.ssh/id_nixSSH";
       
+      status = "systemctl status";
+      restart = "sudo systemctl restart";
+      journal = "journalctl -xeu";
+
       update-darwin = "nix run nix-darwin -- switch --flake ~/Nix/nixos";
 
       update      = "sudo nixos-rebuild";
