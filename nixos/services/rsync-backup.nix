@@ -80,7 +80,6 @@ in
     systemd.services = lib.mapAttrs (name: jobCfg: lib.mkIf jobCfg.enable {
       name = lib.mkForce "${name}-backup.service";
       description = "Rsync backup service for ${name}";
-      wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
         Type = "oneshot";
