@@ -165,8 +165,6 @@
           ./services/telegraf.nix
           ./services/tailscale.nix
 
-          ./backups/backup-arr-stack.nix
-
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
