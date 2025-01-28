@@ -32,6 +32,7 @@
     neofetch
     vscode
     cowsay
+    restic
     pipes
     python3
     inputs.fix-python

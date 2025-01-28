@@ -134,14 +134,19 @@ in {
   };
 
   nfs = {
+    # TODO: This format is disgusting. Clean it up, DRY the files using these
     dirs = {
       secrets = {
         deviceSource = "${ips.nas}:/mnt/tahani/secrets";
         mountPath = "/mnt/nas-secrets";
       };
       plex = {
-        deviceSource = "${ips.nas}:/mnt/apps/plex";
+        # deviceSource = "${÷ips.nas}:/mnt/apps/plex";
         mountPath = "/mnt/nas-plex";
+      };
+      backup = {
+        deviceSource = "${ips.nas}:/mnt/tahani/backup-data/homelab";
+        mountPath = "/mnt/nas-backup";
       };
     };
   };

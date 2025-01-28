@@ -28,6 +28,7 @@
     curl
     wget
     btop
+    restic
     home-manager
     neofetch
     intel-gpu-tools
