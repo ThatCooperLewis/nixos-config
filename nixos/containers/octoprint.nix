@@ -9,19 +9,26 @@ https://github.com/OctoPrint/octoprint-docker/blob/master/docker-compose.yml
 {
   imports = [
     ./container-base.nix
+    ../services/rsync-backup.nix
   ];
 
-  config.networking.firewall.allowedTCPPorts = [ constants.ports.octoprint ];
-  config.users.users.octoprint = {
+  networking.firewall.allowedTCPPorts = [ constants.ports.octoprint ];
+  users.users.octoprint = {
     uid = constants.users.octoprint;
     description = "Octoprint";
     isSystemUser = true;
     group = "octoprint";
     extraGroups = [ "wheel" ];
   };
-  config.users.groups.octoprint.gid = constants.users.octoprint;
+  users.groups.octoprint.gid = constants.users.octoprint;
 
-  config.virtualisation.oci-containers.containers = {
+  services.rsyncBackup.octoprint = {
+    enable = true;
+    source = constants.docker.dirs.octoprint;
+    schedule = "05:45";
+  };
+
+  virtualisation.oci-containers.containers = {
     octoprint = {
       image = "octoprint/octoprint:latest";
       ports = [ "${toString constants.ports.octoprint}:${toString constants.ports.octoprint}" ];

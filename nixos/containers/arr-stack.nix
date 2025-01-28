@@ -18,6 +18,7 @@ in {
 
   imports = [
     ./container-base.nix
+    ../services/rsync-backup.nix
   ];
 
   users.users.multimedia = {
@@ -57,6 +58,12 @@ in {
         OnCalendar = "*-*-* 01:00:00"; # 1 hour after start
       };
     };
+  };
+
+  services.rsyncBackup.arrStack = {
+    enable = true;
+    source = docker.dirs.arr;
+    schedule = "06:30";
   };
 
   networking.firewall.allowedTCPPorts = [
