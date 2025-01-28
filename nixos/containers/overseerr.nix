@@ -12,25 +12,32 @@ Separating the public requests site from the NUC's plex stack, so it can be isol
 
 let
   
+  dataDir = "/var/lib/overseerr";
   docker = constants.docker;
-
 in {
   
   imports = [
     ./container-base.nix
+    ../services/rsync-backup.nix
   ];
 
-  config.networking.firewall.allowedTCPPorts = [ constants.ports.overseerr ];
-  config.users.users.overseerr = {
+  networking.firewall.allowedTCPPorts = [ constants.ports.overseerr ];
+  users.users.overseerr = {
     uid = constants.users.multimedia;
     description = "Overseerr";
     isSystemUser = true;
     group = "overseerr";
     extraGroups = [ "wheel" ];
   };
-  config.users.groups.overseerr.gid = constants.users.multimedia;
+  users.groups.overseerr.gid = constants.users.multimedia;
 
-  config.virtualisation.oci-containers.containers.overseerr = {
+  services.rsyncBackup.overseerr = {
+    enable = true;
+    source = dataDir;
+    schedule = "05:45";
+  };
+
+  virtualisation.oci-containers.containers.overseerr = {
     image = "ghcr.io/hotio/overseerr";
     ports = docker.ports.overseerr;
     environment = docker.environment;
