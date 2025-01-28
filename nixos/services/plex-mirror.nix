@@ -5,6 +5,10 @@ let
 in
 {
 
+  imports = [
+    ./rsync-backup.nix
+  ];
+
   users.users.multimedia = {
     uid = 950;
     group = "multimedia";
@@ -18,6 +22,12 @@ in
     mkdir -p ${dataDir}
     chown -R multimedia:multimedia ${dataDir}
   '';
+
+  services.rsyncBackup.plexMirror = {
+    enable = true;
+    source = dataDir;
+    schedule = "03:00";
+  };
 
   services.plex = {
     enable = true;
