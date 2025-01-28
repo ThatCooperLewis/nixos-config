@@ -85,6 +85,11 @@ in
         import cloudflare
       }
 
+      scrutiny.tail.lewisho.me {
+        reverse_proxy ${constants.tails.nas}:${toString constants.ports.scrutiny}
+        import cloudflare
+      }
+
       radarr.tail.lewisho.me {
         reverse_proxy ${constants.tails.nuc}:${toString constants.ports.radarr}
         import cloudflare
