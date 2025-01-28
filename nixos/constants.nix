@@ -143,6 +143,10 @@ in {
         deviceSource = "${ips.nas}:/mnt/apps/plex";
         mountPath = "/mnt/nas-plex";
       };
+      backup = {
+        deviceSource = "${ips.nas}:/mnt/tahani/backup-data/homelab";
+        mountPath = "/mnt/nas-backup";
+      };
     };
   };
 
