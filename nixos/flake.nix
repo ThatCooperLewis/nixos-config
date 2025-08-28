@@ -160,7 +160,6 @@
           ./users/root/ssh.nix
 
           ./containers/arr-stack.nix
-          ./containers/octoprint.nix
           
           ./services/telegraf.nix
           ./services/tailscale.nix

@@ -75,6 +75,11 @@ in
         import cloudflare
       }
 
+      photonas.tail.lewisho.me {
+        reverse_proxy ${constants.tails.photonas}
+        import cloudflare
+      }
+
       plex.tail.lewisho.me {
         reverse_proxy ${constants.tails.nas}:${toString constants.ports.plex}
         import cloudflare
@@ -111,7 +116,7 @@ in
       }
 
       ha.tail.lewisho.me {
-        reverse_proxy ${constants.tails.ha}
+        reverse_proxy ${constants.tails.homeAss}:${toString constants.ports.homeAss}
         import cloudflare
       }
 
@@ -155,11 +160,15 @@ in
         import cloudflare
       }
       octoprint.local.lewisho.me {
-        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.octoprint}
+        reverse_proxy ${constants.hosts.octoprint}
         import cloudflare
       }
       nas.local.lewisho.me {
         reverse_proxy ${constants.ips.nas}
+        import cloudflare
+      }
+      photonas.local.lewisho.me {
+        reverse_proxy ${constants.ips.photonas}
         import cloudflare
       }
       plex.local.lewisho.me {
@@ -191,7 +200,7 @@ in
         import cloudflare
       }
       ha.local.lewisho.me {
-        reverse_proxy ${constants.urls.ha}
+        reverse_proxy ${constants.urls.homeAss}
         import cloudflare
       }
 

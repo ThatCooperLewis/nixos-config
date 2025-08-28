@@ -3,6 +3,7 @@ let
   ips = {
     brain = "10.0.50.1";
     nas = "10.0.50.2";
+    photonas = "10.0.50.3";
     nuc = "10.0.50.4";
 
     homeAss = "10.0.50.10";
@@ -10,6 +11,7 @@ let
     caddyPi = "10.0.50.30";
     fallbackPi = "10.0.50.31";
     fortressPi = "10.0.50.33";
+    octoprint = "10.0.50.34";
   };
 
   hosts = {
@@ -18,22 +20,24 @@ let
 
     brain = "http://10.0.50.1";	
     nas = "http://10.0.50.2";
+    photonas = "http://10.0.50.3";
     nuc = "http://10.0.50.4";
     
     # Rasp Pi's
     monitor = "http://10.0.50.3";
     homeAss = "http://10.0.50.10";
-    octopi = "http://10.0.50.12";
+    octoprint = "http://10.0.50.34";
     caddypi = "http://10.0.50.30";
   };
 
   tails = {
     brain = "http://100.101.81.63";
     nas = "http://100.86.97.79";
+    photonas = "http://100.123.207.17";
     nuc = "http://100.81.70.111";
     windows = "http://100.88.50.101";
     caddypi = "http://100.69.31.128";
-    ha = "http://100.102.14.66";
+    homeAss = "http://100.102.14.66";
   };
 
   users = {
@@ -166,17 +170,18 @@ in {
     influxdb = "${hosts.brain}:${toString ports.influxdb}";
     # TrueNAS Apps
   	nas = "${hosts.nas}";
+  	photonas = "${hosts.photonas}";
   	plex = "${hosts.nas}:${toString ports.plex}";
   	sab = "${hosts.nas}:${toString ports.sab}";
     scrutiny = "${hosts.nas}:${toString ports.scrutiny}";
     # Monitor Pi
   	uptime = "${hosts.monitor}:${toString ports.uptime}";
     # Home Assistant
-  	ha = "${hosts.homeAss}:${toString ports.homeAss}";
+  	homeAss = "${hosts.homeAss}:${toString ports.homeAss}";
     # Wifi AP
   	wifi = "${hosts.wap}";
     # Octoprint RasPi
-  	octopi = "${hosts.octopi}";
+  	octoprint = "${hosts.octoprint}";
     # Caddy-Cloudflare RasPi   
     caddypi = "${hosts.caddypi}";
   };
