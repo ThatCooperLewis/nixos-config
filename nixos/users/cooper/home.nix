@@ -82,7 +82,7 @@ in
       "synthwave84.disableGlow" = true;
       "synthwave84.brightness" = 0;
       "remote.SSH.remotePlatform" = {
-        "10.0.50.1" = "linux";
+        "nix-nuc" = "linux";
       };
   	};
   };
