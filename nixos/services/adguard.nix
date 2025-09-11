@@ -18,11 +18,11 @@ https://github.com/AdguardTeam/AdGuardHome
 
   services.adguardhome = {
     enable = true;
-    port = 80;
+    port = 3003;
     openFirewall = true;
     settings = {
       http = {
-        address = "0.0.0.0:80";
+        address = "0.0.0.0:3003";
       };
       http_proxy = "";
       dns = {
@@ -35,6 +35,14 @@ https://github.com/AdguardTeam/AdGuardHome
 
         ];
       };
+
+      users = [
+        {
+          name = "lewis-homelab";
+          password = "$2b$12$RIXZ9Nqcy5m4gC92fhjpYOycSV5dkWfU49iMSl.NZdl0y2NFi1DN6";
+        }
+      ];
+
       filtering = {
         protection_enabled = true;
         filtering_enabled = true;
@@ -51,6 +59,13 @@ https://github.com/AdguardTeam/AdGuardHome
         # "https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt"  # malicious url blocklist
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_3.txt"  # Peter Lowe's Blocklist
         "https://raw.githubusercontent.com/ph00lt0/blocklist/master/blocklist.txt" # https://github.com/ph00lt0/blocklist
+      ];
+
+      user_rules = [
+        "@@||t.co^$important"
+        "@@||tiktokcdn-us.com^$important"
+        "@@||www.oregonlive.com^$important"
+        "@@||embeddedassistant.googleapis.com^$important"
       ];
     };
   };

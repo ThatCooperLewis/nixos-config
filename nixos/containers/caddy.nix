@@ -120,6 +120,16 @@ in
         import cloudflare
       }
 
+      adguard.tail.lewisho.me {
+        reverse_proxy ${constants.tails.adguard}:${toString constants.ports.adguard}
+        import cloudflare
+      }
+
+      adguard-remote.tail.lewisho.me {
+        reverse_proxy ${constants.tails.remote}:${toString constants.ports.adguard}
+        import cloudflare
+      }
+
       ## Local
 
       sonarr.local.lewisho.me {
@@ -160,11 +170,11 @@ in
         import cloudflare
       }
       octoprint.local.lewisho.me {
-        reverse_proxy ${constants.hosts.octoprint}
+        reverse_proxy ${constants.ips.octoprint}
         import cloudflare
       }
       adguard.local.lewisho.me {
-        reverse_proxy ${constants.hosts.adguard}
+        reverse_proxy ${constants.ips.adguard}:${toString constants.ports.adguard}
         import cloudflare
       }
       nas.local.lewisho.me {

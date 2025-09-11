@@ -9,7 +9,7 @@
     initExtra = ''
       typeset -A nix_hosts
       nix_hosts=(
-        nix-remote              5.78.156.16
+        nix-remote              100.68.249.124
         nix-brain               10.0.50.1
         nix-nuc                 10.0.50.4
         caddy-pi                10.0.50.30
@@ -46,7 +46,7 @@
 
       update      = "sudo nixos-rebuild";
       update-darwin = "nix run nix-darwin -- switch --flake ~/Nix/nixos";
-
+      update-adguard = "update-remote adguard-pi && udpate-remote nix-remote";
       idport = "sudo netstat -tulpn | grep";
     };
     

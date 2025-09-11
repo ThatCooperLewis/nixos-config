@@ -40,6 +40,8 @@ let
     windows = "http://100.88.50.101";
     caddypi = "http://100.69.31.128";
     homeAss = "http://100.102.14.66";
+    adguard = "http://100.124.121.82";
+    remote = "http://100.68.249.124";
   };
 
   users = {
@@ -58,10 +60,11 @@ let
   };
 
   ports = {
-    dns = 53;
+    adguard = 3003;
     bazarr = 6767;
     caddypi = 80;
     caddypiSSH = 443;
+    dns = 53;
   	grafana = 3000;
     homeAss = 8123;
     influxdb = 8086;

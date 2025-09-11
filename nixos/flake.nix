@@ -222,6 +222,26 @@
         ];
       };
 
+      "nix-remote" = nixpkgs.lib.nixosSystem {
+      	system = "x86_64-linux";
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          ./machines/nix-remote/configuration.nix
+          
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          ./services/tailscale.nix
+          ./services/adguard.nix
+
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
+        ];
+      };
+
       # ISO File Builds
 
       raspIso = nixpkgs.lib.nixosSystem {
