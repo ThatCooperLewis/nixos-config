@@ -12,6 +12,7 @@ let
     fallbackPi = "10.0.50.31";
     fortressPi = "10.0.50.33";
     octoprint = "10.0.50.34";
+    adguard = "10.0.100.0";
   };
 
   hosts = {
@@ -28,6 +29,7 @@ let
     homeAss = "http://10.0.50.10";
     octoprint = "http://10.0.50.34";
     caddypi = "http://10.0.50.30";
+    adguard = "http://10.0.100.0";
   };
 
   tails = {
@@ -56,6 +58,7 @@ let
   };
 
   ports = {
+    dns = 53;
     bazarr = 6767;
     caddypi = 80;
     caddypiSSH = 443;

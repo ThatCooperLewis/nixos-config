@@ -163,6 +163,10 @@ in
         reverse_proxy ${constants.hosts.octoprint}
         import cloudflare
       }
+      adguard.local.lewisho.me {
+        reverse_proxy ${constants.hosts.adguard}
+        import cloudflare
+      }
       nas.local.lewisho.me {
         reverse_proxy ${constants.ips.nas}
         import cloudflare

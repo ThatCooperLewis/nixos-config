@@ -78,6 +78,27 @@
       constants = import ./constants.nix;
     in {
 
+      "adguard-pi" = nixpkgs.lib.nixosSystem {
+      	system = "aarch64-linux";
+
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          ./machines/pi-base.nix
+          {
+            raspberryPi.enable = true;
+            raspberryPi.hostname = "adguard-pi";
+            raspberryPi.address = "10.0.100.0";
+          }
+
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          ./services/tailscale.nix
+          ./services/adguard.nix
+        ];
+      };
+
       "caddy-pi" = nixpkgs.lib.nixosSystem {
       	system = "aarch64-linux";
 
