@@ -6,6 +6,35 @@
     enable = true;
     enableCompletion = true;
 
+    initExtra = ''
+      typeset -A nix_hosts
+      nix_hosts=(
+        nix-remote              5.78.156.16
+        nix-brain               10.0.50.1
+        nix-nuc                 10.0.50.4
+        caddy-pi                10.0.50.30
+        cloudflare-fallback-pi  10.0.50.31
+        fortress-pi             10.0.50.33
+        adguard-pi              10.0.100.0
+      )
+
+      update-remote() {
+        local flake="$1"
+        local ip="''${nix_hosts[$1]}"
+
+        if [[ -z "$flake" || -z "$ip" ]]; then
+          echo "Usage: update-remote <host-key>"
+          echo "Known hosts: ''${(@k)nix_hosts}"
+          return 1
+        fi
+
+        nixos-rebuild switch \
+          --flake ~/Nix/nixos/#$flake \
+          --target-host root@$ip \
+          --verbose --fast
+      }
+    '';
+
     shellAliases = {
       pipes = "pipes.sh -p 3 -r 0";
       ll = "ls -l";
@@ -15,14 +44,8 @@
       restart = "sudo systemctl restart";
       journal = "journalctl -xeu";
 
-      update-darwin = "nix run nix-darwin -- switch --flake ~/Nix/nixos";
-
       update      = "sudo nixos-rebuild";
-      update-caddy          = "update switch --flake ~/Nix/nixos/#caddy-pi --target-host root@10.0.50.30 --verbose --fast";
-      update-caddy-fallback = "update switch --flake ~/Nix/nixos/#cloudflare-fallback-pi --target-host root@10.0.50.31 --verbose --fast";
-      update-fortress       = "update switch --flake ~/Nix/nixos/#fortress-pi --target-host root@10.0.50.33 --verbose --fast";
-      update-brain          = "update switch --flake ~/Nix/nixos/#nix-brain --target-host root@10.0.50.1 --verbose --fast ";
-      update-nuc            = "update switch --flake ~/Nix/nixos/#nix-nuc --target-host root@10.0.50.4 --verbose --fast ";
+      update-darwin = "nix run nix-darwin -- switch --flake ~/Nix/nixos";
 
       idport = "sudo netstat -tulpn | grep";
     };
