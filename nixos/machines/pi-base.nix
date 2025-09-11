@@ -107,6 +107,7 @@ in
       tmux
       home-manager
       neofetch
+      python3
     ];
   };
 }
