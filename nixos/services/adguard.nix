@@ -57,15 +57,27 @@ https://github.com/AdguardTeam/AdGuardHome
       filters = map(url: { enabled = true; url = url; }) [
         # "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt"  # The Big List of Hacked Malware Web Sites (Apparently this one is too heavy-handed)
         # "https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt"  # malicious url blocklist
-        "https://adguardteam.github.io/HostlistsRegistry/assets/filter_3.txt"  # Peter Lowe's Blocklist
+        # "https://adguardteam.github.io/HostlistsRegistry/assets/filter_3.txt"  # Peter Lowe's Blocklist
         "https://raw.githubusercontent.com/ph00lt0/blocklist/master/blocklist.txt" # https://github.com/ph00lt0/blocklist
       ];
 
       user_rules = [
+        # Twitter news links
         "@@||t.co^$important"
+
+        # TikTok
         "@@||tiktokcdn-us.com^$important"
-        "@@||www.oregonlive.com^$important"
+        
+        # Oregonian
+        "@@||www.oregonlive.com^$important" 
         "@@||embeddedassistant.googleapis.com^$important"
+        
+        # Instagram
+        "@@||graph.facebook.com^$important"
+
+        # Apple HomeKit
+        "@@||init.ess.apple.com^$important"
+        "@@||smp-device-content.apple.com^$important"
       ];
     };
   };
