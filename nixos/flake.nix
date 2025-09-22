@@ -184,6 +184,7 @@
           
           ./services/telegraf.nix
           ./services/tailscale.nix
+          ./services/geocities-portfolio.nix
 
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {

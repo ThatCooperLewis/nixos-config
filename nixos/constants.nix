@@ -64,6 +64,7 @@ let
     bazarr = 6767;
     caddypi = 80;
     caddypiSSH = 443;
+    geocitiesPortfolio = 8080;
     dns = 53;
   	grafana = 3000;
     homeAss = 8123;
@@ -140,6 +141,7 @@ in {
     dirs = {
       plexStack = "/home/cooper/Homelab/plex-stack";
       plexStackBackup = "/mnt/primary-backup/plex-stack";
+      geocitiesPortfolio = "/var/www/geocities-portfolio";
     };
   };
 
