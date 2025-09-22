@@ -78,6 +78,10 @@ https://github.com/AdguardTeam/AdGuardHome
         # Apple HomeKit
         "@@||init.ess.apple.com^$important"
         "@@||smp-device-content.apple.com^$important"
+        "@@||smp-device-content.apple.com^$important"
+
+        # Rando news source
+        "@@||www.sltrib.com^$important"
       ];
     };
   };
