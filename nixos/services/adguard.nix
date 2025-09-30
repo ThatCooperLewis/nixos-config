@@ -62,26 +62,47 @@ https://github.com/AdguardTeam/AdGuardHome
       ];
 
       user_rules = [
-        # Twitter news links
+        # Social Media
         "@@||t.co^$important"
-
-        # TikTok
         "@@||tiktokcdn-us.com^$important"
+        "@@||www.tiktok.com^$important"
+        "@@||www.facebook.com^$important"
+        "@@||graph.facebook.com^$important"
         
         # Oregonian
         "@@||www.oregonlive.com^$important" 
         "@@||embeddedassistant.googleapis.com^$important"
-        
-        # Instagram
-        "@@||graph.facebook.com^$important"
+
+        # Rando news source
+        "@@||www.sltrib.com^$important"
 
         # Apple HomeKit
         "@@||init.ess.apple.com^$important"
         "@@||smp-device-content.apple.com^$important"
         "@@||smp-device-content.apple.com^$important"
-
-        # Rando news source
+        "@@||api.smoot.apple.com^$important"
+        "@@||query.ess.apple.com^$important"
+        "@@||lcdn-locator.apple.com^$important"
+        "@@||xp.apple.com^$important"
         "@@||www.sltrib.com^$important"
+        "@@||sentry.io^$important"
+        "@@||o64374.ingest.sentry.io^$important"
+        "@@||xp.itunes-apple.com.akadns.net^$important"
+        "@@||us-east-1.prod.service.minerva.devices.a2z.com^$important"
+        "@@||identity.ess.apple.com^$client='10.40.194.72'"
+        "@@||lcdn-locator.apple.com^$client='10.40.194.72'"
+        "@@||ocsp.comodoca.com^$client='10.40.194.72'"
+
+        # Amazon Orders
+        "@@||com_amazon_amazon.triggers-v1.prod.mobile.weblab.a2z.com^$important"
+        "@@||aax-us-east-retail-direct.amazon.com^$important"
+        "@@||unagi-na.amazon.com^$important"
+        "@@||fls-na.amazon.com^$important"
+        "@@||unagi.amazon.com^$important"
+        "@@||pancake.apple.com^$important"
+        "@@||aes.us-east.ono.axp.amazon-adsystem.com^$important"
+        "@@||maps.hereapi.com^$important"
+
       ];
     };
   };
