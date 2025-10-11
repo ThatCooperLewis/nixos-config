@@ -180,11 +180,34 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          ./containers/arr-stack.nix
+          # ./containers/arr-stack.nix
           
           ./services/telegraf.nix
           ./services/tailscale.nix
           ./services/geocities-portfolio.nix
+
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
+        ];
+      };
+
+      "nix-nas" = nixpkgs.lib.nixosSystem {
+      	system = "x86_64-linux";
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          ./machines/nix-nas/configuration.nix
+          
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          # ./containers/arr-stack.nix
+          
+          # ./services/telegraf.nix
+          ./services/tailscale.nix
+          # ./services/geocities-portfolio.nix
 
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
