@@ -182,9 +182,9 @@
 
           # ./containers/arr-stack.nix
           
-          ./services/telegraf.nix
+          # ./services/telegraf.nix
           ./services/tailscale.nix
-          ./services/geocities-portfolio.nix
+          # ./services/geocities-portfolio.nix
 
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
@@ -207,7 +207,7 @@
           
           # ./services/telegraf.nix
           ./services/tailscale.nix
-          # ./services/geocities-portfolio.nix
+          ./services/geocities-portfolio.nix
 
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
