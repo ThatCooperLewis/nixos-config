@@ -89,9 +89,10 @@ https://github.com/AdguardTeam/AdGuardHome
         "@@||o64374.ingest.sentry.io^$important"
         "@@||xp.itunes-apple.com.akadns.net^$important"
         "@@||us-east-1.prod.service.minerva.devices.a2z.com^$important"
-        "@@||identity.ess.apple.com^$client='10.40.194.72'"
-        "@@||lcdn-locator.apple.com^$client='10.40.194.72'"
-        "@@||ocsp.comodoca.com^$client='10.40.194.72'"
+        # Specific to HomePod
+        "@@||identity.ess.apple.com^$client='10.40.69.100'"
+        "@@||lcdn-locator.apple.com^$client='10.40.69.100'"
+        "@@||ocsp.comodoca.com^$client='10.40.69.100'"
 
         # Amazon Orders
         "@@||com_amazon_amazon.triggers-v1.prod.mobile.weblab.a2z.com^$important"
@@ -103,6 +104,42 @@ https://github.com/AdguardTeam/AdGuardHome
         "@@||aes.us-east.ono.axp.amazon-adsystem.com^$important"
         "@@||maps.hereapi.com^$important"
 
+        # Princess Polly Store
+        "@@||trk.princesspolly.com^$important"
+        "@@||link.citycast.fm^$important"
+
+        # Nuuly (Probably not all required)
+        # Ari's iPad
+        "@@||fast.fonts.net^$client='10.40.69.11'"
+        "@@||script.crazyegg.com^$client='10.40.69.11'"
+        "@@||bam.nr-data.net^$client='10.40.69.11'"
+        "@@||auth.split.io^$client='10.40.69.11'"
+        "@@||js.datadome.co^$client='10.40.69.11'"
+        "@@||sdk.split.io^$client='10.40.69.11'"
+        "@@||api-js.datadome.co^$client='10.40.69.11'"
+        "@@||js-agent.newrelic.com^$client='10.40.69.11'"
+
+        # Nuuly - Ari's iPhone
+        "@@||fast.fonts.net^$client='10.40.69.10'"
+        "@@||script.crazyegg.com^$client='10.40.69.10'"
+        "@@||bam.nr-data.net^$client='10.40.69.10'"
+        "@@||auth.split.io^$client='10.40.69.10'"
+        "@@||js.datadome.co^$client='10.40.69.10'"
+        "@@||sdk.split.io^$client='10.40.69.10'"
+        "@@||api-js.datadome.co^$client='10.40.69.10'"
+        "@@||js-agent.newrelic.com^$client='10.40.69.10'"
+
+        # Package tracking
+        "@@||www.yuntrack.com^$important"
+        "@@||www.yunexpress.com^$important"
+
+        # Sony TV App Access
+        "@@||androidtvchannels-pa.googleapis.com^$client='10.40.69.110'"
+        "@@||app-measurement.com^$client='10.40.69.110'"
+        "@@||firebase-settings.crashlytics.com^$client='10.40.69.110'"
+        "@@||***REMOVED***^$client='10.40.69.110'"
+        "@@||firebaselogging-pa.googleapis.com^$client='10.40.69.110'"
+        "@@||api-partner.spotify.com^$client='10.40.69.110'"
       ];
     };
   };
