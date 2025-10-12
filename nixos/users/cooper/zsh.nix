@@ -12,6 +12,7 @@
         nix-remote              100.68.249.124
         nix-brain               10.0.50.1
         nix-nuc                 10.0.50.4
+        nuc-old                 10.0.50.6
         caddy-pi                10.0.50.30
         cloudflare-fallback-pi  10.0.50.31
         fortress-pi             10.0.50.33

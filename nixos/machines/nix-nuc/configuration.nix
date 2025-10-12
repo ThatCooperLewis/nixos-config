@@ -10,8 +10,8 @@
 
   homeNetwork = {
     enable = true;
-    address = constants.ips.nuc;
-    hostname = "nix-nuc";
+    address = constants.ips.nuc-old;
+    hostname = "nix-nuc-old";
     interface = "enp0s20f0u1";
   };
 

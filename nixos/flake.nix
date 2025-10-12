@@ -170,7 +170,7 @@
         ];
       };
 
-      "nix-nuc" = nixpkgs.lib.nixosSystem {
+      "nix-nuc-old" = nixpkgs.lib.nixosSystem {
       	system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
         modules = [
@@ -193,7 +193,7 @@
         ];
       };
 
-      "nix-nas" = nixpkgs.lib.nixosSystem {
+      "nix-nuc" = nixpkgs.lib.nixosSystem {
       	system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
         modules = [

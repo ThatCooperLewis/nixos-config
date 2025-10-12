@@ -10,8 +10,8 @@
 
   homeNetwork = {
     enable = true;
-    address = "10.0.50.8";
-    hostname = "nix-nas";
+    address = constants.ips.nuc;
+    hostname = "nix-nuc";
     interface = "ens3";
   };
 
