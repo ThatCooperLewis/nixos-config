@@ -30,7 +30,7 @@
         fi
 
         nixos-rebuild switch \
-          --flake ~/Nix/nixos/#$flake \
+          --flake ~/nixos-config/nixos/#$flake \
           --target-host root@$ip \
           --verbose --fast
       }

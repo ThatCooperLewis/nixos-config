@@ -75,11 +75,6 @@ in
         import cloudflare
       }
 
-      photonas.tail.lewisho.me {
-        reverse_proxy ${constants.tails.photonas}
-        import cloudflare
-      }
-
       plex.tail.lewisho.me {
         reverse_proxy ${constants.tails.nas}:${toString constants.ports.plex}
         import cloudflare
@@ -179,10 +174,6 @@ in
       }
       nas.local.lewisho.me {
         reverse_proxy ${constants.ips.nas}
-        import cloudflare
-      }
-      photonas.local.lewisho.me {
-        reverse_proxy ${constants.ips.photonas}
         import cloudflare
       }
       plex.local.lewisho.me {

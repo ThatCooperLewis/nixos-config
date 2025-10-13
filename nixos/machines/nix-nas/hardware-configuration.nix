@@ -11,7 +11,11 @@
   boot.initrd.availableKernelModules = [ "ata_piix" "xhci_pci" "ahci" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
+  # Resolve tdarr/quicksync error https://www.reddit.com/r/jellyfin/comments/ulw3ct/comment/i87o67b/
+  boot.kernelParams = [ "i915.enable_guc=2" ]; 
   boot.extraModulePackages = [ ];
+  # Allow for cross-compiling Nix builds to Raspberry Pi's
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/5fe4f259-2905-4733-b3a1-05d237747aed";
