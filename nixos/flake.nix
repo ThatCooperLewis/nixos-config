@@ -203,7 +203,7 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          # ./containers/arr-stack.nix
+          ./containers/arr-stack.nix
           
           # ./services/telegraf.nix
           ./services/tailscale.nix

@@ -28,5 +28,32 @@
     [ { device = "/dev/disk/by-uuid/3eacf5be-36ae-437c-827d-b45d21dc0b3b"; }
     ];
 
+  # NAS Remote Drives
+
+  fileSystems."/mnt/plex-content-4k" =
+    { device = "10.0.50.2:/mnt/tahani/data-4k";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/plex-content" =
+    { device = "10.0.50.2:/mnt/tahani/data";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/plex-downloads" =
+    { device = "10.0.50.2:/mnt/tahani/escrow-data/plex";
+      fsType = "nfs";
+    };
+# 
+  fileSystems."/mnt/nas-tdarr" =
+    { device = "10.0.50.2:/mnt/apps/tdarr";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/primary-backup" =
+    { device = "10.0.50.2:/mnt/tahani/backup-data/nix-nuc";
+      fsType = "nfs";
+    };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
