@@ -150,7 +150,7 @@ in {
   nfs = {
     dirs = {
       secrets = {
-        deviceSource = "${ips.nas}:/mnt/tahani/secrets";
+        deviceSource = "${ips.nas}:/mnt/janet/secrets";
         mountPath = "/mnt/nas-secrets";
       };
       plex = {
@@ -158,7 +158,7 @@ in {
         mountPath = "/mnt/nas-plex";
       };
       backup = {
-        deviceSource = "${ips.nas}:/mnt/tahani/backup-data/homelab";
+        deviceSource = "${ips.nas}:/mnt/janet/backup-data/homelab";
         mountPath = "/mnt/nas-backup";
       };
     };

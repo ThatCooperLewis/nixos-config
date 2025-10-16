@@ -55,7 +55,7 @@
     };
 
   fileSystems."/mnt/primary-backup" =
-    { device = "10.0.50.2:/mnt/tahani/backup-data/nix-nuc";
+    { device = "10.0.50.2:/mnt/janet/backup-data/nix-nuc";
       fsType = "nfs";
     };
 
