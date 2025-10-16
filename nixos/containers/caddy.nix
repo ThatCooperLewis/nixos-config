@@ -110,6 +110,11 @@ in
         import cloudflare
       }
 
+      tautulli.tail.lewisho.me {
+        reverse_proxy ${constants.tails.nuc}:${toString constants.ports.tautulli}
+        import cloudflare
+      }
+
       ha.tail.lewisho.me {
         reverse_proxy ${constants.tails.homeAss}:${toString constants.ports.homeAss}
         import cloudflare
