@@ -115,6 +115,11 @@ in
         import cloudflare
       }
 
+      lidarr.tail.lewisho.me {
+        reverse_proxy ${constants.tails.nuc}:${toString constants.ports.lidarr}
+        import cloudflare
+      }
+
       ha.tail.lewisho.me {
         reverse_proxy ${constants.tails.homeAss}:${toString constants.ports.homeAss}
         import cloudflare
@@ -163,6 +168,10 @@ in
       }
       tdarr.local.lewisho.me {
         reverse_proxy ${constants.ips.nuc}:${toString constants.ports.tdarrWeb}
+        import cloudflare
+      }
+      lidarr.local.lewisho.me {
+        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.lidarr}
         import cloudflare
       }
       tautulli.local.lewisho.me {
