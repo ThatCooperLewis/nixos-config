@@ -83,6 +83,8 @@ in
       "synthwave84.brightness" = 0;
       "remote.SSH.remotePlatform" = {
         "nix-nuc" = "linux";
+        "nix-nas" = "linux";
+        "10.0.50.4" = "linux";
       };
   	};
   };
