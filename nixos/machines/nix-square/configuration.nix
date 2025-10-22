@@ -23,6 +23,12 @@ https://nixcademy.com/2024/01/15/nix-on-macos/
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = "nix-command flakes";
 
+  environment.systemPackages = with pkgs; [ 
+    micro
+    obsidian
+    home-manager
+  ];
+
   system.defaults = {
     dock.autohide = true;
     dock.mru-spaces = false;
@@ -33,15 +39,6 @@ https://nixcademy.com/2024/01/15/nix-on-macos/
 
   users.users.cooperl.home = "/Users/cooperl";
 
-  environment.systemPackages = with pkgs; [ 
-    micro
-    obsidian
-    home-manager
-  ];
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # Touch ID support for sudo
   security.pam.enableSudoTouchIdAuth = true;
 
@@ -49,6 +46,6 @@ https://nixcademy.com/2024/01/15/nix-on-macos/
 
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
-  system.stateVersion = 4;
+  system.stateVersion = 5;
 
 }

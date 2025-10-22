@@ -44,7 +44,8 @@
       constants = import ./constants.nix;
     in {
       # Square-issued M3 MBP
-      "BLKKTWPFQ13Y2" = nix-darwin.lib.darwinSystem {
+      "blkktwpfq13y2" = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
         specialArgs = { inherit self inputs; };
         modules = [ 
 

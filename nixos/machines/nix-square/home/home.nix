@@ -43,25 +43,33 @@
   	  github.copilot-chat      
       eamodio.gitlens
   	];
-  	userSettings = {
-      "editor.accessibilitySupport" = "off";
+    userSettings = {
   	  "files.autoSave" = "afterDelay";
       "git.confirmSync" = false;
       "git.autofetch" = true;
-
+      "editor.accessibilitySupport" = "off";
+      "remote.SSH.useLocalServer" = false;
+      "update.mode" = "manual";
       "liveshare.anonymousGuestApproval" = "reject";
       "liveshare.guestApprovalRequired" = true;
       "liveshare.shareExternalFiles" = false;
-
-      "workbench.colorTheme" = "Bluloco Light";
+      "workbench.colorTheme" = "SynthWave '84";
       "workbench.iconTheme" = "file-icons";
-
       "editor.fontFamily" = "FiraCode Nerd Font Mono";
       "terminal.integrated.fontFamily" = "FiraCode Nerd Font Mono";
-      "terminal.integrated.fontSize" = "13";
+      "editor.minimap.enabled" = false;
       "editor.fontSize" = "13";
-
+      "terminal.integrated.commandsToSkipShell" = [ "-workbench.action.quickOpenView" ];
       "lldb.library" = "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB";
+      "explorer.confirmDelete" = false;
+      "diffEditor.ignoreTrimWhitespace" = false;
+      "explorer.confirmDragAndDrop" = false;
+      "editor.tabSize" = 2;
+      "synthwave84.disableGlow" = true;
+      "synthwave84.brightness" = 0;
+      "remote.SSH.remotePlatform" = {
+        "10.0.50.1" = "linux";
+      };
   	};
   };
 
