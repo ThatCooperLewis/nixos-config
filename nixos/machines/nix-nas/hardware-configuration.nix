@@ -34,23 +34,8 @@
 
   # NAS Remote Drives
 
-  fileSystems."/mnt/plex-content-4k" =
-    { device = "10.0.50.2:/mnt/tahani/data-4k";
-      fsType = "nfs";
-    };
-
-  fileSystems."/mnt/plex-content" =
-    { device = "10.0.50.2:/mnt/tahani/data";
-      fsType = "nfs";
-    };
-
-  fileSystems."/mnt/plex-downloads" =
-    { device = "10.0.50.2:/mnt/tahani/escrow-data/plex";
-      fsType = "nfs";
-    };
-# 
-  fileSystems."/mnt/nas-tdarr" =
-    { device = "10.0.50.2:/mnt/apps/tdarr";
+  fileSystems."/mnt/plex-content-unified" = 
+    { device = "10.0.50.2:/mnt/janet/plex-content";
       fsType = "nfs";
     };
 

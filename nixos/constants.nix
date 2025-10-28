@@ -91,8 +91,8 @@ let
     tailscale = 41641;
   	tautulli = 8181;
   	telegraf = 8125;
-  	tdarrServer = 8266; # 8265 for Web Portal, 8266 for Node/Server interop
-  	tdarrWeb = 8265;
+  	tdarrServer = 8266; # 8266 for Node/Server interop
+  	tdarrWeb = 8265; # 8265 for Web Portal
   	uptime = 3001;
     xrdp = 3389;
   };
@@ -205,7 +205,7 @@ in {
 
   docker = {
     tdarrServerIP = "10.0.50.4";
-    plexArgs = [ "--network=plex-stack" ];
+    plexArgs = [ "--network=plex-stack" "--pull=always" ];
     environment = {
       TZ = localTimeZone;
       UMASK_SET = "022";
@@ -268,10 +268,7 @@ in {
       navidrome = "/home/cooper/navidrome-stack";
       octoprint = "/home/cooper/octoprint";
       plexData = "/mnt/plex-content";
-      plexData4k = "/mnt/plex-content-4k";
-      usenetDownloads = "/mnt/plex-downloads/data/usenet";
-      usenet4kDownloads = "/mnt/plex-downloads/data-4k/usenet";
-      tdarrTranscode = "/mnt/nas-tdarr/temp";
+      plexDataUnified = "/mnt/plex-content-unified";
       palworld = "/home/cooper/Homelab/palworld";
       minecraft = "/var/lib/minecraft";
       caddypi = "/etc/caddy";

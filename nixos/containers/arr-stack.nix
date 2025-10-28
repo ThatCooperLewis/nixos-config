@@ -124,8 +124,7 @@ in {
       volumes = [
         "${docker.dirs.arr}/bazarr/config:/config"
         "${docker.dirs.arr}/bazarr/logs:/logs"
-        "${docker.dirs.plexData}/movies:/data/movies"
-        "${docker.dirs.plexData}/shows:/data/shows"
+        "${docker.dirs.plexDataUnified}:/plex-content"
       ];
       extraOptions = docker.plexArgs;
     };
@@ -146,8 +145,7 @@ in {
       environment = docker.environment;
       volumes = [
 	    "${docker.dirs.arr}/radarr/config:/config"
- 	    "${docker.dirs.plexData}/movies:/data/movies"
- 	    "${docker.dirs.usenetDownloads}:/data/usenet"
+      "${docker.dirs.plexDataUnified}:/plex-content"
       ];    	
       extraOptions = docker.plexArgs;
     };
@@ -158,8 +156,7 @@ in {
       environment = docker.environment;
       volumes = [
 	    "${docker.dirs.arr}/radarr-4k/config:/config"
- 	    "${docker.dirs.plexData4k}/movies:/data-4k/movies"
- 	    "${docker.dirs.usenet4kDownloads}:/data-4k/usenet"
+      "${docker.dirs.plexDataUnified}:/plex-content"
       ];    	
       extraOptions = docker.plexArgs;
     };
@@ -178,9 +175,7 @@ in {
       environment = docker.environment;
       volumes = [
 	    "${docker.dirs.arr}/sonarr/config:/config"
- 	    "${docker.dirs.plexData}/shows:/data/shows"
- 	    "${docker.dirs.plexData}/anime:/data/anime"
- 	    "${docker.dirs.usenetDownloads}:/data/usenet"
+      "${docker.dirs.plexDataUnified}:/plex-content"
       ];
       extraOptions = docker.plexArgs;
     };
@@ -191,9 +186,7 @@ in {
       environment = docker.environment;
       volumes = [
 	    "${docker.dirs.arr}/sonarr-4k/config:/config"
- 	    "${docker.dirs.plexData4k}/shows:/data-4k/shows"
- 	    "${docker.dirs.plexData4k}/anime:/data-4k/anime"
- 	    "${docker.dirs.usenet4kDownloads}:/data-4k/usenet"
+      "${docker.dirs.plexDataUnified}:/plex-content"
       ];
       extraOptions = docker.plexArgs;
     };
@@ -204,8 +197,7 @@ in {
       environment = docker.environment;
       volumes = [
 	    "${docker.dirs.arr}/lidarr/config:/config"
- 	    "${docker.dirs.plexData}/music:/data/music"
- 	    "${docker.dirs.usenetDownloads}:/data/usenet"
+      "${docker.dirs.plexDataUnified}:/plex-content"
       ];
       extraOptions = docker.plexArgs;
     };
@@ -237,9 +229,7 @@ in {
         "${docker.dirs.arr}/tdarr/server:/app/server"
         "${docker.dirs.arr}/tdarr/configs:/app/configs"
         "${docker.dirs.arr}/tdarr/logs:/app/logs"
-        "${docker.dirs.plexData4k}:/data-4k"
-        "${docker.dirs.plexData}:/data"
-        "${docker.dirs.tdarrTranscode}:/temp"
+        "${docker.dirs.plexDataUnified}:/plex-content"
       ];
       extraOptions = docker.plexArgs;
     };
@@ -262,9 +252,7 @@ in {
         "${docker.dirs.arr}/tdarr/server:/app/server"
         "${docker.dirs.arr}/tdarr/configs:/app/configs"
         "${docker.dirs.arr}/tdarr/logs:/app/logs"
-        "${docker.dirs.plexData4k}:/data-4k"
-        "${docker.dirs.plexData}:/data"
-        "${docker.dirs.tdarrTranscode}:/temp"
+        "${docker.dirs.plexDataUnified}:/plex-content"
       ];
       extraOptions = [
       	"--device=/dev/dri"
