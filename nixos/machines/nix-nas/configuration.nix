@@ -48,6 +48,19 @@
     nixos-generators
   ];
 
+  hardware.opengl.enable = true;
+
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "qxl" "virtio" ];
+    displayManager.lightdm.enable = true;
+    desktopManager.xfce.enable = true;
+  };
+
+  services.spice-vdagentd = {
+    enable = true;
+  };
+
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
 
