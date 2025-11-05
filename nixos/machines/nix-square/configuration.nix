@@ -45,7 +45,7 @@ https://nixcademy.com/2024/01/15/nix-on-macos/
   environment.etc.bashrc.target = "bashrc_nix";
   environment.etc.zshrc.target = "zshrc_nix";
   environment.etc.zshenv.target = "zshenv_nix";
-
+  
   programs.zsh.enable = true;
 
   # Set Git commit hash for darwin-version.

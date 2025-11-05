@@ -59,6 +59,7 @@
       "liveshare.shareExternalFiles" = false;
       "workbench.colorTheme" = "SynthWave '84";
       "workbench.iconTheme" = "file-icons";
+      "workbench.activityBar.orientation" = "vertical"; # Prevents cursor from compressing the activity bar horizontally
       "editor.fontFamily" = "FiraCode Nerd Font";
       "terminal.integrated.fontFamily" = "FiraCode Nerd Font Mono";
       "editor.minimap.enabled" = false;
