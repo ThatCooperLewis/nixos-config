@@ -29,6 +29,10 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  # Copy VSCode settings to Cursor
+  home.file."Library/Application Support/Cursor/User/settings.json".source = 
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Library/Application Support/Code/User/settings.json";
+
   #### VS Code
   programs.vscode = {
     # https://nixos.wiki/wiki/Visual_Studio_Code
@@ -55,7 +59,7 @@
       "liveshare.shareExternalFiles" = false;
       "workbench.colorTheme" = "SynthWave '84";
       "workbench.iconTheme" = "file-icons";
-      "editor.fontFamily" = "FiraCode Nerd Font Mono";
+      "editor.fontFamily" = "FiraCode Nerd Font";
       "terminal.integrated.fontFamily" = "FiraCode Nerd Font Mono";
       "editor.minimap.enabled" = false;
       "editor.fontSize" = "13";

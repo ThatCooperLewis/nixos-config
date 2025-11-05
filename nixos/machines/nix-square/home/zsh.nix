@@ -1,7 +1,35 @@
 { config, pkgs, ... }:
 
 {
-  config.programs.zsh = {
+
+  # Avoid conflicts with Square source files
+  # https://***REMOVED***
+
+  # Square manages ~/.zshrc, so use dotDir to have home-manager write to a different location
+  # Then symlink ~/.zshrc_nix to that location
+  # Add `if test -f ~/.zshrc_nix; then source ~/.zshrc_nix; fi` in ~/.zshrc 
+  home.file.".zshrc_nix".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/zsh/.zshrc";
+  
+  # Override .zshenv to NOT set ZDOTDIR (we want MDM's ~/.zshrc to be read)
+  # But still include session variables from home-manager
+  home.file.".zshenv".text = ''
+    # Source system zshenv
+    if [ -f /etc/zshenv_nix ]; then
+      source /etc/zshenv_nix
+    fi
+    
+    # Session variables from home-manager (without ZDOTDIR)
+    ${builtins.concatStringsSep "\n" (
+      builtins.attrValues (
+        builtins.mapAttrs (name: value: "export ${name}=\"${toString value}\"") config.home.sessionVariables
+      )
+    )}
+  '';
+  
+  programs.zsh = {
+    # Write zsh config to ~/.config/zsh/.zshrc instead of ~/.zshrc
+    dotDir = ".config/zsh";
+
     # https://nixos.wiki/wiki/zsh
     enable = true;
     shellAliases = {
@@ -11,7 +39,7 @@
       gpom = "git pull origin main";
       current = "git rev-parse --abbrev-ref HEAD";
       commit = "git commit -m";
-      update = "sudo nix run nix-darwin -- switch --flake ~/nixos-config/nixos";
+      update = "sudo nix run nix-darwin -- switch --flake '/Users/cooperl/nixos-config/nixos#square-mbp'";
       snowsql = "/Applications/SnowSQL.app/Contents/MacOS/snowsql";
     };
     history.size = 30000;

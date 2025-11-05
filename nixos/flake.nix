@@ -43,8 +43,8 @@
       # TODO: Combine both the constants imports at the higher-level `outputs` declaration
       constants = import ./constants.nix;
     in {
-      # Square-issued M3 MBP
-      "blkktwpfq13y2" = nix-darwin.lib.darwinSystem {
+      # Square-issued M4 MBP
+      "square-mbp" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = { inherit self inputs; };
         modules = [ 
