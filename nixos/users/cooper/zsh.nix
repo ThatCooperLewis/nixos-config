@@ -46,7 +46,7 @@
       journal = "journalctl -xeu";
 
       update      = "sudo nixos-rebuild";
-      update-darwin = "nix run nix-darwin -- switch --flake ~/Nix/nixos";
+      update-darwin = "sudo nix run nix-darwin -- switch --flake ~/Nix/nixos";
       update-adguard = "update-remote adguard-pi && udpate-remote nix-remote";
       idport = "sudo netstat -tulpn | grep";
     };
