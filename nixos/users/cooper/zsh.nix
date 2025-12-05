@@ -6,7 +6,7 @@
     enable = true;
     enableCompletion = true;
 
-    initExtra = ''
+    initContent = ''
       typeset -A nix_hosts
       nix_hosts=(
         nix-remote              100.68.249.124

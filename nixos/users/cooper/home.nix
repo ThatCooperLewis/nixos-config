@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let 
-  isMacOS = pkgs.system == "aarch64-darwin";
-  supportsCode = pkgs.system != "aarch64-linux"; # VS Code Extensions are not supported on raspberry pi
+  isMacOS = pkgs.stdenv.hostPlatform.system == "aarch64-darwin";
+  supportsCode = pkgs.stdenv.hostPlatform.system != "aarch64-linux"; # VS Code Extensions are not supported on raspberry pi
   synthwaveTheme = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
     mktplcRef = {
       publisher = "robbowen";
@@ -18,7 +18,6 @@ in
   ];
 
   programs.home-manager.enable = true;
-  nixpkgs.config.allowUnfree = true;
 
   home = if isMacOS then {
     username = "cooper";    # TODO: Pass this in as an arg from the flake-level
@@ -34,10 +33,12 @@ in
 
   programs.git = {
   	enable = true;
-  	userName = "Cooper Lewis";
-  	userEmail = "thatcooperlewis@gmail.com";
-    extraConfig = {
+    settings = {
       fetch.prune = true;
+      user = {
+        name = "Cooper Lewis";
+        email = "thatcooperlewis@gmail.com";
+      };
     };
   };
 
@@ -45,48 +46,50 @@ in
   programs.vscode = lib.mkIf supportsCode {
     # https://nixos.wiki/wiki/Visual_Studio_Code
   	enable = true;
-  	extensions = with pkgs.vscode-extensions; [
-      # Languages
-  	  ms-python.python
-  	  # kevinrose.vsc-python-indent
-  	  ms-azuretools.vscode-docker
-      bbenoist.nix
-  	  dotjoshjohnson.xml
+  	profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        # Languages
+        ms-python.python
+        # kevinrose.vsc-python-indent
+        ms-azuretools.vscode-docker
+        bbenoist.nix
+        dotjoshjohnson.xml
 
-      # Tools
-  	  github.copilot      
-      eamodio.gitlens
-      ms-vscode-remote.remote-ssh
+        # Tools
+        github.copilot      
+        eamodio.gitlens
+        ms-vscode-remote.remote-ssh
 
-      # Themes
-      file-icons.file-icons # TODO: Convert this to custom extension declaration
-      synthwaveTheme
-  	];
-  	userSettings = {
-  	  "files.autoSave" = "afterDelay";
-      "git.confirmSync" = false;
-      "git.autofetch" = true;
-      "editor.accessibilitySupport" = "off";
-      "remote.SSH.useLocalServer" = false;
-      "update.mode" = "manual";
+        # Themes
+        file-icons.file-icons # TODO: Convert this to custom extension declaration
+        synthwaveTheme
+      ];
+      userSettings = {
+        "files.autoSave" = "afterDelay";
+        "git.confirmSync" = false;
+        "git.autofetch" = true;
+        "editor.accessibilitySupport" = "off";
+        "remote.SSH.useLocalServer" = false;
+        "update.mode" = "manual";
 
-      "workbench.colorTheme" = "SynthWave '84";
-      "workbench.iconTheme" = "file-icons";
-      "editor.fontFamily" = "FiraMono Nerd Font Mono";
-      "editor.minimap.enabled" = false;
-      "terminal.integrated.commandsToSkipShell" = [ "-workbench.action.quickOpenView" ];
-      "explorer.confirmDelete" = false;
-      "diffEditor.ignoreTrimWhitespace" = false;
-      "explorer.confirmDragAndDrop" = false;
-      "editor.tabSize" = 2;
-      "synthwave84.disableGlow" = true;
-      "synthwave84.brightness" = 0;
-      "remote.SSH.remotePlatform" = {
-        "nix-nuc" = "linux";
-        "nix-nas" = "linux";
-        "10.0.50.4" = "linux";
+        "workbench.colorTheme" = "SynthWave '84";
+        "workbench.iconTheme" = "file-icons";
+        "editor.fontFamily" = "FiraMono Nerd Font Mono";
+        "editor.minimap.enabled" = false;
+        "terminal.integrated.commandsToSkipShell" = [ "-workbench.action.quickOpenView" ];
+        "explorer.confirmDelete" = false;
+        "diffEditor.ignoreTrimWhitespace" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "editor.tabSize" = 2;
+        "synthwave84.disableGlow" = true;
+        "synthwave84.brightness" = 0;
+        "remote.SSH.remotePlatform" = {
+          "nix-nuc" = "linux";
+          "nix-nas" = "linux";
+          "10.0.50.4" = "linux";
+        };
       };
-  	};
+    };
   };
 
   programs.zoxide = {

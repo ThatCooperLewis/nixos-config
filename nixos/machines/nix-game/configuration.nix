@@ -11,16 +11,15 @@
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
-  networking.hostName = "nix-game";
-
-  # Enable networking
+  # Networking
   networking.networkmanager.enable = true;
+  networking.hostName = "nix-game";
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -47,6 +46,7 @@
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+  chaotic.hdr.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {

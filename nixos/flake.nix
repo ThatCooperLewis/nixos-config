@@ -5,15 +5,21 @@
 
   inputs = {
     # Official NixOS package source
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # Unstable branch
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.11";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with
       # the `inputs.nixpkgs` of the current flake,
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";    
     };
+
+    # https://www.nyx.chaotic.cx/
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     # https://github.com/LovingMelody/nix-citizen/
     nix-citizen.url = "github:LovingMelody/nix-citizen";
@@ -36,7 +42,7 @@
 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs@{ self, nixpkgs, nix-darwin, nixpkgs-darwin, vscode-server, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, chaotic, nix-darwin, nixpkgs-darwin, vscode-server, home-manager, ... }: {
     
     # macOS machines
     darwinConfigurations = let
@@ -249,9 +255,10 @@
 
       "nix-game" = nixpkgs.lib.nixosSystem {
       	system = "x86_64-linux";
-        specialArgs = { inherit inputs constants; };
+        specialArgs = { inherit nixpkgs-unstable inputs constants; };
         modules = [
           ./machines/nix-game/configuration.nix
+          chaotic.nixosModules.default
           
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix

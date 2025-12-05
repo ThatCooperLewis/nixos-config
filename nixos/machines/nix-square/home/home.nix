@@ -37,55 +37,59 @@
   programs.vscode = {
     # https://nixos.wiki/wiki/Visual_Studio_Code
   	enable = true;
-  	extensions = with pkgs.vscode-extensions; [
-      # Languages
-      bbenoist.nix
-  	  dotjoshjohnson.xml
+  	profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        # Languages
+        bbenoist.nix
+        dotjoshjohnson.xml
 
-      # Tools
-  	  github.copilot      
-  	  github.copilot-chat      
-      eamodio.gitlens
-  	];
-    userSettings = {
-  	  "files.autoSave" = "afterDelay";
-      "git.confirmSync" = false;
-      "git.autofetch" = true;
-      "editor.accessibilitySupport" = "off";
-      "remote.SSH.useLocalServer" = false;
-      "update.mode" = "manual";
-      "liveshare.anonymousGuestApproval" = "reject";
-      "liveshare.guestApprovalRequired" = true;
-      "liveshare.shareExternalFiles" = false;
-      "workbench.colorTheme" = "SynthWave '84";
-      "workbench.iconTheme" = "file-icons";
-      "workbench.activityBar.orientation" = "vertical"; # Prevents cursor from compressing the activity bar horizontally
-      "editor.fontFamily" = "FiraCode Nerd Font";
-      "terminal.integrated.fontFamily" = "FiraCode Nerd Font Mono";
-      "editor.minimap.enabled" = false;
-      "editor.fontSize" = "13";
-      "terminal.integrated.commandsToSkipShell" = [ "-workbench.action.quickOpenView" ];
-      "lldb.library" = "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB";
-      "explorer.confirmDelete" = false;
-      "diffEditor.ignoreTrimWhitespace" = false;
-      "explorer.confirmDragAndDrop" = false;
-      "editor.tabSize" = 2;
-      "synthwave84.disableGlow" = true;
-      "synthwave84.brightness" = 0;
-      "remote.SSH.remotePlatform" = {
-        "10.0.50.1" = "linux";
+        # Tools
+        github.copilot      
+        github.copilot-chat      
+        eamodio.gitlens
+      ];
+      userSettings = {
+        "files.autoSave" = "afterDelay";
+        "git.confirmSync" = false;
+        "git.autofetch" = true;
+        "editor.accessibilitySupport" = "off";
+        "remote.SSH.useLocalServer" = false;
+        "update.mode" = "manual";
+        "liveshare.anonymousGuestApproval" = "reject";
+        "liveshare.guestApprovalRequired" = true;
+        "liveshare.shareExternalFiles" = false;
+        "workbench.colorTheme" = "SynthWave '84";
+        "workbench.iconTheme" = "file-icons";
+        "workbench.activityBar.orientation" = "vertical"; # Prevents cursor from compressing the activity bar horizontally
+        "editor.fontFamily" = "FiraCode Nerd Font";
+        "terminal.integrated.fontFamily" = "FiraCode Nerd Font Mono";
+        "editor.minimap.enabled" = false;
+        "editor.fontSize" = "13";
+        "terminal.integrated.commandsToSkipShell" = [ "-workbench.action.quickOpenView" ];
+        "lldb.library" = "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB";
+        "explorer.confirmDelete" = false;
+        "diffEditor.ignoreTrimWhitespace" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "editor.tabSize" = 2;
+        "synthwave84.disableGlow" = true;
+        "synthwave84.brightness" = 0;
+        "remote.SSH.remotePlatform" = {
+          "10.0.50.1" = "linux";
+        };
       };
-  	};
+    };
   };
 
   # #### Git
   programs.git = {
     # https://nixos.wiki/wiki/git
     enable = true;
-    userName = "Cooper Lewis";
-    userEmail = "thatcooperlewis@gmail.com";
-    extraConfig = {
+    settings = {
       fetch.prune = true;
+      user = {
+        name = "Cooper Lewis";
+        email = "thatcooperlewis@gmail.com";
+      };
     };
   };
 

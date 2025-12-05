@@ -44,7 +44,7 @@
     };
     history.size = 30000;
 
-    initExtra = ''
+    initContent = ''
       source ${./square.zsh}
     '';
 

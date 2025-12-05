@@ -1,7 +1,7 @@
 { config, pkgs, inputs, lib, constants, ... }:
 
 let
-  isMacOS = pkgs.system == "aarch64-darwin";
+  isMacOS = pkgs.stdenv.hostPlatform.system == "aarch64-darwin";
 in
 {
   home-manager.useGlobalPkgs = true;
