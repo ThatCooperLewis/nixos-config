@@ -8,6 +8,7 @@ in
   home-manager.useUserPackages = true;
   home-manager.users.cooper = import ./home.nix;
 
+  programs.fish.enable = true;
   programs.zsh.enable = true;
   services.openssh.enable = true;
 
@@ -19,7 +20,7 @@ in
     
     # Linux User
     openssh.authorizedKeys.keys = constants.sshKeys;
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     isNormalUser = true;
     description = "Cooper Lewis";
     extraGroups = [ "docker" "wheel" "networkmanager" ]; };

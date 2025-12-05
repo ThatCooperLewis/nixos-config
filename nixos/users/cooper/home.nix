@@ -14,7 +14,7 @@ let
 in
 {
   imports = [
-  	./zsh.nix
+  	./fish.nix
   ];
 
   programs.home-manager.enable = true;
@@ -22,10 +22,22 @@ in
   home = if isMacOS then {
     username = "cooper";    # TODO: Pass this in as an arg from the flake-level
     stateVersion = "24.11"; # TODO: Pass this in as an arg from the flake-level
+    packages = with pkgs; [
+      eza
+      bat
+      ripgrep
+      fzf
+    ];
   } else {
     username = "cooper";
     stateVersion = "23.11"; # TODO: Pass this in as an arg from the flake-level
     homeDirectory = "/home/cooper";
+    packages = with pkgs; [
+      eza
+      bat
+      ripgrep
+      fzf
+    ];
   };
 
   # Provide custom files to the home directory
@@ -88,6 +100,12 @@ in
           "nix-nas" = "linux";
           "10.0.50.4" = "linux";
         };
+        "terminal.integrated.profiles.linux"= {
+          "fish"= {
+            "path"= "/run/current-system/sw/bin/fish";
+          };
+        };
+        "terminal.integrated.defaultProfile.linux"= "fish";
       };
     };
   };
@@ -95,7 +113,8 @@ in
   programs.zoxide = {
     # A better `cd`
     enable = true;
-    enableZshIntegration = true;
+    # enableZshIntegration = true;
+    enableFishIntegration = true;
     options = [ "--cmd cd" ]; 
   };
 
@@ -104,7 +123,8 @@ in
     # https://github.com/ogham/exa (deprecated in favor of `eza`)
     # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.eza.enable
     enable = true;
-    enableZshIntegration = true;
+    # enableZshIntegration = true;
+    enableFishIntegration = true;
     icons = "auto";
     colors = "auto";
   };
