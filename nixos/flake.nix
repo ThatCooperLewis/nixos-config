@@ -247,6 +247,26 @@
         ];
       };
 
+      "nix-game" = nixpkgs.lib.nixosSystem {
+      	system = "x86_64-linux";
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          ./machines/nix-game/configuration.nix
+          
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          ./services/tailscale.nix
+          # ./services/remote-desktop.nix
+          
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
+        ];
+      };
+
       "nix-remote" = nixpkgs.lib.nixosSystem {
       	system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
