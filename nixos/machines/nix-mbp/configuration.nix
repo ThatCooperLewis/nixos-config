@@ -13,6 +13,7 @@
     home-manager
   ];
 
+  system.primaryUser = "cooper";
   system.defaults = {
     dock.autohide = true;
     dock.mru-spaces = false;
@@ -21,8 +22,14 @@
     screencapture.location = "~/Documents/screenshots";
   };
 
+  # Not sure if these do anything, but running this will for sure set the default: 
+  # chsh -s /run/current-system/sw/bin/fish
+  programs.fish.enable = true;
+  users.users.cooper.shell = "/run/current-system/sw/bin/fish";
+  environment.shells = [ "/run/current-system/sw/bin/fish" ];
+
   # Touch ID support for sudo
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

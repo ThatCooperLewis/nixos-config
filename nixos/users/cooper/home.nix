@@ -17,6 +17,9 @@ in
   	./fish.nix
   ];
 
+  # Stop warning of overwriting fish config
+  xdg.configFile."fish/config.fish".force = true;
+
   programs.home-manager.enable = true;
 
   home = if isMacOS then {
