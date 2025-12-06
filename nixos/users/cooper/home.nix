@@ -109,6 +109,12 @@ in
           };
         };
         "terminal.integrated.defaultProfile.linux"= "fish";
+        "terminal.integrated.defaultProfile.osx" = "fish";
+        "terminal.integrated.profiles.osx" = {
+          "fish" = {
+            "path" = "/run/current-system/sw/bin/fish";
+          };
+        };
       };
     };
   };
