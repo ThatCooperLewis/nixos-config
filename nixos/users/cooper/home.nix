@@ -50,6 +50,7 @@ in
   	enable = true;
     settings = {
       fetch.prune = true;
+      pull.rebase = true;
       user = {
         name = "Cooper Lewis";
         email = "thatcooperlewis@gmail.com";
