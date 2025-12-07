@@ -6,8 +6,13 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       ./hardware-configuration.nix
+      
+      # Fancy audio fix for Star Citizen
+      inputs.nix-gaming.nixosModules.pipewireLowLatency
+      # SteamOS optimizations
+      inputs.nix-gaming.nixosModules.platformOptimizations
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -16,7 +21,13 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
-
+  
+  # Star Citizen optimizations
+  # https://wiki.starcitizen-lug.org/Alternative-Installations#nixos-installation
+  boot.kernel.sysctl = {
+    # "vm.max_map_count" = 16777216; # Covered by nix-gaming.nixosModules.platformOptimizations
+    "fs.file-max" = 524288;
+  };
   # Networking
   networking.networkmanager.enable = true;
   networking.hostName = "nix-game";
@@ -71,6 +82,8 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    lowLatency.enable = true;
+  
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -93,19 +106,60 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    
+    # Terminal
     btop
     cowsay
     curl
-    discord
     fastfetch
     fish
     kitty
-    git
     micro
+    wget
+
+    # Development
+    code-cursor
+    git
     python3
     vscode
-    wget
+    ngrok
+
+    # Media
+    discord
+    tidal-hifi
+    obsidian
+
+    # Gaming
+    wine
+    gamescope
+    lutris
+    vulkan-tools
+    vulkan-validation-layers
+    vulkan-loader
+    inputs.nix-citizen.packages.${stdenv.hostPlatform.system}.star-citizen
+    inputs.nix-citizen.packages.${stdenv.hostPlatform.system}.lug-helper # Not necessary for installing game, but has nice tools
   ];
+
+  environment.variables = {
+    OLLAMA_ORIGINS = "*";
+  };
+
+  services.ollama = {
+    enable = true;
+    environmentVariables = {};
+    port = 11434;
+  };
+  
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+
+    # nix-gaming module, enables SteamOS sysctl optimizations
+    # https://github.com/fufexan/nix-gaming?tab=readme-ov-file#platform-optimizations
+    platformOptimizations.enable = true;
+  };
+
 
   services.openssh.enable = true;
 
