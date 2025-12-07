@@ -16,6 +16,18 @@
       # ... = "cd ../..";
       g  = "git";
       v  = "nvim";
+      
+      pipes = "pipes.sh -p 3 -r 0";
+      nsh = "ssh -i ~/.ssh/id_nixSSH";
+      
+      check = "sudo systemctl status";
+      restart = "sudo systemctl restart";
+      journal = "journalctl -xeu";
+
+      update      = "sudo nixos-rebuild";
+      update-darwin = "sudo nix run nix-darwin -- switch --flake ~/Nix/nixos";
+      update-adguard = "update-remote adguard-pi && udpate-remote nix-remote";
+      idport = "sudo netstat -tulpn | grep";
     };
 
     shellAbbrs = {
