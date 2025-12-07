@@ -71,6 +71,7 @@ in
         dotjoshjohnson.xml
 
         # Tools
+        # chatgpt-codex TODO
         github.copilot      
         eamodio.gitlens
         ms-vscode-remote.remote-ssh
