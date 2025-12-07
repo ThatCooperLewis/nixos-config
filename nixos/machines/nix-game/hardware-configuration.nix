@@ -13,6 +13,17 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # Graphics Config
+
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # Storage Config
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/76e32700-60e2-4684-aa2f-575312681ef5";
       fsType = "ext4";
