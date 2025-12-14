@@ -82,7 +82,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    lowLatency.enable = true;
+    # lowLatency.enable = true;
   
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
@@ -133,6 +133,7 @@
     wine
     gamescope
     lutris
+    dxvk
     vulkan-tools
     vulkan-validation-layers
     vulkan-loader
