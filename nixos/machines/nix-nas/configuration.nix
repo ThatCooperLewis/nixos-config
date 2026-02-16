@@ -46,6 +46,8 @@
     inputs.fix-python
     unclutter
     nixos-generators
+    claude-code
+    nodejs
   ];
 
   hardware.opengl.enable = true;
