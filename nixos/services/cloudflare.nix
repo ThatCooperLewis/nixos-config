@@ -25,8 +25,6 @@
 
   services.cloudflared = {
     enable = true;
-    user = "cloudflare";
-    group = "cloudflare";
     tunnels = {
       "4db3f32d-06ee-4104-a515-dcbbd8fdaeb6" = {
         credentialsFile = "/var/lib/cloudflared/credentials.json";
