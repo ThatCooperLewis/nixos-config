@@ -32,6 +32,9 @@
     # https://github.com/GuillaumeDesforges/fix-python
     fix-python.url = "github:GuillaumeDesforges/fix-python";
 
+    # https://github.com/sadjow/claude-code-nix
+    claude-code.url = "github:sadjow/claude-code-nix?ref=latest";
+
     # macOS flakes
     # https://nixcademy.com/posts/nix-on-macos/
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
@@ -42,7 +45,7 @@
 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, chaotic, nix-darwin, nixpkgs-darwin, vscode-server, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, chaotic, nix-darwin, nixpkgs-darwin, vscode-server, home-manager, claude-code, ... }: {
     
     # macOS machines
     darwinConfigurations = let
@@ -204,6 +207,10 @@
       	system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
         modules = [
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [ claude-code.overlays.default ];
+            environment.systemPackages = [ pkgs.claude-code ];
+          })
           ./machines/nix-nas/configuration.nix
           
           home-manager.nixosModules.home-manager

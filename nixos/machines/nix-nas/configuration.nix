@@ -46,7 +46,6 @@
     inputs.fix-python
     unclutter
     nixos-generators
-    claude-code
     nodejs
   ];
 
