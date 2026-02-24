@@ -47,6 +47,12 @@
     unclutter
     nixos-generators
     nodejs
+    # Rust Development
+    cargo
+    rustc
+    gcc                                                 
+    pkg-config 
+    clippy
   ];
 
   hardware.opengl.enable = true;
