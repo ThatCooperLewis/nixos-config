@@ -33,7 +33,7 @@ in
       # Claude CLI (Node.js) needs HOME and PATH
       Environment = [
         "HOME=/home/cooper"
-        "PATH=${lib.makeBinPath [ pkgs.claude-code pkgs.nodejs ]}:/run/current-system/sw/bin"
+        "PATH=${repoDir}/target/release:${lib.makeBinPath [ pkgs.claude-code pkgs.nodejs ]}:/run/current-system/sw/bin"
       ];
 
       # Load bot tokens and secrets
