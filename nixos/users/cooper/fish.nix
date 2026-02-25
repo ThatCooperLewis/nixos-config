@@ -24,6 +24,8 @@
       restart = "sudo systemctl restart";
       journal = "journalctl -xeu";
 
+      stubert-deploy = "cargo build --release --manifest-path ~/Development/stubert/Cargo.toml && sudo systemctl restart stubert";
+
       update      = "sudo nixos-rebuild";
       update-darwin = "sudo nix run nix-darwin -- switch --flake ~/Nix/nixos";
       update-adguard = "update-remote adguard-pi && udpate-remote nix-remote";

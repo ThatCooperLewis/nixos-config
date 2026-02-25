@@ -53,9 +53,11 @@
     gcc                                                 
     pkg-config 
     clippy
+    # Stubert
+    ffmpeg
   ];
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   services.xserver = {
     enable = true;

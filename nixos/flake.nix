@@ -218,7 +218,7 @@
           ./users/root/ssh.nix
 
           ./containers/arr-stack.nix
-          ./containers/stubert.nix
+          ./services/stubert.nix
           
           # ./services/telegraf.nix
           ./services/tailscale.nix

@@ -44,5 +44,10 @@
       fsType = "nfs";
     };
 
+  fileSystems."/mnt/obsidian" =
+    { device = "10.0.50.2:/mnt/eleanor/obsidian";
+      fsType = "nfs";
+    };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
