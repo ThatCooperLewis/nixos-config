@@ -6,6 +6,11 @@ let
   binary = "${repoDir}/target/release/stubert";
 in
 {
+  # Make stubert CLI available in all shells
+  environment.shellInit = ''
+    export PATH="${repoDir}/target/release:$PATH"
+  '';
+
   networking.firewall.allowedTCPPorts = [ constants.ports.stubert ];
 
   systemd.services.stubert = {
@@ -16,7 +21,7 @@ in
 
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${binary} --runtime-dir ${configDir}";
+      ExecStart = "${binary} run --runtime-dir ${configDir}";
       Restart = "always";
       RestartSec = 5;
       TimeoutStopSec = 30;
