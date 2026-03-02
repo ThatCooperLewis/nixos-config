@@ -56,7 +56,7 @@ let
     navidrome = 950;
     octoprint = 333;
     omada = 508;
-    palworld = 1400;
+
     tailscale = 1984;
     uptime = 900;
   };
@@ -77,8 +77,7 @@ let
     octoprint = 5000;
     omada = 8043;
   	overseerr = 5055;
-    palworld = 8211;
-    palworldSecondary = 27015;
+
     plex = 32400;
   	prowlarr = 9696;
   	radarr = 7878;
@@ -220,7 +219,7 @@ in {
       grafana = "${toString users.grafana}";
       caddypi = "${toString users.caddypi}";
       cloudflare = "${toString users.cloudflare}";
-      palworld = "${toString users.palworld}";
+
       navidrome = "${toString users.navidrome}";
       octoprint = "${toString users.octoprint}";
       minecraft = "${toString users.minecraft}";
@@ -252,12 +251,7 @@ in {
       influxdb = ["${toString ports.influxdb}:${toString ports.influxdb}"];
       grafana = ["${toString ports.grafana}:${toString ports.grafana}"];
       uptime = ["${toString ports.uptime}:${toString ports.uptime}"];
-      palworld = [
-        "${toString ports.palworld}:${toString ports.palworld}/udp"
-        "${toString ports.palworld}:${toString ports.palworld}/tcp"
-        "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/udp"
-        "${toString ports.palworldSecondary}:${toString ports.palworldSecondary}/tcp"
-      ];
+
       minecraft = ["${toString ports.minecraft}:${toString ports.minecraft}/udp"];
     };
 
@@ -270,7 +264,7 @@ in {
       octoprint = "/home/cooper/octoprint";
       plexData = "/mnt/plex-content";
       plexDataUnified = "/mnt/plex-content-unified";
-      palworld = "/home/cooper/Homelab/palworld";
+
       minecraft = "/var/lib/minecraft";
       caddypi = "/etc/caddy";
     };
