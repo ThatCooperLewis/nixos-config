@@ -137,7 +137,7 @@ https://github.com/AdguardTeam/AdGuardHome
         "@@||androidtvchannels-pa.googleapis.com^$client='10.40.69.110'"
         "@@||app-measurement.com^$client='10.40.69.110'"
         "@@||firebase-settings.crashlytics.com^$client='10.40.69.110'"
-        "@@||***REMOVED***^$client='10.40.69.110'"
+
         "@@||firebaselogging-pa.googleapis.com^$client='10.40.69.110'"
         "@@||api-partner.spotify.com^$client='10.40.69.110'"
       ];
