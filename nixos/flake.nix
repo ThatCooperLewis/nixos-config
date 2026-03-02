@@ -52,24 +52,6 @@
       # TODO: Combine both the constants imports at the higher-level `outputs` declaration
       constants = import ./constants.nix;
     in {
-      # Square-issued M4 MBP
-      "square-mbp" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit self inputs; };
-        modules = [ 
-
-          ./machines/nix-square/configuration.nix
-        
-          home-manager.darwinModules.home-manager
-          {
-            # nixpkgs = nixpkgsConfig;
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.cooperl = import ./machines/nix-square/home/home.nix;
-          }
-        ];
-      };
-
       cooper-mbp = nix-darwin.lib.darwinSystem {
         system.configurationRevision = self.rev or self.dirtyRev or null;
         modules = [

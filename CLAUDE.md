@@ -26,14 +26,14 @@ nix flake update --flake ~/nixos-config/nixos
 nix flake check ~/nixos-config/nixos
 ```
 
-Valid hostnames: `nix-nuc`, `nix-brain`, `nix-game`, `nix-remote`, `square-mbp`, `cooper-mbp`, `adguard-pi`, `caddy-pi`, `cloudflare-fallback-pi`, `fortress-pi`
+Valid hostnames: `nix-nuc`, `nix-brain`, `nix-game`, `nix-remote`, `cooper-mbp`, `adguard-pi`, `caddy-pi`, `cloudflare-fallback-pi`, `fortress-pi`
 
 ## Architecture
 
 ### Flake Structure
 
 The flake (`nixos/flake.nix`) tracks **NixOS 25.11** stable with an unstable channel available. It produces:
-- `darwinConfigurations`: 2 macOS machines (aarch64-darwin)
+- `darwinConfigurations`: 1 macOS machine (aarch64-darwin)
 - `nixosConfigurations`: 8 NixOS machines (x86_64-linux + aarch64-linux RPis) + 1 ISO template
 
 Key inputs beyond nixpkgs: `home-manager`, `chaotic` (bleeding-edge pkgs for gaming), `nix-citizen`/`nix-gaming` (Star Citizen), `vscode-server`, `claude-code`, `nix-darwin`.
@@ -86,4 +86,3 @@ Containers use `virtualisation.oci-containers.containers` with Docker backend. T
 | nix-brain | Monitoring/utility | Dual Nvidia GPUs, Grafana/InfluxDB |
 | nix-game | Gaming workstation | KDE Plasma, GPU passthrough, Star Citizen |
 | nix-remote | Remote server | AdGuard, lightweight |
-| square-mbp | Work laptop | Minimal config, avoids conflicts with Square tooling |
