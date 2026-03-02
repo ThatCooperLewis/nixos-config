@@ -12,7 +12,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   # Resolve tdarr/quicksync error https://www.reddit.com/r/jellyfin/comments/ulw3ct/comment/i87o67b/
-  boot.kernelParams = [ "i915.enable_guc=2" ]; 
+  boot.kernelParams = [ "i915.enable_guc=2" "zfs.zfs_arc_max=4294967296" ];
   boot.extraModulePackages = [ ];
   # Allow for cross-compiling Nix builds to Raspberry Pi's
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -29,7 +29,9 @@
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/3eacf5be-36ae-437c-827d-b45d21dc0b3b"; }
+    [ 
+    #{ device = "/dev/disk/by-uuid/3eacf5be-36ae-437c-827d-b45d21dc0b3b"; }
+    { device = "/swapfile"; size = 20480; }
     ];
 
   # NAS Remote Drives

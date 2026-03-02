@@ -47,6 +47,7 @@
     unclutter
     nixos-generators
     nodejs
+    bfg-repo-cleaner
     # Rust Development
     cargo
     rustc
