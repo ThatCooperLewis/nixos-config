@@ -41,6 +41,8 @@
     # https://github.com/LnL7/nix-darwin
     nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
+    # Enable determinate build for mac-server
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
 
   # The `@` syntax here is used to alias the attribute set of the
@@ -52,11 +54,27 @@
       # TODO: Combine both the constants imports at the higher-level `outputs` declaration
       constants = import ./constants.nix;
     in {
+
+      # Personal MacBook
       cooper-mbp = nix-darwin.lib.darwinSystem {
         system.configurationRevision = self.rev or self.dirtyRev or null;
         modules = [
 
           ./machines/nix-mbp/configuration.nix
+
+          home-manager.darwinModules.home-manager
+          ./users/cooper/user.nix
+
+        ];
+      };
+
+      # Mac Server
+      mac-server = nix-darwin.lib.darwinSystem {
+        system.configurationRevision = self.rev or self.dirtyRev or null;
+        modules = [
+          inputs.determinate.darwinModules.default
+          
+          ./machines/nix-mac/configuration.nix
 
           home-manager.darwinModules.home-manager
           ./users/cooper/user.nix
