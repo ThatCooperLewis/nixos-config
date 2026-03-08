@@ -232,7 +232,7 @@
       };
 
       "nix-brain" = nixpkgs.lib.nixosSystem {
-      	system = "x86_64-linux";
+      	system = "aarch64-linux";
         specialArgs = { inherit inputs constants; };
         modules = [
           ./machines/nix-brain/configuration.nix
@@ -241,22 +241,10 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
-          ./containers/omada-controller.nix
-          ./containers/grafana.nix
-          ./containers/minecraft.nix
-
-          ./services/plex-mirror.nix
-          ./services/tailscale.nix
-          ./services/cloudflare.nix
-          ./services/influxdb.nix
-          ./services/telegraf.nix
-          ./services/remote-desktop.nix
-
-          ./programs/vuescan/vuescan.nix
-          
           vscode-server.nixosModules.default
-          ({ config, pkgs, ... }: {
+          ({ config, lib, pkgs, ... }: {
             services.vscode-server.enable = true;
+            nixpkgs.hostPlatform = "aarch64-linux";
           })
         ];
       };
