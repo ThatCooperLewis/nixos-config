@@ -246,6 +246,8 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
+          ./services/tailscale.nix
+
           vscode-server.nixosModules.default
           ({ config, lib, pkgs, ... }: {
             services.vscode-server.enable = true;
