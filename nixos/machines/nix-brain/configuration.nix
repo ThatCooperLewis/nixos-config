@@ -1,12 +1,19 @@
-{ config, pkgs, ... }:
+{ config, pkgs, constants, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ 
+    ./hardware-configuration.nix
+    ../home-network.nix
+  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  homeNetwork = {
+    enable = true;
+    address = constants.ips.brain;
+    hostname = "nix-brain";
+    interface = "enp0s1";
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
