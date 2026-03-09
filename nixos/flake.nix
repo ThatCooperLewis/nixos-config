@@ -235,6 +235,11 @@
       	system = "aarch64-linux";
         specialArgs = { inherit inputs constants; };
         modules = [
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [ claude-code.overlays.default ];
+            environment.systemPackages = [ pkgs.claude-code ];
+          })
+
           ./machines/nix-brain/configuration.nix
           
           home-manager.nixosModules.home-manager
