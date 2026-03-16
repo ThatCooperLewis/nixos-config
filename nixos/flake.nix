@@ -59,7 +59,10 @@
       cooper-mbp = nix-darwin.lib.darwinSystem {
         system.configurationRevision = self.rev or self.dirtyRev or null;
         modules = [
-
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [ claude-code.overlays.default ];
+            environment.systemPackages = [ pkgs.claude-code ];
+          })
           ./machines/nix-mbp/configuration.nix
 
           home-manager.darwinModules.home-manager
