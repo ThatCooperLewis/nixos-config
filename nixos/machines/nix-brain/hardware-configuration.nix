@@ -28,5 +28,12 @@
     [ { device = "/dev/disk/by-uuid/a3f7afc9-ca0e-4b2f-a828-1dbeae50f220"; }
     ];
 
+  # NAS Remote Drives
+
+  fileSystems."/mnt/plex-content" =
+    { device = "10.0.50.2:/mnt/janet/plex-content";
+      fsType = "nfs";
+    };
+
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
