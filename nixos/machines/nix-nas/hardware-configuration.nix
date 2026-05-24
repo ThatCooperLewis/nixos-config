@@ -51,5 +51,10 @@
       fsType = "nfs";
     };
 
+  fileSystems."/mnt/photography" =
+    { device = "10.0.50.2:/mnt/eleanor/photography";
+      fsType = "nfs";
+    };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
