@@ -212,7 +212,7 @@ in {
     };
 
     tdarr = {
-      image = "ghcr.io/haveagitgat/tdarr:latest";
+      image = "ghcr.io/haveagitgat/tdarr:2.61.01";
       ports = docker.ports.tdarr;
       environment = {
       	PUID = docker.users.multimedia;
@@ -234,31 +234,5 @@ in {
       extraOptions = docker.plexArgs;
     };
  
-    tdarrNode = {
-      image = "ghcr.io/haveagitgat/tdarr_node:latest";
-      environment = {
-      	PUID = docker.users.multimedia;
-      	PGID = docker.users.multimedia;
-      	UMASK_SET = docker.environment.UMASK_SET;
-      	TZ = constants.localTimeZone;
-      	serverIP = docker.tdarrServerIP;
-      	serverPort = "${toString constants.ports.tdarrServer}";
-      	inContainer = "true";
-      	max_old_space_size = "8152";
-      	maxOldSpaceSize = "8152";
-      	nodeName = "PrimaryNode";
-      };
-      volumes = [
-        "${docker.dirs.arr}/tdarr/server:/app/server"
-        "${docker.dirs.arr}/tdarr/configs:/app/configs"
-        "${docker.dirs.arr}/tdarr/logs:/app/logs"
-        "${docker.dirs.plexDataUnified}:/plex-content"
-      ];
-      extraOptions = [
-      	"--device=/dev/dri"
-      	"--network=plex-stack"
-      ];
-    };
-
   };
 }
