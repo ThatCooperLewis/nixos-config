@@ -52,6 +52,11 @@
 
     # Cozy color theme + options
     interactiveShellInit = ''
+      # --- Homebrew (macOS; no-op when /opt/homebrew not present) ---
+      if test -x /opt/homebrew/bin/brew
+        eval (/opt/homebrew/bin/brew shellenv fish)
+      end
+
       # --- Key bindings ---
       # fish_vi_key_bindings
 
