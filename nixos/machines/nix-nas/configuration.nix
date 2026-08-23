@@ -36,6 +36,7 @@
     curl
     wget
     btop
+    tmux
     home-manager
     neofetch
     intel-gpu-tools
@@ -57,6 +58,19 @@
     # Stubert
     ffmpeg
   ];
+
+  # Claude Code's app SSH tool / Remote Control pushes a precompiled CLI
+  # archive to the remote host and executes it directly (separate from the
+  # `pkgs.claude-code` binary on PATH). NixOS has no standard dynamic linker
+  # path, so that binary can't run without nix-ld shimming one in.
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib   # libstdc++/libgcc_s — the important one for Bun-compiled binaries
+      zlib
+      openssl
+    ];
+  };
 
   hardware.graphics.enable = true;
 
