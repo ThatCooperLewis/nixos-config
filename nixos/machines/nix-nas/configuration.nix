@@ -58,6 +58,16 @@
     ffmpeg
   ];
 
+  # Get Claude Code Remote able to SSH into nix
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib   # libstdc++/libgcc_s — the important one for Bun-compiled binaries
+      zlib
+      openssl
+    ];
+  };
+
   hardware.graphics.enable = true;
 
   services.xserver = {

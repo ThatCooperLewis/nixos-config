@@ -219,6 +219,7 @@
 
           ./containers/arr-stack.nix
           ./services/stubert.nix
+          ./services/claude-rc.nix
           ./services/livesync-bridge.nix
 
           # ./services/telegraf.nix
