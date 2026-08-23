@@ -147,6 +147,13 @@ in {
     };
   };
 
+  obsidian = {
+    # CouchDB behind tailnet TLS (Self-hosted LiveSync), no port
+    couchdbUrl = "https://nas.featherback-alligator.ts.net";
+    vaultRoot = "/mnt/obsidian";        # same path as the old NFS mount
+    vaultDir = "/mnt/obsidian/Brain";   # what Stubert consumes
+  };
+
   nfs = {
     dirs = {
       secrets = {

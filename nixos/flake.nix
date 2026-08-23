@@ -219,7 +219,8 @@
 
           ./containers/arr-stack.nix
           ./services/stubert.nix
-          
+          ./services/livesync-bridge.nix
+
           # ./services/telegraf.nix
           ./services/tailscale.nix
           ./services/geocities-portfolio.nix

@@ -46,11 +46,6 @@
       fsType = "nfs";
     };
 
-  fileSystems."/mnt/obsidian" =
-    { device = "10.0.50.2:/mnt/eleanor/obsidian";
-      fsType = "nfs";
-    };
-
   fileSystems."/mnt/photography" =
     { device = "10.0.50.2:/mnt/eleanor/photography";
       fsType = "nfs";
