@@ -44,6 +44,7 @@ let
     homeAss = "http://100.102.14.66";
     adguard = "http://100.124.121.82";
     remote = "http://100.68.249.124";
+    jetkvm = "http://100.87.185.37";
   };
 
   users = {

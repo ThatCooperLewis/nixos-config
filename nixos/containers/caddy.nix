@@ -140,6 +140,11 @@ in
         import cloudflare
       }
 
+      jet.tail.lewisho.me {
+        reverse_proxy ${constants.tails.jetkvm}
+        import cloudflare
+      }
+
       ## Local
 
       sonarr.local.lewisho.me {
