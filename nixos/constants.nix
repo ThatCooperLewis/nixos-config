@@ -32,6 +32,7 @@ let
     octoprint = "http://10.0.50.34";
     caddypi = "http://10.0.50.30";
     adguard = "http://10.0.100.0";
+    jetkvm = "http://10.0.50.111";
   };
 
   tails = {
