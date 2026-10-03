@@ -25,15 +25,15 @@
     },
     "claude-code": {
       "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "systems": "systems"
       },
       "locked": {
-        "lastModified": 1783733469,
-        "narHash": "sha256-GPPbut5HTEfSwCFf6f7RagCHz2BMHvRQSFkESHOwjB0=",
+        "lastModified": 1790974898,
+        "narHash": "sha256-hlXNVCDT7ek84budcUCXznMks5AdJOAY6a7yyeWof18=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "b8106a2893d7b1c5b116bebbcf17df80ead302b1",
+        "rev": "82c2606e9fb92836f7f98443b8a0bbbbf4090099",
         "type": "github"
       },
       "original": {
@@ -102,7 +102,7 @@
     },
     "fix-python": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
@@ -211,24 +211,6 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
-      "inputs": {
         "systems": "systems_2"
       },
       "locked": {
@@ -244,7 +226,7 @@
         "type": "indirect"
       }
     },
-    "flake-utils_3": {
+    "flake-utils_2": {
       "inputs": {
         "systems": "systems_4"
       },
@@ -579,11 +561,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1783604885,
-        "narHash": "sha256-tzMgSkV7kljEkqIjlgV6F+n+xD+/a35Db8bs7a4BFAo=",
+        "lastModified": 1790769526,
+        "narHash": "sha256-5AIVFLRcx8YAwbFTVPTs7YhwJH7JyHfAQsvXmpovcXI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "767b0d3ec98a143ad9ed7dfc0d5553510ac27133",
+        "rev": "c9fe7d12cd78d1adcd12dd15e24432dde5b155a0",
         "type": "github"
       },
       "original": {
@@ -817,7 +799,7 @@
     },
     "vscode-server": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_2",
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
