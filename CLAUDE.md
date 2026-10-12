@@ -28,6 +28,14 @@ nix flake check ~/nixos-config/nixos
 
 Valid hostnames: `nix-nuc`, `nix-brain`, `nix-game`, `nix-remote`, `cooper-mbp`, `adguard-pi`, `caddy-pi`, `cloudflare-fallback-pi`, `fortress-pi`
 
+## Troubleshooting
+
+Write-ups of problems solved before (symptoms, root cause, manual fix) live as Markdown notes in the Obsidian vault at `~/Brain/Wiki/`. Scripts that automate those fixes live in `scripts/`. **When debugging an error, grep both for the error message first** before working out the fix from scratch.
+
+| Script | Note | Problem |
+|--------|------|---------|
+| `scripts/restore-nix-darwin.sh` | `~/Brain/Wiki/macOS Migration.md` | nix-darwin Mac broken after Migration Assistant (missing `/nix`, shell won't start, installer keychain error, `/etc` conflicts) |
+
 ## Architecture
 
 ### Flake Structure
