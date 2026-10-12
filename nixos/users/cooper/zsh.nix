@@ -47,7 +47,7 @@
 
       update      = "sudo nixos-rebuild";
       update-darwin = "sudo nix run nix-darwin -- switch --flake ~/Nix/nixos";
-      update-adguard = "update-remote adguard-pi && udpate-remote nix-remote";
+      update-adguard = "update-remote adguard-pi && update-remote nix-remote";
       idport = "sudo netstat -tulpn | grep";
     };
     
