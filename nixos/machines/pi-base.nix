@@ -62,6 +62,8 @@ in
     system.stateVersion = cfg.stateVersion;
     nixpkgs.hostPlatform = "aarch64-linux";
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    # Accept builds signed by nix-nuc (the Pis' build host), so deploys work as cooper with --sudo
+    nix.settings.extra-trusted-public-keys = [ "nix-nuc-1:UJRsbdcJbusuHasbct8m8HWcZQpA7D/G/+pMTHFr7k4=" ];
 
     time.timeZone = "America/Los_Angeles";
     hardware.enableRedistributableFirmware = true;
