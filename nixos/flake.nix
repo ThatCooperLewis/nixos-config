@@ -187,6 +187,7 @@
           ./users/root/ssh.nix
 
           ./containers/overseerr.nix
+          ./services/cloudflare-fortress.nix
         ];
       };
 
