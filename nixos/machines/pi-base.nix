@@ -106,7 +106,7 @@ in
       btop
       tmux
       home-manager
-      neofetch
+      fastfetch
       python3
     ];
   };

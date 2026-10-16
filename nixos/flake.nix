@@ -8,6 +8,12 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     # Unstable branch
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # Raspberry Pis, upgraded ahead of the rest of the flake
+    nixpkgs-pi.url = "github:NixOS/nixpkgs/nixos-26.05";
+    home-manager-pi = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs-pi";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -113,7 +119,7 @@
         ];
       };
 
-      "caddy-pi" = nixpkgs.lib.nixosSystem {
+      "caddy-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
       	system = "aarch64-linux";
 
         specialArgs = { inherit inputs constants; };
@@ -125,7 +131,7 @@
             raspberryPi.address = "10.0.50.30";
           }
 
-          home-manager.nixosModules.home-manager
+          inputs.home-manager-pi.nixosModules.home-manager
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
