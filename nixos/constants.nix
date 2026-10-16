@@ -13,6 +13,7 @@ let
     fallbackPi = "10.0.50.31";
     fortressPi = "10.0.50.33";
     octoprint = "10.0.50.34";
+    jetkvm = "10.0.50.111";
     adguard = "10.0.100.0";
   };
 
