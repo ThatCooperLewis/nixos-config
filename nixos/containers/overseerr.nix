@@ -31,7 +31,6 @@ in {
     description = "Overseerr";
     isSystemUser = true;
     group = "overseerr";
-    extraGroups = [ "wheel" ];
   };
   users.groups.overseerr.gid = constants.users.multimedia;
 

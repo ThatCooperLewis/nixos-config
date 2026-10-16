@@ -180,6 +180,8 @@
             raspberryPi.enable = true;
             raspberryPi.hostname = "fortress-pi";
             raspberryPi.address = "10.0.50.33";
+            # Internet-facing: no root login. Deploy as cooper with --sudo --ask-sudo-password.
+            services.openssh.settings.PermitRootLogin = nixpkgs.lib.mkForce "no";
           }
 
           home-manager.nixosModules.home-manager
