@@ -171,10 +171,6 @@ in {
         deviceSource = "${ips.nas}:/mnt/janet/backup-data/homelab";
         mountPath = "/mnt/nas-backup";
       };
-      photography = {
-        deviceSource = "${ips.nas}:/mnt/eleanor/photography";
-        mountPath = "/mnt/photography";
-      };
     };
   };
 
