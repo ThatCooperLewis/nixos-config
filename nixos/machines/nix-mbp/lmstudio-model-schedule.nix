@@ -1,22 +1,30 @@
 { pkgs, ... }:
 
-# Day/night model swap for LM Studio. Keeps exactly one LLM loaded: the fast
-# model by day (07:55-01:55) and the heavy model overnight (01:55-07:55), so
-# the heavy model never holds RAM while the Mac is used for photo editing.
-# Stubert's Helper Agent uses `model: auto`, so it follows whatever is loaded.
-# Swaps run 5 minutes early so the half-hourly pebble-ingest cron doesn't land
-# mid-load.
+# Presence-based model swap for LM Studio. Keeps exactly one LLM loaded: the
+# light model while Cooper is using the Mac, and the heavy model once he's
+# been away for 20 minutes (no keyboard/mouse input, or screen locked that
+# long). 02:00-08:00 is always heavy. Stubert's Helper Agent uses
+# `model: auto`, so it follows whatever is loaded.
+#
+# Checks every minute, but never swaps while a model is generating, has queued
+# requests, or served a request in the last few minutes, so ongoing sessions
+# finish first. Swaps also skip the 3 minutes before :00 and :30 so the
+# half-hourly pebble-ingest cron doesn't land mid-load; the overnight window
+# starts at 01:55 for the same reason.
 
 let
-  fast = "qwen/qwen3.6-35b-a3b";
+  # Keep in sync with the heavy/light labels in stats.nix.
+  light = "qwen/qwen3.6-35b-a3b";
   heavy = "qwen3.5-122b-a10b";
   contextLength = 65536;
+  awaySeconds = 20 * 60;
+  recentUseSeconds = 3 * 60;
   lms = "/Users/cooper/.lmstudio/bin/lms";
   logFile = "/Users/cooper/Library/Logs/lmstudio-model-schedule.log";
 
   swapScript = pkgs.writeShellScript "lmstudio-model-schedule" ''
     set -euo pipefail
-    export PATH=${pkgs.jq}/bin:/usr/bin:/bin
+    export PATH=${pkgs.jq}/bin:/usr/sbin:/usr/bin:/bin
 
     log() { echo "$(date '+%F %T') $*"; }
 
@@ -26,42 +34,67 @@ let
         | tr '\r' '\n' | grep -i 'loaded successfully\|error' | tail -n 1
     }
 
-    # Pick by clock, matching the 01:55/07:55 launchd schedule below.
-    now=$((10#$(date +%H) * 60 + 10#$(date +%M)))
-    if (( now >= 115 && now < 475 )); then want=${heavy}; else want=${fast}; fi
+    epoch=$(date +%s)
+    hm=$((10#$(date +%H) * 60 + 10#$(date +%M)))
 
-    if ! ${lms} ls --json | jq -e --arg k "$want" 'any(.[]; .modelKey == $k)' >/dev/null; then
-      log "$want is not downloaded; using ${fast}"
-      want=${fast}
+    # Seconds since the last keyboard/mouse input.
+    idle=$(ioreg -c IOHIDSystem | awk '/HIDIdleTime/ && !v {v = $NF} END {print int(v / 1e9)}')
+
+    # Seconds the screen has been locked (0 when unlocked).
+    session=$(ioreg -n Root -d1 -a)
+    locked=0
+    if [ "$(plutil -extract IOConsoleUsers.0.CGSSessionScreenIsLocked raw -o - - <<<"$session" 2>/dev/null)" = true ]; then
+      locked_at=$(plutil -extract IOConsoleUsers.0.CGSSessionScreenLockedTime raw -o - - <<<"$session" 2>/dev/null || echo "$epoch")
+      locked=$((epoch - locked_at))
+      (( locked > 0 )) || locked=1
     fi
 
-    loaded=$(${lms} ps --json | jq -r '.[] | .modelKey // .identifier')
-    if [ "$loaded" = "$want" ]; then
-      log "$want already loaded"
+    if (( hm >= 115 && hm < 480 )); then
+      want=${heavy}; why="overnight"
+    elif (( idle >= ${toString awaySeconds} || locked >= ${toString awaySeconds} )); then
+      want=${heavy}; why="away (idle ''${idle}s, locked ''${locked}s)"
+    elif (( locked == 0 )); then
+      want=${light}; why="in use"
+    else
+      exit 0 # locked under 20 minutes: keep whatever is loaded
+    fi
+
+    if [ "$want" = ${heavy} ] \
+      && ! ${lms} ls --json | jq -e --arg k ${heavy} 'any(.[]; .modelKey == $k)' >/dev/null; then
+      want=${light}
+    fi
+
+    ps=$(${lms} ps --json)
+    loaded=$(jq -r '.[] | .modelKey // .identifier' <<<"$ps")
+    if [ "$loaded" = "$want" ]; then exit 0; fi
+
+    # Let ongoing sessions finish: wait until nothing is generating, queued,
+    # or used recently.
+    if jq -e --argjson now "$epoch" '
+        any(.[]; (.status // "idle") != "idle" or (.queued // 0) > 0
+                 or ($now * 1000 - (.lastUsedTime // 0)) < ${toString (recentUseSeconds * 1000)})
+      ' <<<"$ps" >/dev/null; then
       exit 0
     fi
+    if (( hm % 30 >= 27 )); then exit 0; fi
 
-    log "swapping [''${loaded//$'\n'/, }] -> $want"
+    log "$why: swapping [''${loaded//$'\n'/, }] -> $want"
     ${lms} unload --all
     if load "$want"; then
       log "loaded $want"
-    elif [ "$want" != ${fast} ]; then
-      log "failed to load $want; falling back to ${fast}"
-      load ${fast}
+    elif [ "$want" != ${light} ]; then
+      log "failed to load $want; falling back to ${light}"
+      load ${light}
     else
-      log "failed to load ${fast}"
+      log "failed to load ${light}"
       exit 1
     fi
   '';
 in
 {
-  # Also runs at login, and launchd runs a missed swap when the Mac wakes.
   launchd.user.agents.lmstudio-model-schedule.serviceConfig = {
     ProgramArguments = [ "${swapScript}" ];
-    StartCalendarInterval = [
-      { Hour = 1; Minute = 55; }
-      { Hour = 7; Minute = 55; }
-    ];
+    StartInterval = 60;
     RunAtLoad = true;
     StandardOutPath = logFile;
     StandardErrorPath = logFile;
