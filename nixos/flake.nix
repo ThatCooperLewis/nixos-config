@@ -179,7 +179,10 @@
           {
             raspberryPi.enable = true;
             raspberryPi.hostname = "fortress-pi";
-            raspberryPi.address = "10.0.50.33";
+            raspberryPi.address = "10.60.0.33";
+            # DMZ (VLAN 60), isolated by UniFi firewall rules; see Brain Wiki/Home Network "fortress-pi Isolation"
+            homeNetwork.gateway = "10.60.0.1";
+            homeNetwork.prefixLength = 24;
             # Internet-facing: no root login. Deploy as cooper with --sudo --ask-sudo-password.
             services.openssh.settings.PermitRootLogin = nixpkgs.lib.mkForce "no";
           }
