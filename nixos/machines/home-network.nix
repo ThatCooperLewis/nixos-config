@@ -49,6 +49,16 @@ in
       type = lib.types.str;
       example = "nix-machine";
     };
+    gateway = lib.mkOption {
+      type = lib.types.str;
+      default = "10.0.30.30";
+      description = "Default gateway. The default is Primary's; machines on other VLANs use that VLAN's gateway.";
+    };
+    prefixLength = lib.mkOption {
+      type = lib.types.int;
+      default = 16;
+      description = "Subnet prefix length. The default is Primary's (10.0.0.0/16).";
+    };
   };
 
 # Test 12
@@ -59,10 +69,10 @@ in
       interfaces.${cfg.interface}.ipv4.addresses = [
         {
           address = cfg.address;
-          prefixLength = 16;
+          prefixLength = cfg.prefixLength;
         }
       ];
-      defaultGateway = "10.0.30.30";
+      defaultGateway = cfg.gateway;
       nameservers = [ "1.1.1.1" "8.8.8.8" ];
     };
   };
