@@ -157,7 +157,10 @@
           {
             raspberryPi.enable = true;
             raspberryPi.hostname = "cloudflare-fallback-pi";
-            raspberryPi.address = "10.0.50.31";
+            raspberryPi.address = "10.50.0.31";
+            # Homelab (VLAN 50); see Brain Wiki/Home Network
+            homeNetwork.gateway = "10.50.0.1";
+            homeNetwork.prefixLength = 24;
           }
 
           inputs.home-manager-pi.nixosModules.home-manager

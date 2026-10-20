@@ -14,7 +14,7 @@
         nix-nuc                 10.0.50.4
         nuc-old                 10.0.50.6
         caddy-pi                10.0.50.30
-        cloudflare-fallback-pi  10.0.50.31
+        cloudflare-fallback-pi  10.50.0.31
         fortress-pi             10.60.0.33
         adguard-pi              10.0.100.0
       )

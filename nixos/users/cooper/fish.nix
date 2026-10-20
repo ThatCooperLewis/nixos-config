@@ -110,7 +110,7 @@
           nix-nuc                10.0.50.4      root   \
           nuc-old                10.0.50.6      root   \
           caddy-pi               10.0.50.30     root   \
-          cloudflare-fallback-pi 10.0.50.31     root   \
+          cloudflare-fallback-pi 10.50.0.31     root   \
           fortress-pi            10.60.0.33     cooper \
           adguard-pi             10.0.100.0     root
 

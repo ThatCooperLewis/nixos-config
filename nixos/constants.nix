@@ -10,7 +10,7 @@ let
     homeAss = "10.0.50.10";
 
     caddyPi = "10.0.50.30";
-    fallbackPi = "10.0.50.31";
+    fallbackPi = "10.50.0.31";
     fortressPi = "10.60.0.33";
     octoprint = "10.0.50.34";
     jetkvm = "10.0.50.111";
