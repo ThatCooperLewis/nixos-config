@@ -98,7 +98,7 @@
       constants = import ./constants.nix;
     in {
 
-      "adguard-pi" = nixpkgs.lib.nixosSystem {
+      "adguard-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
       	system = "aarch64-linux";
 
         specialArgs = { inherit inputs constants; };
@@ -110,7 +110,7 @@
             raspberryPi.address = "10.0.100.0";
           }
 
-          home-manager.nixosModules.home-manager
+          inputs.home-manager-pi.nixosModules.home-manager
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
