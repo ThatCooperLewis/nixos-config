@@ -144,7 +144,7 @@
         ];
       };
 
-      "cloudflare-fallback-pi" = nixpkgs.lib.nixosSystem {
+      "cloudflare-fallback-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
       	system = "aarch64-linux";
 
         specialArgs = { 
@@ -160,7 +160,7 @@
             raspberryPi.address = "10.0.50.31";
           }
 
-          home-manager.nixosModules.home-manager
+          inputs.home-manager-pi.nixosModules.home-manager
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
