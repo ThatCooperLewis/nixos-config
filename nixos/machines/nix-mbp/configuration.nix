@@ -2,7 +2,7 @@
 
 {
 
-  imports = [ ./photo-backup.nix ./lmstudio-model-schedule.nix ./stats.nix ];
+  imports = [ ./photo-backup.nix ./lmstudio-model-schedule.nix ./stats.nix ./linux-builder.nix ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;

@@ -98,36 +98,57 @@
 
     # Custom cozy prompt (left + right)
     functions = {
-      # Build a NixOS host's config locally and push it over SSH (Pis build via binfmt emulation)
+      # Build a NixOS host's config here and push it over SSH. On the Mac,
+      # aarch64 builds go to its Linux builder VM; on nix-nuc, binfmt emulation.
+      # Hosts that refuse root SSH deploy as cooper with sudo, built on nix-nuc
+      # so the target accepts the signed paths.
       update-remote = ''
+        # name ip ssh-user
         set -l hosts \
-          nix-remote             100.68.249.124 \
-          nix-brain              10.0.50.1 \
-          nix-nuc                10.0.50.4 \
-          nuc-old                10.0.50.6 \
-          caddy-pi               10.0.50.30 \
-          cloudflare-fallback-pi 10.0.50.31 \
-          fortress-pi            10.60.0.33 \
-          adguard-pi             10.0.100.0
+          nix-remote             100.68.249.124 root   \
+          nix-brain              10.0.50.1      root   \
+          nix-nuc                10.0.50.4      root   \
+          nuc-old                10.0.50.6      root   \
+          caddy-pi               10.0.50.30     root   \
+          cloudflare-fallback-pi 10.0.50.31     root   \
+          fortress-pi            10.60.0.33     cooper \
+          adguard-pi             10.0.100.0     root
 
-        set -l flake $argv[1]
+        set -l name $argv[1]
+        set -l action $argv[2]
+        test -z "$action"; and set action switch
         set -l ip
-        for i in (seq 1 2 (count $hosts))
-          if test "$hosts[$i]" = "$flake"
+        set -l user
+        for i in (seq 1 3 (count $hosts))
+          if test "$hosts[$i]" = "$name"
             set ip $hosts[(math $i + 1)]
+            set user $hosts[(math $i + 2)]
           end
         end
 
-        if test -z "$flake" -o -z "$ip"
-          echo "Usage: update-remote <host-key>"
-          echo "Known hosts:" $hosts[(seq 1 2 (count $hosts))]
+        if test -z "$ip"; or not contains -- $action switch test boot build dry-activate
+          echo "Usage: update-remote <host> [switch|test|boot|build|dry-activate]"
+          echo "Known hosts:" $hosts[(seq 1 3 (count $hosts))]
           return 1
         end
 
-        nixos-rebuild switch \
-          --flake ~/nixos-config/nixos/#$flake \
-          --target-host root@$ip \
-          --verbose --fast
+        set -l flake
+        for dir in ~/Nix/nixos ~/nixos-config/nixos
+          test -d $dir; and set flake $dir; and break
+        end
+
+        set -l extra
+        if test "$user" != root
+          set extra --sudo --ask-sudo-password
+          test (hostname) != nix-nuc; and set -a extra --build-host root@10.0.50.4
+        end
+        test -f ~/.ssh/id_nixSSH; and set -lx NIX_SSHOPTS "-i $HOME/.ssh/id_nixSSH -o IdentitiesOnly=yes"
+
+        ${pkgs.nixos-rebuild-ng}/bin/nixos-rebuild-ng $action \
+          --flake "$flake#$name" \
+          --target-host $user@$ip \
+          --use-substitutes --no-reexec \
+          $extra
       '';
 
       fish_prompt = ''
