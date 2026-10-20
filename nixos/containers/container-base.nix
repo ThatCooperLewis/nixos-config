@@ -27,5 +27,8 @@ Use in conjunction with an actual container.
   config.virtualisation.oci-containers.backend = "docker";
   # Emit docker metrics to telegraf, which needs the docker socket to read them
   config.services.telegraf.extraConfig.inputs.docker = {};
-  config.users.users.telegraf.extraGroups = lib.mkIf config.services.telegraf.enable [ "docker" ];
+  # mkIf on the whole attrset, so machines without telegraf don't get an empty telegraf user
+  config.users.users = lib.mkIf config.services.telegraf.enable {
+    telegraf.extraGroups = [ "docker" ];
+  };
 }

@@ -49,6 +49,13 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     # Enable determinate build for mac-server
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+
+    # https://github.com/ryantm/agenix
+    # Encrypted secrets in this repo, decrypted on each machine with its SSH host key. See secrets/secrets.nix
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs-pi";
+    };
   };
 
   # The `@` syntax here is used to alias the attribute set of the
@@ -194,6 +201,7 @@
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
+          inputs.agenix.nixosModules.default
           ./containers/overseerr.nix
           ./services/cloudflare-fortress.nix
         ];
