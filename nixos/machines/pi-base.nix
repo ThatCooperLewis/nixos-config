@@ -78,10 +78,9 @@ in
     boot = {
       kernelPackages = pkgs.linuxKernel.packages.linux_rpi4; # Needed to boot via USB drive
       initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
-      # 26.05 defaults to the systemd initrd, which also wants TPM modules the Pi
-      # kernel lacks. Keep the scripted one so an upgrade doesn't change how a
-      # headless Pi boots; switching is its own change.
-      initrd.systemd.enable = false;
+      initrd.systemd.enable = true;
+      # The Pis have no TPM, and the Pi kernel lacks the tpm-crb module this would load
+      initrd.systemd.tpm2.enable = false;
       loader = {
         grub.enable = false;
         generic-extlinux-compatible.enable = true;
