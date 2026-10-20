@@ -170,7 +170,7 @@
         ];
       };
 
-      "fortress-pi" = nixpkgs.lib.nixosSystem {
+      "fortress-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
       	system = "aarch64-linux";
 
         specialArgs = { inherit inputs constants; };
@@ -184,10 +184,10 @@
             homeNetwork.gateway = "10.60.0.1";
             homeNetwork.prefixLength = 24;
             # Internet-facing: no root login. Deploy as cooper with --sudo --ask-sudo-password.
-            services.openssh.settings.PermitRootLogin = nixpkgs.lib.mkForce "no";
+            services.openssh.settings.PermitRootLogin = inputs.nixpkgs-pi.lib.mkForce "no";
           }
 
-          home-manager.nixosModules.home-manager
+          inputs.home-manager-pi.nixosModules.home-manager
           ./users/cooper/user.nix
           ./users/root/ssh.nix
 
