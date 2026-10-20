@@ -265,7 +265,6 @@ in
   virtualisation.oci-containers.containers = {
     caddy = {
       image = "ghcr.io/caddybuilds/caddy-cloudflare:latest";
-      pull = "newer"; # Fetch a newer :latest whenever the container (re)starts
       ports = docker.ports.caddypi;
       user = docker.users.caddypi;
       environmentFiles = ["/etc/caddy/caddy.env"]; # Pass the secret API Token
