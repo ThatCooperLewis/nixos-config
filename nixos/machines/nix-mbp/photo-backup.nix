@@ -25,9 +25,18 @@ let
       exit 0
     fi
 
+    # A pending macOS removable-volume permission prompt blocks the first
+    # read of the volume for hours. Fail fast instead.
+    if ! ${pkgs.coreutils}/bin/timeout 120 /bin/ls "$src" >/dev/null ; then
+      echo "can't read $src within 2 minutes (pending permission prompt?)"
+      echo "== $(date '+%F %T') finished, exit 1"
+      exit 1
+    fi
+
     # -rlt, not -a: the NAS keeps its own permissions (files owned by other
     # users can't be chmod'ed by cooper, which would fail every run).
-    ${pkgs.rsync}/bin/rsync -rlt --delete --max-delete=2000 \
+    # --timeout ends a run that moves no data for 10 minutes.
+    ${pkgs.rsync}/bin/rsync -rlt --delete --max-delete=2000 --timeout=600 \
       --info=stats2 \
       --exclude .DS_Store --exclude .Spotlight-V100 --exclude .fseventsd \
       --exclude .Trashes --exclude .TemporaryItems --exclude .DocumentRevisions-V100 \
