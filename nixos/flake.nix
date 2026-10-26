@@ -135,7 +135,10 @@
           {
             raspberryPi.enable = true;
             raspberryPi.hostname = "caddy-pi";
-            raspberryPi.address = "10.0.50.30";
+            raspberryPi.address = "10.50.0.30";
+            # Homelab (VLAN 50); see Brain Wiki/Home Network
+            homeNetwork.gateway = "10.50.0.1";
+            homeNetwork.prefixLength = 24;
           }
 
           inputs.home-manager-pi.nixosModules.home-manager

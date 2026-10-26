@@ -9,7 +9,7 @@ let
 
     homeAss = "10.0.50.10";
 
-    caddyPi = "10.0.50.30";
+    caddyPi = "10.50.0.30";
     fallbackPi = "10.50.0.31";
     fortressPi = "10.60.0.33";
     octoprint = "10.0.50.34";
@@ -31,7 +31,7 @@ let
     monitor = "http://10.0.50.3";
     homeAss = "http://10.0.50.10";
     octoprint = "http://10.0.50.34";
-    caddypi = "http://10.0.50.30";
+    caddypi = "http://10.50.0.30";
     adguard = "http://10.0.100.0";
     jetkvm = "http://10.0.50.111";
   };
