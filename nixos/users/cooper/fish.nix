@@ -142,6 +142,10 @@
           set extra --sudo --ask-sudo-password
           test (hostname) != nix-nuc; and set -a extra --build-host root@10.0.50.4
         end
+        # The Mac's builder VM only does aarch64-linux; x86_64 hosts build on nix-nuc.
+        if contains -- $name nix-remote nix-nuc nuc-old; and test (uname) = Darwin
+          set -a extra --build-host root@10.0.50.4
+        end
         test -f ~/.ssh/id_nixSSH; and set -lx NIX_SSHOPTS "-i $HOME/.ssh/id_nixSSH -o IdentitiesOnly=yes"
 
         ${pkgs.nixos-rebuild-ng}/bin/nixos-rebuild-ng $action \
