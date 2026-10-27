@@ -7,7 +7,12 @@ let
 
   # Host keys: /etc/ssh/ssh_host_ed25519_key.pub on each machine
   fortress-pi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBjNCB0PcU37lyDLGjTlPEUeTQJvt4i3BmqgqQ/Zw1YV";
+  cooper-mbp = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDd4gyZtFs9MKhR5YR/o8S+sbcGy1hIi+ObMe79oThhX";
+  nix-nuc = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICQvXc07ECdtcmTwL2uV3pkNPFPoSLbr4s/dcdvRGpDB";
 in
 {
   "fortress-pi-tunnel.age".publicKeys = [ cooper fortress-pi ];
+
+  # Bearer token for calendar-bridge writes: the Mac checks it, Stubert on nix-nuc sends it.
+  "calendar-bridge-token.age".publicKeys = [ cooper cooper-mbp nix-nuc ];
 }

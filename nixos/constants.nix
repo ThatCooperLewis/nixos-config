@@ -89,6 +89,7 @@ let
     sab = 30055;
     scrutiny = 31054;
     stubert = 8484;
+    calendarBridge = 8485;
   	sonarr = 8989;
   	sonarr4k = 8990;
     tailscale = 41641;

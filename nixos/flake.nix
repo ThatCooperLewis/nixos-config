@@ -78,6 +78,7 @@
             environment.systemPackages = [ pkgs.claude-code ];
           })
           ./machines/nix-mbp/configuration.nix
+          inputs.agenix.darwinModules.default
 
           home-manager.darwinModules.home-manager
           ./users/cooper/user.nix
@@ -248,6 +249,7 @@
           ./users/root/ssh.nix
 
           ./containers/arr-stack.nix
+          inputs.agenix.nixosModules.default
           ./services/stubert.nix
           ./services/livesync-bridge.nix
 

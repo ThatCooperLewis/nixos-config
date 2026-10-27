@@ -1,4 +1,4 @@
-{ lib, pkgs, constants, ... }:
+{ config, lib, pkgs, constants, ... }:
 
 let
   repoDir = "/home/cooper/Development/stubert";
@@ -12,6 +12,13 @@ in
   '';
 
   networking.firewall.allowedTCPPorts = [ constants.ports.stubert ];
+
+  # Bearer token for calendar-bridge writes (apple-calendar skill); the Mac holds the same secret.
+  age.secrets.calendar-bridge-token = {
+    file = ../secrets/calendar-bridge-token.age;
+    owner = "cooper";
+    mode = "0400";
+  };
 
   systemd.services.stubert = {
     description = "Stubert";
@@ -33,6 +40,7 @@ in
       # Claude CLI (Node.js) needs HOME and PATH
       Environment = [
         "HOME=/home/cooper"
+        "APPLE_BRIDGE_TOKEN_FILE=${config.age.secrets.calendar-bridge-token.path}"
         "PATH=${repoDir}/target/release:${lib.makeBinPath [ pkgs.claude-code pkgs.nodejs ]}:/run/current-system/sw/bin"
       ];
 
