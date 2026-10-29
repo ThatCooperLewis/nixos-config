@@ -18,6 +18,7 @@
 //                          {occurrence_start, span: "this" | "future"}
 //   POST  /reminders       {title, [list | list_id], [due], [notes], [priority], [url]}
 //   PATCH /reminders/<id>  any of the above, plus {completed: true|false}
+//   POST  /reminder-lists  {title}: a new list in the default list's account
 // In a PATCH, a null value clears an optional field (location, notes, url, due).
 //
 // Dates accept YYYY-MM-DD, YYYY-MM-DDTHH:MM (local time) or full ISO 8601.
@@ -379,6 +380,21 @@ func editReminder(_ id: String, _ body: [String: Any]) throws -> Any {
   return reminderJSON(r)
 }
 
+func createReminderList(_ body: [String: Any]) throws -> Any {
+  try requireAccess(.reminder)
+  guard let title = try str(body, "title"), !title.isEmpty else { throw bad("title is required") }
+  if store.calendars(for: .reminder).contains(where: { $0.title.lowercased() == title.lowercased() }) {
+    throw HTTPError(status: 409, message: "a list named \(title) already exists")
+  }
+  guard let source = store.defaultCalendarForNewReminders()?.source else { throw bad("no default reminders account") }
+  let list = EKCalendar(for: .reminder, eventStore: store)
+  list.title = title
+  list.source = source
+  try store.saveCalendar(list, commit: true)
+  log("created reminder list \(list.calendarIdentifier) \"\(title)\" in \(source.title)")
+  return calendarJSON(list)
+}
+
 // MARK: - Routes
 
 func route(path: String, query: [String: [String]]) throws -> Any {
@@ -455,6 +471,7 @@ func writeRoute(method: String, path: String, body: [String: Any]) throws -> Any
   case ("PATCH", "events", 2): return try editEvent(parts[1], body)
   case ("POST", "reminders", 1): return try createReminder(body)
   case ("PATCH", "reminders", 2): return try editReminder(parts[1], body)
+  case ("POST", "reminder-lists", 1): return try createReminderList(body)
   default: throw HTTPError(status: 404, message: "no \(method) route for \(path)")
   }
 }
