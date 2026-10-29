@@ -2,7 +2,7 @@
 
 {
 
-  imports = [ ./photo-backup.nix ./lmstudio-model-schedule.nix ./stats.nix ./linux-builder.nix ./calendar-bridge.nix ./notes-mirror.nix ../darwin-base.nix ];
+  imports = [ ./photo-backup.nix ./lmstudio-model-schedule.nix ./stats.nix ./linux-builder.nix ./calendar-bridge.nix ./notes-mirror.nix ./windows-pc.nix ../darwin-base.nix ];
 
   system.defaults.screencapture.location = "~/Documents/screenshots";
 }
