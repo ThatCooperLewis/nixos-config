@@ -38,6 +38,7 @@ let
   tails = {
     brain = "http://100.101.81.63";
     nas = "http://100.86.97.79";
+    macRack = "http://100.106.15.6";
     nuc = "http://100.80.253.64";
     nuc-old = "http://100.81.70.111";
     windows = "http://100.88.50.101";
