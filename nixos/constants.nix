@@ -3,12 +3,12 @@ let
   ips = {
     brain = "10.0.50.1";
     nas = "10.0.50.2";
-    macRack = "10.0.50.3";
     nuc = "10.0.50.4";
     nuc-old = "10.0.50.6";
 
     homeAss = "10.0.50.10";
 
+    macRack = "10.50.0.3";
     caddyPi = "10.50.0.30";
     fallbackPi = "10.50.0.31";
     fortressPi = "10.60.0.33";
@@ -23,7 +23,7 @@ let
 
     brain = "http://10.0.50.1";	
     nas = "http://10.0.50.2";
-    macRack = "http://10.0.50.3";
+    macRack = "http://10.50.0.3";
     nuc = "http://10.0.50.4";
     nuc-old = "http://10.0.50.6";
 
