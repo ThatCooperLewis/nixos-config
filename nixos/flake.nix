@@ -86,6 +86,24 @@
         ];
       };
 
+      # Rack M3 Pro MacBook: Plex server and VM host
+      mac-rack = nix-darwin.lib.darwinSystem {
+        system.configurationRevision = self.rev or self.dirtyRev or null;
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          inputs.determinate.darwinModules.default
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [ claude-code.overlays.default ];
+            environment.systemPackages = [ pkgs.claude-code ];
+          })
+          ./machines/mac-rack/configuration.nix
+
+          home-manager.darwinModules.home-manager
+          ./users/cooper/user.nix
+
+        ];
+      };
+
       # Mac Server
       mac-server = nix-darwin.lib.darwinSystem {
         system.configurationRevision = self.rev or self.dirtyRev or null;

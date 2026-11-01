@@ -3,7 +3,7 @@ let
   ips = {
     brain = "10.0.50.1";
     nas = "10.0.50.2";
-    photonas = "10.0.50.3";
+    macRack = "10.0.50.3";
     nuc = "10.0.50.4";
     nuc-old = "10.0.50.6";
 
@@ -23,12 +23,11 @@ let
 
     brain = "http://10.0.50.1";	
     nas = "http://10.0.50.2";
-    photonas = "http://10.0.50.3";
+    macRack = "http://10.0.50.3";
     nuc = "http://10.0.50.4";
     nuc-old = "http://10.0.50.6";
-    
+
     # Rasp Pi's
-    monitor = "http://10.0.50.3";
     homeAss = "http://10.0.50.10";
     octoprint = "http://10.0.50.34";
     caddypi = "http://10.50.0.30";
