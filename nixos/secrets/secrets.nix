@@ -7,6 +7,8 @@ let
 
   # Host keys: /etc/ssh/ssh_host_ed25519_key.pub on each machine
   fortress-pi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBjNCB0PcU37lyDLGjTlPEUeTQJvt4i3BmqgqQ/Zw1YV";
+  # No secrets yet: add it to a secret's publicKeys when it needs one, then re-key
+  mac-rack = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPKYq3TZT5Arqfm3HJm8Rm6SCy36fhY/wN8gn2JLMr4d";
   mac-studio = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDd4gyZtFs9MKhR5YR/o8S+sbcGy1hIi+ObMe79oThhX";
   nix-nuc = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICQvXc07ECdtcmTwL2uV3pkNPFPoSLbr4s/dcdvRGpDB";
 in

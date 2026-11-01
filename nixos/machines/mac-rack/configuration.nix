@@ -18,6 +18,10 @@
     KbdInteractiveAuthentication no
   '';
 
+  # agenix decrypts with this Mac's host key, listed as mac-rack in secrets/secrets.nix.
+  # nix-darwin has no services.openssh.hostKeys for agenix to infer it from.
+  age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   # A server: macOS updates get installed by hand, not at 3am
   system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
 }

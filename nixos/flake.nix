@@ -88,6 +88,7 @@
             environment.systemPackages = [ pkgs.claude-code ];
           })
           ./machines/mac-rack/configuration.nix
+          inputs.agenix.darwinModules.default
 
           home-manager.darwinModules.home-manager
           ./users/cooper/user.nix
