@@ -14,6 +14,9 @@
   homeNetwork = {
     enable = true;
     address = constants.ips.nuc;
+    # Homelab VLAN (switch port MGE9, untagged VLAN 50)
+    gateway = "10.50.0.1";
+    prefixLength = 24;
     hostname = "nix-nuc";
     interface = "ens3";
   };

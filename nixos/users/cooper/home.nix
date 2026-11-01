@@ -103,7 +103,7 @@ in
         "remote.SSH.remotePlatform" = {
           "nix-nuc" = "linux";
           "nix-nas" = "linux";
-          "10.0.50.4" = "linux";
+          "10.50.0.4" = "linux";
           "10.0.50.1" = "linux";
         };
         "terminal.integrated.profiles.linux"= {

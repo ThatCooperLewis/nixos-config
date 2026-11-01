@@ -3,11 +3,11 @@ let
   ips = {
     brain = "10.0.50.1";
     nas = "10.0.50.2";
-    nuc = "10.0.50.4";
 
     homeAss = "10.0.50.10";
 
     macRack = "10.50.0.3";
+    nuc = "10.50.0.4";
     caddyPi = "10.50.0.30";
     fallbackPi = "10.50.0.31";
     fortressPi = "10.60.0.33";
@@ -23,7 +23,7 @@ let
     brain = "http://10.0.50.1";
     nas = "http://10.0.50.2";
     macRack = "http://10.50.0.3";
-    nuc = "http://10.0.50.4";
+    nuc = "http://10.50.0.4";
 
     # Rasp Pi's
     homeAss = "http://10.0.50.10";
@@ -198,7 +198,7 @@ in {
   };
 
   docker = {
-    tdarrServerIP = "10.0.50.4";
+    tdarrServerIP = ips.nuc;
     plexArgs = [ "--network=plex-stack" "--pull=always" ];
     environment = {
       TZ = localTimeZone;

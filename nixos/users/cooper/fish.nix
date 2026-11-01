@@ -104,7 +104,7 @@
       update-remote = ''
         # name ip ssh-user
         set -l hosts \
-          nix-nuc                10.0.50.4      root   \
+          nix-nuc                10.50.0.4      root   \
           caddy-pi               10.50.0.30     root   \
           cloudflare-fallback-pi 10.50.0.31     root   \
           fortress-pi            10.60.0.33     cooper \
@@ -136,11 +136,11 @@
         set -l extra
         if test "$user" != root
           set extra --sudo --ask-sudo-password
-          test (hostname) != nix-nuc; and set -a extra --build-host root@10.0.50.4
+          test (hostname) != nix-nuc; and set -a extra --build-host root@10.50.0.4
         end
         # The Mac's builder VM only does aarch64-linux; x86_64 hosts build on nix-nuc.
         if contains -- $name nix-nuc; and test (uname) = Darwin
-          set -a extra --build-host root@10.0.50.4
+          set -a extra --build-host root@10.50.0.4
         end
         test -f ~/.ssh/id_nixSSH; and set -lx NIX_SSHOPTS "-i $HOME/.ssh/id_nixSSH -o IdentitiesOnly=yes"
 
