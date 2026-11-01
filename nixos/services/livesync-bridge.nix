@@ -6,8 +6,8 @@ let
   src = pkgs.fetchFromGitHub {
     owner = "vrtmrz";
     repo = "livesync-bridge";
-    rev = "454f7611e88f681b3430234e03424be28ed3c7be";
-    hash = "sha256-EDbowbevqGsjwQEejl/LUmS8JFHAv6H8JBx9IYt3eNY=";
+    rev = "5d3aa6fed69fefb8344356ffa4d60fe2d5538fa6"; # commonlib 0.2.3 = LiveSync 1.0.44
+    hash = "sha256-TAWgYQ1z0PkGUfvQriJp2ReBDhCr8zagbV99xp1BU9k=";
   };
 
   stateDir = "/var/lib/livesync-bridge";
