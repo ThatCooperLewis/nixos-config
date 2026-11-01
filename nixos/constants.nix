@@ -115,7 +115,10 @@ in {
 
     # cooper@macbook
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB/veCx5UoXbcJagSUN0/dL8xBA6FxxeLn/h8i9xQLoJ cooper-mbp"
-    
+
+    # cooper@mac-rack
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPrPq9zG4EU4lNsTSdJOqVQF80a44lZukZ90NC6F/Rv cooper@mac-rack"
+
     # cooper@nix-brain
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkiU50BcIBPk6MsbUNw8Rmol/cApjRrVjRvAt/IlJqG nix-brain"
     # root@nix-brain
