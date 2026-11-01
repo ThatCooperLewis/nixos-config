@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-CONFIG="cooper-mbp"
+CONFIG="mac-studio"
 SET_HOSTNAME=0
 ASSUME_YES=0
 MAX_SWITCH_ATTEMPTS=5

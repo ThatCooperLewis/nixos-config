@@ -68,8 +68,8 @@
       constants = import ./constants.nix;
     in {
 
-      # Personal MacBook
-      cooper-mbp = nix-darwin.lib.darwinSystem {
+      # Personal M3 Max MacBook Pro
+      mac-studio = nix-darwin.lib.darwinSystem {
         system.configurationRevision = self.rev or self.dirtyRev or null;
         modules = [
           inputs.determinate.darwinModules.default
@@ -77,7 +77,7 @@
             nixpkgs.overlays = [ claude-code.overlays.default ];
             environment.systemPackages = [ pkgs.claude-code ];
           })
-          ./machines/nix-mbp/configuration.nix
+          ./machines/mac-studio/configuration.nix
           inputs.agenix.darwinModules.default
 
           home-manager.darwinModules.home-manager
