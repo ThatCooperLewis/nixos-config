@@ -11,6 +11,12 @@
 
   # Managed remotely over SSH (macOS Remote Login, enabled by users/cooper/user.nix)
   users.users.cooper.openssh.authorizedKeys.keys = constants.sshKeys;
+  # Keys only. sshd takes the first value it reads, and these load before the
+  # macOS defaults in /etc/ssh/sshd_config.
+  services.openssh.extraConfig = ''
+    PasswordAuthentication no
+    KbdInteractiveAuthentication no
+  '';
 
   # A server: macOS updates get installed by hand, not at 3am
   system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
