@@ -57,3 +57,33 @@
           ./services/tailscale.nix
         ];
       };
+
+
+
+# Gaming workstation: CachyOS kernel, HDR, Steam, Star Citizen, Ollama. Archived 2026-11-01.
+# Needs these flake inputs:
+#   nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+#   chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";       # https://www.nyx.chaotic.cx/
+#   nix-citizen.url = "github:LovingMelody/nix-citizen";          # https://github.com/LovingMelody/nix-citizen/
+#   nix-gaming.url = "github:fufexan/nix-gaming";
+#   nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
+      "nix-game" = nixpkgs.lib.nixosSystem {
+      	system = "x86_64-linux";
+        specialArgs = { inherit nixpkgs-unstable inputs constants; };
+        modules = [
+          ./machines/nix-game/configuration.nix
+          chaotic.nixosModules.default
+          
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          ./services/tailscale.nix
+          # ./services/remote-desktop.nix
+          
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
+        ];
+      };

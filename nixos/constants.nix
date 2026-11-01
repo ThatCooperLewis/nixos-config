@@ -4,7 +4,6 @@ let
     brain = "10.0.50.1";
     nas = "10.0.50.2";
     nuc = "10.0.50.4";
-    nuc-old = "10.0.50.6";
 
     homeAss = "10.0.50.10";
 
@@ -21,26 +20,22 @@ let
     firewall = "https://10.0.30.30";
     wap = "http://10.0.50.0";
 
-    brain = "http://10.0.50.1";	
+    brain = "http://10.0.50.1";
     nas = "http://10.0.50.2";
     macRack = "http://10.50.0.3";
     nuc = "http://10.0.50.4";
-    nuc-old = "http://10.0.50.6";
 
     # Rasp Pi's
     homeAss = "http://10.0.50.10";
-    octoprint = "http://10.0.50.34";
     caddypi = "http://10.50.0.30";
     adguard = "http://10.50.0.32";
     jetkvm = "http://10.0.50.111";
   };
 
   tails = {
-    brain = "http://100.101.81.63";
     nas = "http://100.86.97.79";
     macRack = "http://100.106.15.6";
     nuc = "http://100.80.253.64";
-    nuc-old = "http://100.81.70.111";
     windows = "http://100.88.50.101";
     caddypi = "http://100.69.31.128";
     homeAss = "http://100.102.14.66";
@@ -54,11 +49,8 @@ let
     cloudflare = 2002;
     influxdb = 992;
     grafana = 472;
-    minecraft = 1776;
     multimedia = 950;
     navidrome = 950;
-    octoprint = 333;
-    omada = 508;
 
     tailscale = 1984;
     uptime = 900;
@@ -75,9 +67,7 @@ let
     homeAss = 8123;
     influxdb = 8086;
   	lidarr = 8686;
-    minecraft = 19132;
     navidrome = 4533;
-    octoprint = 5000;
     omada = 8043;
   	overseerr = 5055;
 
@@ -119,11 +109,6 @@ in {
     # cooper@mac-rack
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPrPq9zG4EU4lNsTSdJOqVQF80a44lZukZ90NC6F/Rv cooper@mac-rack"
 
-    # cooper@nix-brain
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkiU50BcIBPk6MsbUNw8Rmol/cApjRrVjRvAt/IlJqG nix-brain"
-    # root@nix-brain
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMuFaNqrc/rm3EHHa1ah0I/S+wxXEC9vnmkse/kfNG0H nix-brain"
-    
     # cooper@nix-nuc
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJk/2Xmwc8tbST0xXD7uMCnEK3ys9Mgr+SfRXZMYwh2y nix-nuc"
     # root@nix-nuc
@@ -194,18 +179,13 @@ in {
     influxdb = "${hosts.brain}:${toString ports.influxdb}";
     # TrueNAS Apps
   	nas = "${hosts.nas}";
-  	photonas = "${hosts.photonas}";
   	plex = "${hosts.nas}:${toString ports.plex}";
   	sab = "${hosts.nas}:${toString ports.sab}";
     scrutiny = "${hosts.nas}:${toString ports.scrutiny}";
-    # Monitor Pi
-  	uptime = "${hosts.monitor}:${toString ports.uptime}";
     # Home Assistant
   	homeAss = "${hosts.homeAss}:${toString ports.homeAss}";
     # Wifi AP
   	wifi = "${hosts.wap}";
-    # Octoprint RasPi
-  	octoprint = "${hosts.octoprint}";
     # Caddy-Cloudflare RasPi   
     caddypi = "${hosts.caddypi}";
   };
@@ -235,8 +215,6 @@ in {
       cloudflare = "${toString users.cloudflare}";
 
       navidrome = "${toString users.navidrome}";
-      octoprint = "${toString users.octoprint}";
-      minecraft = "${toString users.minecraft}";
     };
     
     ports = {
@@ -245,7 +223,6 @@ in {
         "${toString ports.caddypiSSH}:${toString ports.caddypiSSH}" 
         "${toString ports.caddypiSSH}:${toString ports.caddypiSSH}/udp" 
       ];
-      octoprint = ["${toString ports.octoprint}:${toString ports.octoprint}"];
       bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
       overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
       prowlarr = ["${toString ports.prowlarr}:${toString ports.prowlarr}"];
@@ -265,8 +242,6 @@ in {
       influxdb = ["${toString ports.influxdb}:${toString ports.influxdb}"];
       grafana = ["${toString ports.grafana}:${toString ports.grafana}"];
       uptime = ["${toString ports.uptime}:${toString ports.uptime}"];
-
-      minecraft = ["${toString ports.minecraft}:${toString ports.minecraft}/udp"];
     };
 
     dirs = {
@@ -275,11 +250,9 @@ in {
       grafana = "/var/lib/grafana";
       uptime = "/home/cooper/uptime-stack";
       navidrome = "/home/cooper/navidrome-stack";
-      octoprint = "/home/cooper/octoprint";
       plexData = "/mnt/plex-content";
       plexDataUnified = "/mnt/plex-content-unified";
 
-      minecraft = "/var/lib/minecraft";
       caddypi = "/etc/caddy";
     };
   };

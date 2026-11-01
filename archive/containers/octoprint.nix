@@ -7,6 +7,8 @@ https://github.com/OctoPrint/octoprint-docker/blob/master/docker-compose.yml
 */
 
 {
+  # Archived 2026-11-01. These imports are relative to nixos/containers/, where
+  # this file lived; container-base.nix and services/rsync-backup.nix are still there.
   imports = [
     ./container-base.nix
     ../services/rsync-backup.nix

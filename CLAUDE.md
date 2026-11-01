@@ -26,7 +26,7 @@ nix flake update --flake ~/nixos-config/nixos
 nix flake check ~/nixos-config/nixos
 ```
 
-Valid hostnames: `nix-nuc`, `nix-brain`, `nix-game`, `nix-remote`, `mac-studio`, `adguard-pi`, `caddy-pi`, `cloudflare-fallback-pi`, `fortress-pi`
+Valid hostnames: `nix-nuc`, `mac-studio`, `mac-rack`, `adguard-pi`, `caddy-pi`, `cloudflare-fallback-pi`, `fortress-pi`
 
 ## Troubleshooting
 
@@ -91,6 +91,3 @@ Containers use `virtualisation.oci-containers.containers` with Docker backend. T
 | Machine | Role | Notable |
 |---------|------|---------|
 | nix-nuc | Arr-stack media server | Intel iGPU transcode, NFS mounts |
-| nix-brain | Monitoring/utility | Dual Nvidia GPUs, Grafana/InfluxDB |
-| nix-game | Gaming workstation | KDE Plasma, GPU passthrough, Star Citizen |
-| nix-remote | Remote server | AdGuard, lightweight |

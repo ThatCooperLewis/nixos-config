@@ -2,6 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
+# Archived 2026-11-01. Reviving this machine needs these flake inputs, which were
+# removed from nixos/flake.nix along with it (its entry is in archive/flake.nix):
+#   nixpkgs-unstable  github:NixOS/nixpkgs/nixos-unstable (passed in as a specialArg)
+#   chaotic           github:chaotic-cx/nyx/nyxpkgs-unstable: linuxPackages_cachyos, chaotic.hdr
+#   nix-gaming        github:fufexan/nix-gaming: pipewireLowLatency, platformOptimizations
+#   nix-citizen       github:LovingMelody/nix-citizen (inputs.nix-gaming.follows = "nix-gaming"):
+#                     star-citizen, lug-helper
+
 { pkgs, inputs, constants, ... }:
 
 {

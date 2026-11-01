@@ -6,8 +6,6 @@
   inputs = {
     # Official NixOS package source
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    # Unstable branch
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # Raspberry Pis, upgraded ahead of the rest of the flake
     nixpkgs-pi.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager-pi = {
@@ -24,13 +22,6 @@
       inputs.nixpkgs.follows = "nixpkgs";    
     };
 
-    # https://www.nyx.chaotic.cx/
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-
-    # https://github.com/LovingMelody/nix-citizen/
-    nix-citizen.url = "github:LovingMelody/nix-citizen";
-    nix-gaming.url = "github:fufexan/nix-gaming";
-    nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
     
     # https://github.com/nix-community/nixos-vscode-server
     vscode-server.url = "github:nix-community/nixos-vscode-server";
@@ -60,7 +51,7 @@
 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, chaotic, nix-darwin, nixpkgs-darwin, vscode-server, home-manager, claude-code, ... }: {
+  outputs = inputs@{ self, nixpkgs, nix-darwin, nixpkgs-darwin, vscode-server, home-manager, claude-code, ... }: {
     
     # macOS machines
     darwinConfigurations = let
@@ -97,20 +88,6 @@
             environment.systemPackages = [ pkgs.claude-code ];
           })
           ./machines/mac-rack/configuration.nix
-
-          home-manager.darwinModules.home-manager
-          ./users/cooper/user.nix
-
-        ];
-      };
-
-      # Mac Server
-      mac-server = nix-darwin.lib.darwinSystem {
-        system.configurationRevision = self.rev or self.dirtyRev or null;
-        modules = [
-          inputs.determinate.darwinModules.default
-          
-          ./machines/nix-mac/configuration.nix
 
           home-manager.darwinModules.home-manager
           ./users/cooper/user.nix
@@ -232,29 +209,6 @@
         ];
       };
 
-      "nix-nuc-old" = nixpkgs.lib.nixosSystem {
-      	system = "x86_64-linux";
-        specialArgs = { inherit inputs constants; };
-        modules = [
-          ./machines/nix-nuc/configuration.nix
-          
-          home-manager.nixosModules.home-manager
-          ./users/cooper/user.nix
-          ./users/root/ssh.nix
-
-          # ./containers/arr-stack.nix
-          
-          # ./services/telegraf.nix
-          ./services/tailscale.nix
-          # ./services/geocities-portfolio.nix
-
-          vscode-server.nixosModules.default
-          ({ config, pkgs, ... }: {
-            services.vscode-server.enable = true;
-          })
-        ];
-      };
-
       "nix-nuc" = nixpkgs.lib.nixosSystem {
       	system = "x86_64-linux";
         specialArgs = { inherit inputs constants; };
@@ -282,85 +236,6 @@
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
           })
-        ];
-      };
-
-      "nix-brain" = nixpkgs.lib.nixosSystem {
-      	system = "aarch64-linux";
-        specialArgs = { inherit inputs constants; };
-        modules = [
-          ({ pkgs, ... }: {
-            nixpkgs.overlays = [ claude-code.overlays.default ];
-            environment.systemPackages = [ pkgs.claude-code ];
-          })
-
-          ./machines/nix-brain/configuration.nix
-          
-          home-manager.nixosModules.home-manager
-          ./users/cooper/user.nix
-          ./users/root/ssh.nix
-
-          ./services/tailscale.nix
-
-          vscode-server.nixosModules.default
-          ({ config, lib, pkgs, ... }: {
-            services.vscode-server.enable = true;
-            nixpkgs.hostPlatform = "aarch64-linux";
-          })
-        ];
-      };
-
-      "nix-game" = nixpkgs.lib.nixosSystem {
-      	system = "x86_64-linux";
-        specialArgs = { inherit nixpkgs-unstable inputs constants; };
-        modules = [
-          ./machines/nix-game/configuration.nix
-          chaotic.nixosModules.default
-          
-          home-manager.nixosModules.home-manager
-          ./users/cooper/user.nix
-          ./users/root/ssh.nix
-
-          ./services/tailscale.nix
-          # ./services/remote-desktop.nix
-          
-          vscode-server.nixosModules.default
-          ({ config, pkgs, ... }: {
-            services.vscode-server.enable = true;
-          })
-        ];
-      };
-
-      "nix-remote" = nixpkgs.lib.nixosSystem {
-      	system = "x86_64-linux";
-        specialArgs = { inherit inputs constants; };
-        modules = [
-          ./machines/nix-remote/configuration.nix
-          
-          home-manager.nixosModules.home-manager
-          ./users/cooper/user.nix
-          ./users/root/ssh.nix
-
-          ./services/tailscale.nix
-          ./services/adguard.nix
-
-          vscode-server.nixosModules.default
-          ({ config, pkgs, ... }: {
-            services.vscode-server.enable = true;
-          })
-        ];
-      };
-
-      # ISO File Builds
-
-      raspIso = nixpkgs.lib.nixosSystem {
-      	system = "aarch64-linux";
-        modules = [
-          ({ pkgs, modulesPath, ... }: {
-            imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix") ];
-          })
-
-          ./templates/raspi-4/configuration.nix
         ];
       };
     };

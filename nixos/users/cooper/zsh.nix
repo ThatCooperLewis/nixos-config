@@ -9,10 +9,7 @@
     initContent = ''
       typeset -A nix_hosts
       nix_hosts=(
-        nix-remote              100.68.249.124
-        nix-brain               10.0.50.1
         nix-nuc                 10.0.50.4
-        nuc-old                 10.0.50.6
         caddy-pi                10.50.0.30
         cloudflare-fallback-pi  10.50.0.31
         fortress-pi             10.60.0.33
@@ -47,7 +44,6 @@
 
       update      = "sudo nixos-rebuild";
       update-darwin = "sudo nix run nix-darwin -- switch --flake ~/Nix/nixos";
-      update-adguard = "update-remote adguard-pi && update-remote nix-remote";
       idport = "sudo netstat -tulpn | grep";
     };
     
