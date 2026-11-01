@@ -112,7 +112,7 @@
           caddy-pi               10.50.0.30     root   \
           cloudflare-fallback-pi 10.50.0.31     root   \
           fortress-pi            10.60.0.33     cooper \
-          adguard-pi             10.0.100.0     root
+          adguard-pi             10.50.0.32     root
 
         set -l name $argv[1]
         set -l action $argv[2]

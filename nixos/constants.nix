@@ -14,7 +14,7 @@ let
     fortressPi = "10.60.0.33";
     octoprint = "10.0.50.34";
     jetkvm = "10.0.50.111";
-    adguard = "10.0.100.0";
+    adguard = "10.50.0.32";
   };
 
   hosts = {
@@ -31,7 +31,7 @@ let
     homeAss = "http://10.0.50.10";
     octoprint = "http://10.0.50.34";
     caddypi = "http://10.50.0.30";
-    adguard = "http://10.0.100.0";
+    adguard = "http://10.50.0.32";
     jetkvm = "http://10.0.50.111";
   };
 

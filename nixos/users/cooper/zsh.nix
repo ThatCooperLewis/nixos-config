@@ -16,7 +16,7 @@
         caddy-pi                10.50.0.30
         cloudflare-fallback-pi  10.50.0.31
         fortress-pi             10.60.0.33
-        adguard-pi              10.0.100.0
+        adguard-pi              10.50.0.32
       )
 
       update-remote() {

@@ -133,7 +133,10 @@
           {
             raspberryPi.enable = true;
             raspberryPi.hostname = "adguard-pi";
-            raspberryPi.address = "10.0.100.0";
+            raspberryPi.address = "10.50.0.32";
+            # Homelab (VLAN 50); see Brain Wiki/Home Network
+            homeNetwork.gateway = "10.50.0.1";
+            homeNetwork.prefixLength = 24;
           }
 
           inputs.home-manager-pi.nixosModules.home-manager
