@@ -1,9 +1,11 @@
 { pkgs, inputs, constants, ... }:
 
+# nix-nuc: Arr stack, Tautulli, Stubert. Host-independent; the flake pairs it with one
+# hardware file (hardware-truenas.nix today, the UTM VM on mac-rack next). See Brain Wiki/Mac Rack.
 {
-  imports = [ 
-    ./hardware-configuration.nix
+  imports = [
     ../home-network.nix
+    ./data-disk.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -18,7 +20,6 @@
     gateway = "10.50.0.1";
     prefixLength = 24;
     hostname = "nix-nuc";
-    interface = "ens3";
   };
 
 
@@ -45,7 +46,6 @@
     tmux
     home-manager
     neofetch
-    intel-gpu-tools
     vscode
     cowsay
     pipes
@@ -82,14 +82,20 @@
 
   services.xserver = {
     enable = true;
-    videoDrivers = [ "qxl" "virtio" ];
     displayManager.lightdm.enable = true;
     desktopManager.xfce.enable = true;
   };
 
-  services.spice-vdagentd = {
-    enable = true;
-  };
+  # NAS Remote Drives
+  fileSystems."/mnt/plex-content-unified" =
+    { device = "10.0.50.2:/mnt/janet/plex-content";
+      fsType = "nfs";
+    };
+
+  fileSystems."/mnt/primary-backup" =
+    { device = "10.0.50.2:/mnt/janet/backup-data/nix-nuc";
+      fsType = "nfs";
+    };
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";

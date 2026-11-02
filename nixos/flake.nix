@@ -218,7 +218,8 @@
             nixpkgs.overlays = [ claude-code.overlays.default ];
             environment.systemPackages = [ pkgs.claude-code ];
           })
-          ./machines/nix-nas/configuration.nix
+          ./machines/nix-nuc
+          ./machines/nix-nuc/hardware-truenas.nix
           
           home-manager.nixosModules.home-manager
           ./users/cooper/user.nix
