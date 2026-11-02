@@ -100,6 +100,36 @@
     # nixOS machines
     nixosConfigurations = let
       constants = import ./constants.nix;
+      # Shared by nix-nuc's hosts: the architecture and disks come from the hardware file
+      nixNuc = hardware: nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [ claude-code.overlays.default ];
+            environment.systemPackages = [ pkgs.claude-code ];
+          })
+          ./machines/nix-nuc
+          hardware
+          
+          home-manager.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          ./containers/arr-stack.nix
+          inputs.agenix.nixosModules.default
+          ./services/stubert.nix
+          ./services/livesync-bridge.nix
+
+          # ./services/telegraf.nix
+          ./services/tailscale.nix
+          ./services/geocities-portfolio.nix
+
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
+        ];
+      };
     in {
 
       "adguard-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
@@ -210,36 +240,10 @@
         ];
       };
 
-      "nix-nuc" = nixpkgs.lib.nixosSystem {
-      	system = "x86_64-linux";
-        specialArgs = { inherit inputs constants; };
-        modules = [
-          ({ pkgs, ... }: {
-            nixpkgs.overlays = [ claude-code.overlays.default ];
-            environment.systemPackages = [ pkgs.claude-code ];
-          })
-          ./machines/nix-nuc
-          ./machines/nix-nuc/hardware-truenas.nix
-          
-          home-manager.nixosModules.home-manager
-          ./users/cooper/user.nix
-          ./users/root/ssh.nix
-
-          ./containers/arr-stack.nix
-          inputs.agenix.nixosModules.default
-          ./services/stubert.nix
-          ./services/livesync-bridge.nix
-
-          # ./services/telegraf.nix
-          ./services/tailscale.nix
-          ./services/geocities-portfolio.nix
-
-          vscode-server.nixosModules.default
-          ({ config, pkgs, ... }: {
-            services.vscode-server.enable = true;
-          })
-        ];
-      };
+      # nix-nuc: one module set, paired with a hardware file per host (see machines/nix-nuc)
+      "nix-nuc" = nixNuc ./machines/nix-nuc/hardware-truenas.nix;
+      # The UTM VM on mac-rack, until it takes over as nix-nuc
+      "nix-nuc-utm" = nixNuc ./machines/nix-nuc/hardware-utm.nix;
     };
   };
 }
