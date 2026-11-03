@@ -241,8 +241,9 @@
       };
 
       # nix-nuc: one module set, paired with a hardware file per host (see machines/nix-nuc)
-      # The UTM VM on mac-rack since 2026-11-01. hardware-truenas.nix is the old TrueNAS VM, kept as a fallback
-      "nix-nuc" = nixNuc ./machines/nix-nuc/hardware-utm.nix;
+      # The TrueNAS VM again since 2026-11-03 (it ran in UTM on mac-rack 2026-11-01 to 2026-11-03).
+      # hardware-utm.nix is that aarch64 UTM VM, kept in case it moves again
+      "nix-nuc" = nixNuc ./machines/nix-nuc/hardware-truenas.nix;
     };
   };
 }

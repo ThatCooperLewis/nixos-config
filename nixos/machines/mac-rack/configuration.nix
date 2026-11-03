@@ -3,7 +3,7 @@
 # The rack M3 Pro MacBook: Plex server and VM host. See Brain Wiki/Mac Rack.
 {
 
-  imports = [ ../darwin-base.nix ./power.nix ./network.nix ./nix-nuc-vm.nix ];
+  imports = [ ../darwin-base.nix ./power.nix ./network.nix ];
 
   networking.hostName = "mac-rack";
   networking.computerName = "mac-rack";
