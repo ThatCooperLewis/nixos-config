@@ -1,7 +1,7 @@
 { pkgs, inputs, constants, ... }:
 
 # nix-nuc: Arr stack, Tautulli, Stubert. Host-independent; the flake pairs it with one
-# hardware file (hardware-truenas.nix today; hardware-utm.nix for the UTM VM on mac-rack). See Brain Wiki/Mac Rack.
+# hardware file (hardware-truenas.nix).
 {
   imports = [
     ../home-network.nix

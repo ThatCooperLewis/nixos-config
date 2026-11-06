@@ -68,6 +68,7 @@ in {
 
   networking.firewall.allowedTCPPorts = [
     constants.ports.bazarr
+    constants.ports.lidarr
     constants.ports.prowlarr
     constants.ports.radarr
     constants.ports.radarr4k

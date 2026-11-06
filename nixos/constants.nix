@@ -6,12 +6,10 @@ let
 
     homeAss = "10.0.50.10";
 
-    macRack = "10.50.0.3";
     nuc = "10.50.0.4";
     caddyPi = "10.50.0.30";
     fallbackPi = "10.50.0.31";
     fortressPi = "10.60.0.33";
-    octoprint = "10.0.50.34";
     jetkvm = "10.0.50.111";
     adguard = "10.50.0.32";
   };
@@ -22,7 +20,6 @@ let
 
     brain = "http://10.0.50.1";
     nas = "http://10.0.50.2";
-    macRack = "http://10.50.0.3";
     nuc = "http://10.50.0.4";
 
     # Rasp Pi's
@@ -34,7 +31,6 @@ let
 
   tails = {
     nas = "http://100.86.97.79";
-    macRack = "http://100.106.15.6";
     nuc = "http://100.80.253.64";
     windows = "http://100.88.50.101";
     caddypi = "http://100.69.31.128";
@@ -45,7 +41,7 @@ let
   };
 
   users = {
-    caddypi = 2222;
+    caddy = 2222;
     cloudflare = 2002;
     influxdb = 992;
     grafana = 472;
@@ -59,8 +55,8 @@ let
   ports = {
     adguard = 3003;
     bazarr = 6767;
-    caddypi = 80;
-    caddypiSSH = 443;
+    http = 80;
+    https = 443;
     geocitiesPortfolio = 8080;
     dns = 53;
   	grafana = 3000;
@@ -105,9 +101,6 @@ in {
 
     # cooper@macbook
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB/veCx5UoXbcJagSUN0/dL8xBA6FxxeLn/h8i9xQLoJ cooper-mbp"
-
-    # cooper@mac-rack
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPrPq9zG4EU4lNsTSdJOqVQF80a44lZukZ90NC6F/Rv cooper@mac-rack"
 
     # cooper@nix-nuc
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJk/2Xmwc8tbST0xXD7uMCnEK3ys9Mgr+SfRXZMYwh2y nix-nuc"
@@ -211,17 +204,17 @@ in {
       multimedia = "${toString users.multimedia}";
       uptime = "${toString users.uptime}";
       grafana = "${toString users.grafana}";
-      caddypi = "${toString users.caddypi}";
+      caddy = "${toString users.caddy}";
       cloudflare = "${toString users.cloudflare}";
 
       navidrome = "${toString users.navidrome}";
     };
     
     ports = {
-      caddypi = [ 
-        "${toString ports.caddypi}:${toString ports.caddypi}" 
-        "${toString ports.caddypiSSH}:${toString ports.caddypiSSH}" 
-        "${toString ports.caddypiSSH}:${toString ports.caddypiSSH}/udp" 
+      caddy = [
+        "${toString ports.http}:${toString ports.http}"
+        "${toString ports.https}:${toString ports.https}"
+        "${toString ports.https}:${toString ports.https}/udp"
       ];
       bazarr = ["${toString ports.bazarr}:${toString ports.bazarr}"];
       overseerr = ["${toString ports.overseerr}:${toString ports.overseerr}"];
@@ -253,7 +246,7 @@ in {
       plexData = "/mnt/plex-content";
       plexDataUnified = "/mnt/plex-content-unified";
 
-      caddypi = "/etc/caddy";
+      caddy = "/etc/caddy";
     };
   };
 }

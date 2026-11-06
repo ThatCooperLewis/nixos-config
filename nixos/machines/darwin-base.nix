@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-# Shared by every nix-darwin Mac (mac-studio, mac-rack). Per-machine modules
+# Shared by every nix-darwin Mac (mac-studio). Per-machine modules
 # live in machines/<machine>/.
 {
   nixpkgs.hostPlatform = "aarch64-darwin";

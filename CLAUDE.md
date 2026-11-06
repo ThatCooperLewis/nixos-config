@@ -26,7 +26,7 @@ nix flake update --flake ~/nixos-config/nixos
 nix flake check ~/nixos-config/nixos
 ```
 
-Valid hostnames: `nix-nuc`, `mac-studio`, `mac-rack`, `adguard-pi`, `caddy-pi`, `cloudflare-fallback-pi`, `fortress-pi`
+Valid hostnames: `nix-nuc`, `mac-studio`, `adguard-pi`, `caddy-pi`, `cloudflare-fallback-pi`, `fortress-pi`
 
 ## Troubleshooting
 

@@ -47,6 +47,13 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-pi";
     };
+
+    # https://github.com/nix-community/disko
+    # Declarative disk layouts, used by nixos-anywhere for fresh installs (fortress-pi)
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs-pi";
+    };
   };
 
   # The `@` syntax here is used to alias the attribute set of the
@@ -76,25 +83,6 @@
 
         ];
       };
-
-      # Rack M3 Pro MacBook: Plex server and VM host
-      mac-rack = nix-darwin.lib.darwinSystem {
-        system.configurationRevision = self.rev or self.dirtyRev or null;
-        specialArgs = { inherit inputs constants; };
-        modules = [
-          inputs.determinate.darwinModules.default
-          ({ pkgs, ... }: {
-            nixpkgs.overlays = [ claude-code.overlays.default ];
-            environment.systemPackages = [ pkgs.claude-code ];
-          })
-          ./machines/mac-rack/configuration.nix
-          inputs.agenix.darwinModules.default
-
-          home-manager.darwinModules.home-manager
-          ./users/cooper/user.nix
-
-        ];
-      };
     };
 
     # nixOS machines
@@ -116,6 +104,8 @@
           ./users/root/ssh.nix
 
           ./containers/arr-stack.nix
+          ./containers/caddy.nix
+          ./services/cloudflare.nix
           inputs.agenix.nixosModules.default
           ./services/stubert.nix
           ./services/livesync-bridge.nix
@@ -213,22 +203,12 @@
         ];
       };
 
+      # TrueNAS VM in the DMZ (it was a Raspberry Pi; the hostname stayed). See machines/fortress
       "fortress-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
-      	system = "aarch64-linux";
-
         specialArgs = { inherit inputs constants; };
         modules = [
-          ./machines/pi-base.nix
-          {
-            raspberryPi.enable = true;
-            raspberryPi.hostname = "fortress-pi";
-            raspberryPi.address = "10.60.0.33";
-            # DMZ (VLAN 60), isolated by UniFi firewall rules; see Brain Wiki/Home Network "fortress-pi Isolation"
-            homeNetwork.gateway = "10.60.0.1";
-            homeNetwork.prefixLength = 24;
-            # Internet-facing: no root login. Deploy as cooper with --sudo --ask-sudo-password.
-            services.openssh.settings.PermitRootLogin = inputs.nixpkgs-pi.lib.mkForce "no";
-          }
+          inputs.disko.nixosModules.disko
+          ./machines/fortress
 
           inputs.home-manager-pi.nixosModules.home-manager
           ./users/cooper/user.nix
@@ -241,8 +221,6 @@
       };
 
       # nix-nuc: one module set, paired with a hardware file per host (see machines/nix-nuc)
-      # The TrueNAS VM again since 2026-11-03 (it ran in UTM on mac-rack 2026-11-01 to 2026-11-03).
-      # hardware-utm.nix is that aarch64 UTM VM, kept in case it moves again
       "nix-nuc" = nixNuc ./machines/nix-nuc/hardware-truenas.nix;
     };
   };

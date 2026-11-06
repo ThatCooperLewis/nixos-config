@@ -7,9 +7,9 @@
 
 /*
 
-The built-in NixOS Caddy service doesn't handle its cloudflare DNS plugin easily.
-Instead of messing with the fully-functional internal caddy on the NUC, my solution is to run a separate caddy service on a Pi.
-This secondary proxy is dedicated to handling Tailscale traffic sent through Cloudflare. 
+Reverse proxy for *.local.lewisho.me (LAN IPs) and *.tail.lewisho.me (Tailscale IPs), with TLS from Let's Encrypt
+via the Cloudflare DNS challenge. Runs the caddy-cloudflare image because NixOS's Caddy can't easily load that plugin.
+Runs on nix-nuc; it used to run on caddy-pi.
 
 */
 
@@ -25,12 +25,12 @@ in
   users = {
     users.caddy = {
       isSystemUser = true;
-      uid = constants.users.caddypi;
+      uid = constants.users.caddy;
       group = "caddy";
       description = "Caddy-Cloudflare User";
       extraGroups = [ "wheel" ];
     };
-    groups.caddy.gid = constants.users.caddypi;
+    groups.caddy.gid = constants.users.caddy;
   };
 
   # Make sure the caddy data config is properly set
@@ -39,25 +39,44 @@ in
     chown -R caddy:caddy /etc/caddy/data
   '';
 
-  # Copy the Caddy env file from NAS
-  system.activationScripts.populateCaddyEnv = lib.mkAfter ''
+  # Copy the Caddy env file (Cloudflare DNS token) from the NAS before Caddy starts, on every boot and deploy.
+  # If the NAS is unreachable, keep the last copy so Caddy still comes up.
+  systemd.services.caddy-env = {
+    description = "Copy the Caddy env file from the NAS";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "docker-caddy.service" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      TimeoutStartSec = "60s";
+    };
+    script = ''
       mkdir -p /etc/caddy
-      cp /mnt/nas-secrets/caddy/caddy.env /etc/caddy/caddy.env
-      chown -R caddy:caddy /etc/caddy
-  '';
-
-  # Changes to Caddyfile will now autmoatically update
-  system.activationScripts.restartCaddy = ''
-    /run/current-system/sw/bin/systemctl restart docker-caddy
-  '';
+      if cp /mnt/nas-secrets/caddy/caddy.env /etc/caddy/caddy.env.new; then
+        mv /etc/caddy/caddy.env.new /etc/caddy/caddy.env
+      else
+        rm -f /etc/caddy/caddy.env.new
+        echo "NAS env file unavailable, keeping the existing copy" >&2
+      fi
+      chown caddy:caddy /etc/caddy/caddy.env
+      chmod 0600 /etc/caddy/caddy.env
+    '';
+  };
+  systemd.services.docker-caddy = {
+    wants = [ "caddy-env.service" ];
+    after = [ "caddy-env.service" ];
+    # The Caddyfile is bind-mounted, so restart Caddy whenever it changes
+    restartTriggers = [ config.environment.etc."caddy/Caddyfile".text ];
+  };
 
   environment.etc."caddy/Caddyfile" = {
     text = ''
 
 
 
-      ##### !!!WARNING!!! #####
-      # This service is set to restart anytime the machine runs nixos-rebuild!
+      # Caddy restarts whenever this file changes.
       # Anything configured here should be for local admin only.
 
 
@@ -140,16 +159,6 @@ in
         import cloudflare
       }
 
-      adguard.tail.lewisho.me {
-        reverse_proxy ${constants.tails.adguard}:${toString constants.ports.adguard}
-        import cloudflare
-      }
-
-      adguard-remote.tail.lewisho.me {
-        reverse_proxy ${constants.tails.remote}:${toString constants.ports.adguard}
-        import cloudflare
-      }
-
       jet.tail.lewisho.me {
         reverse_proxy ${constants.tails.jetkvm}
         import cloudflare
@@ -178,10 +187,6 @@ in
         reverse_proxy ${constants.ips.nuc}:${toString constants.ports.prowlarr}
         import cloudflare
       }
-      overseerr.local.lewisho.me {
-        reverse_proxy ${constants.ips.nuc}:${toString constants.ports.overseerr}
-        import cloudflare
-      }
       requestrr.local.lewisho.me {
         reverse_proxy ${constants.ips.nuc}:${toString constants.ports.requestrr}
         import cloudflare
@@ -204,14 +209,6 @@ in
         reverse_proxy ${constants.ips.nuc}:${toString constants.ports.tautulli}
         import cloudflare
       }
-      octoprint.local.lewisho.me {
-        reverse_proxy ${constants.ips.octoprint}
-        import cloudflare
-      }
-      adguard.local.lewisho.me {
-        reverse_proxy ${constants.ips.adguard}:${toString constants.ports.adguard}
-        import cloudflare
-      }
       nas.local.lewisho.me {
         reverse_proxy ${constants.ips.nas}
         import cloudflare
@@ -226,22 +223,6 @@ in
       }
       scrutiny.local.lewisho.me {
         reverse_proxy ${constants.ips.nas}:${toString constants.ports.scrutiny}
-        import cloudflare
-      }
-      influx.local.lewisho.me {
-        reverse_proxy ${constants.ips.brain}:${toString constants.ports.influxdb}
-        import cloudflare
-      }
-      grafana.local.lewisho.me {
-        reverse_proxy ${constants.ips.brain}:${toString constants.ports.grafana}
-        import cloudflare
-      }
-      wifi.local.lewisho.me {
-        reverse_proxy ${constants.ips.brain}:${toString constants.ports.omada} {
-          transport http {
-            tls_insecure_skip_verify
-          }
-        }
         import cloudflare
       }
       ha.local.lewisho.me {
@@ -259,18 +240,18 @@ in
     group = "caddy";
   };
 
-  networking.firewall.allowedTCPPorts = [ constants.ports.caddypi constants.ports.caddypiSSH ];
-  networking.firewall.allowedUDPPorts = [ constants.ports.caddypiSSH ];
+  networking.firewall.allowedTCPPorts = [ constants.ports.http constants.ports.https ];
+  networking.firewall.allowedUDPPorts = [ constants.ports.https ];
 
   virtualisation.oci-containers.containers = {
     caddy = {
       image = "ghcr.io/caddybuilds/caddy-cloudflare:latest";
-      ports = docker.ports.caddypi;
-      user = docker.users.caddypi;
+      ports = docker.ports.caddy;
+      user = docker.users.caddy;
       environmentFiles = ["/etc/caddy/caddy.env"]; # Pass the secret API Token
       volumes = [ 
-        "${docker.dirs.caddypi}/data:/data"
-        "${docker.dirs.caddypi}/Caddyfile:/etc/caddy/Caddyfile"
+        "${docker.dirs.caddy}/data:/data"
+        "${docker.dirs.caddy}/Caddyfile:/etc/caddy/Caddyfile"
       ];
     };
   };

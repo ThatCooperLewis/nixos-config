@@ -46,12 +46,15 @@ in {
   };
   users.groups.nas-backup = {};
 
+  # The official image: hotio's overseerr image is gone from both registries (2026-11). 1.35.0 is Overseerr's
+  # final release. It keeps its config in /app/config and runs as the overseerr user instead of root.
   virtualisation.oci-containers.containers.overseerr = {
-    image = "ghcr.io/hotio/overseerr";
+    image = "docker.io/sctx/overseerr:1.35.0";
     ports = docker.ports.overseerr;
-    environment = docker.environment;
+    user = "${toString constants.users.multimedia}:${toString constants.users.multimedia}";
+    environment = { TZ = constants.localTimeZone; };
     volumes = [
-      "/var/lib/overseerr:/config"
+      "${dataDir}:/app/config"
     ];
   };
 }

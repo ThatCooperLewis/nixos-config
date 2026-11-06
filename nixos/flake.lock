@@ -97,6 +97,26 @@
         "url": "https://install.determinate.systems/determinate-nixd/tag/v3.17.0/x86_64-linux"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-pi"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792526520,
+        "narHash": "sha256-3hSJlv8mUVnZPMWK2+CM7a9O+nR6Z4mCh27NfLCmTPc=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "cedd626e11b635470fa6f9fdb8ad79b0075dd7f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "fix-python": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -455,6 +475,7 @@
         "agenix": "agenix",
         "claude-code": "claude-code",
         "determinate": "determinate",
+        "disko": "disko",
         "fix-python": "fix-python",
         "home-manager": "home-manager",
         "home-manager-pi": "home-manager-pi",
