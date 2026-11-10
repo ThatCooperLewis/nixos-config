@@ -26,7 +26,7 @@ nix flake update --flake ~/nixos-config/nixos
 nix flake check ~/nixos-config/nixos
 ```
 
-Valid hostnames: `nix-nuc`, `mac-studio`, `adguard-pi`, `caddy-pi`, `cloudflare-fallback-pi`, `fortress-pi`
+Valid hostnames: `nix-nuc`, `mac-studio`, `fortress-pi`
 
 ## Troubleshooting
 
@@ -66,14 +66,9 @@ Central source of truth for the entire homelab. Contains:
 
 **When adding a new service or machine, update constants.nix first.**
 
-### Raspberry Pi Pattern
+### Archive
 
-All Pi machines share `machines/pi-base.nix` and are configured via options:
-```nix
-raspberryPi.enable = true;
-raspberryPi.hostname = "name-pi";
-raspberryPi.address = "10.0.50.XX";
-```
+`../archive/` (repo root) holds retired configs for reference, not built: old flake outputs in `archive/flake.nix` (including the Raspberry Pis, retired 2026-11-09), plus their machine and service modules (`archive/machines/pi-base.nix`, `archive/services/adguard.nix`).
 
 ### Container Pattern
 
@@ -81,13 +76,14 @@ Containers use `virtualisation.oci-containers.containers` with Docker backend. T
 
 ### Network Layout
 
-- LAN: `10.0.50.x` (servers), `10.0.100.x` (Pi DNS)
+- LAN: `10.0.50.x` (servers), `10.50.0.x` (Homelab VLAN), `10.60.0.x` (DMZ)
 - Tailscale VPN: `100.x.x.x`
 - NFS storage: TrueNAS at `10.0.50.2`
-- External access via Cloudflare tunnel through caddy-pi
+- External access via Cloudflare tunnels: the shared one on nix-nuc, Overseerr's own on fortress-pi
 
 ## Key Machines
 
 | Machine | Role | Notable |
 |---------|------|---------|
-| nix-nuc | Arr-stack media server | Intel iGPU transcode, NFS mounts |
+| nix-nuc | TrueNAS VM: arr-stack, Caddy, shared Cloudflare tunnel, Stubert | NFS mounts |
+| fortress-pi | TrueNAS VM in the DMZ: Overseerr + its own tunnel | Name kept from the old Pi |

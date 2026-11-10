@@ -87,3 +87,90 @@
           })
         ];
       };
+
+
+## Raspberry Pis, retired 2026-11-09 (services moved to nix-nuc and TrueNAS VMs; see Brain Projects/Hardware Consolidation Plan)
+## They used archive/machines/pi-base.nix (was machines/pi-base.nix) and the nixpkgs-pi / home-manager-pi inputs.
+## Removed constants: ips.caddyPi 10.50.0.30, ips.fallbackPi 10.50.0.31, ips.adguard 10.50.0.32,
+## tails.caddypi 100.69.31.128, tails.adguard 100.124.121.82, ports.adguard 3003 (archive/services/adguard.nix uses it).
+
+      "adguard-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
+      	system = "aarch64-linux";
+
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          ./machines/pi-base.nix
+          {
+            raspberryPi.enable = true;
+            raspberryPi.hostname = "adguard-pi";
+            raspberryPi.address = "10.50.0.32";
+            # Homelab (VLAN 50); see Brain Wiki/Home Network
+            homeNetwork.gateway = "10.50.0.1";
+            homeNetwork.prefixLength = 24;
+          }
+
+          inputs.home-manager-pi.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          ./services/tailscale.nix
+          ./services/adguard.nix
+        ];
+      };
+
+      "caddy-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
+      	system = "aarch64-linux";
+
+        specialArgs = { inherit inputs constants; };
+        modules = [
+          ./machines/pi-base.nix
+          {
+            raspberryPi.enable = true;
+            raspberryPi.hostname = "caddy-pi";
+            raspberryPi.address = "10.50.0.30";
+            # Homelab (VLAN 50); see Brain Wiki/Home Network
+            homeNetwork.gateway = "10.50.0.1";
+            homeNetwork.prefixLength = 24;
+          }
+
+          inputs.home-manager-pi.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          ./containers/caddy.nix
+
+          ./services/tailscale.nix
+          ./services/cloudflare.nix
+          ./services/telegraf.nix
+
+        ];
+      };
+
+      "cloudflare-fallback-pi" = inputs.nixpkgs-pi.lib.nixosSystem {
+      	system = "aarch64-linux";
+
+        specialArgs = { 
+          inherit inputs constants; 
+          systemType = "aarch64-linux"; 
+        };
+        modules = [
+          # Use the default RaspberryPi configuration
+          ./machines/pi-base.nix
+          {
+            raspberryPi.enable = true;
+            raspberryPi.hostname = "cloudflare-fallback-pi";
+            raspberryPi.address = "10.50.0.31";
+            # Homelab (VLAN 50); see Brain Wiki/Home Network
+            homeNetwork.gateway = "10.50.0.1";
+            homeNetwork.prefixLength = 24;
+          }
+
+          inputs.home-manager-pi.nixosModules.home-manager
+          ./users/cooper/user.nix
+          ./users/root/ssh.nix
+
+          ./services/cloudflare.nix
+          ./services/telegraf.nix
+          ./services/tailscale.nix
+        ];
+      };

@@ -6,7 +6,7 @@
 
 /*
 
-This configuration is shared between all Rasbperry Pi's in this network.
+ARCHIVED 2026-11-09: no Pis are left. This was shared between all Raspberry Pis in this network; paths are as they were in nixos/machines/.
 It assumes you installed NixOS on a Pi 4, using the official ISO (otherwise the NIXOS_SD filesystem may have a different name).
 Hostname and Memory Swap are configurable. 
 

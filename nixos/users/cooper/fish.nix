@@ -105,10 +105,7 @@
         # name ip ssh-user
         set -l hosts \
           nix-nuc                10.50.0.4      root   \
-          caddy-pi               10.50.0.30     root   \
-          cloudflare-fallback-pi 10.50.0.31     root   \
-          fortress-pi            10.60.0.33     cooper \
-          adguard-pi             10.50.0.32     root
+          fortress-pi            10.60.0.33     cooper
 
         set -l name $argv[1]
         set -l action $argv[2]

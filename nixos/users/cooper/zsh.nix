@@ -10,10 +10,7 @@
       typeset -A nix_hosts
       nix_hosts=(
         nix-nuc                 10.50.0.4
-        caddy-pi                10.50.0.30
-        cloudflare-fallback-pi  10.50.0.31
         fortress-pi             10.60.0.33
-        adguard-pi              10.50.0.32
       )
 
       update-remote() {

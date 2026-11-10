@@ -7,11 +7,8 @@ let
     homeAss = "10.0.50.10";
 
     nuc = "10.50.0.4";
-    caddyPi = "10.50.0.30";
-    fallbackPi = "10.50.0.31";
     fortressPi = "10.60.0.33";
     jetkvm = "10.0.50.111";
-    adguard = "10.50.0.32";
   };
 
   hosts = {
@@ -22,10 +19,8 @@ let
     nas = "http://10.0.50.2";
     nuc = "http://10.50.0.4";
 
-    # Rasp Pi's
+    # LAN devices
     homeAss = "http://10.0.50.10";
-    caddypi = "http://10.50.0.30";
-    adguard = "http://10.50.0.32";
     jetkvm = "http://10.0.50.111";
   };
 
@@ -33,9 +28,7 @@ let
     nas = "http://100.86.97.79";
     nuc = "http://100.80.253.64";
     windows = "http://100.88.50.101";
-    caddypi = "http://100.69.31.128";
     homeAss = "http://100.102.14.66";
-    adguard = "http://100.124.121.82";
     remote = "http://100.68.249.124";
     jetkvm = "http://100.87.185.37";
   };
@@ -53,7 +46,6 @@ let
   };
 
   ports = {
-    adguard = 3003;
     bazarr = 6767;
     http = 80;
     https = 443;
@@ -179,8 +171,6 @@ in {
   	homeAss = "${hosts.homeAss}:${toString ports.homeAss}";
     # Wifi AP
   	wifi = "${hosts.wap}";
-    # Caddy-Cloudflare RasPi   
-    caddypi = "${hosts.caddypi}";
   };
 
   services = {

@@ -2,7 +2,7 @@
 
 /*
 
-fortress-pi's own Cloudflare tunnel, so public Overseerr traffic doesn't pass through the shared tunnel on caddy-pi/fallback-pi.
+fortress-pi's own Cloudflare tunnel, so public Overseerr traffic doesn't pass through the shared tunnel on nix-nuc.
 Routes are managed in the Cloudflare dashboard (requests.lewisho.me -> localhost:5055).
 
 The credentials come from secrets/fortress-pi-tunnel.age (agenix), not the NAS secrets share: this Pi must not reach the NAS
