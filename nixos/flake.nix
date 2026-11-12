@@ -110,7 +110,8 @@
           ./services/stubert.nix
           ./services/livesync-bridge.nix
 
-          # ./services/telegraf.nix
+          ./services/influxdb.nix
+          ./services/telegraf.nix
           ./services/tailscale.nix
           ./services/geocities-portfolio.nix
 

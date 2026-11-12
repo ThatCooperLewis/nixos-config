@@ -20,4 +20,9 @@ in
 
   # Bearer token for calendar-bridge writes: the Mac checks it, Stubert on nix-nuc sends it.
   "calendar-bridge-token.age".publicKeys = [ cooper mac-studio nix-nuc ];
+
+  # InfluxDB on nix-nuc: admin login and token, and the write-only token every telegraf host sends
+  "influxdb-admin-password.age".publicKeys = [ cooper nix-nuc ];
+  "influxdb-admin-token.age".publicKeys = [ cooper nix-nuc ];
+  "influxdb-telegraf-token.age".publicKeys = [ cooper nix-nuc ];
 }

@@ -1,4 +1,4 @@
-{ pkgs, app, lib, user, constants, ... }:
+{ config, constants, ... }:
 
 ##########################
 ####### InfluxDB2 ########
@@ -6,57 +6,44 @@
 
 /*
 
-Timeseries metrics database. Table defined via NIx.
-Two quirks about this:
-- The service doesn't permit custom data directories, so a symlink is necessary
-- The service creates its own user, and gets upset if you override it. So only the UID/GID is set here.
+Timeseries metrics database for telegraf, on nix-nuc. Org, bucket, users and tokens are provisioned by Nix.
+- Data stays in the default /var/lib/influxdb2. Metrics are disposable (about 17 days of retention), so there's no backup.
+- Admin login: user "admin", password in secrets/influxdb-admin-password.age (decrypt from the Mac with agenix).
+- Telegraf writes with its own write-only token (secrets/influxdb-telegraf-token.age), never the admin one.
 
 */
 
 let
-  user = "influxdb2";
-  dataDir = constants.services.dirs.influxdb;
-  secretsDir = "${constants.nfs.dirs.secrets.mountPath}/influxdb";
+  org = "lewis-homelab";
+  bucket = "influx";
 in
 {
+  age.secrets = {
+    influxdb-admin-password = { file = ../secrets/influxdb-admin-password.age; owner = "influxdb2"; };
+    influxdb-admin-token = { file = ../secrets/influxdb-admin-token.age; owner = "influxdb2"; };
+    influxdb-telegraf-token = { file = ../secrets/influxdb-telegraf-token.age; owner = "influxdb2"; };
+  };
 
-  imports = [
-    ./rsync-backup.nix
-  ];
-
-  services.influxdb2 = { 
-    enable = true; 
+  services.influxdb2 = {
+    enable = true;
     provision = {
       enable = true;
       initialSetup = {
-        username = "telegraf";
-        tokenFile = "/var/lib/influxdb2/api.secret";
-        passwordFile = "/var/lib/influxdb2/password.secret";
-        organization = "lewis-homelab";
-        bucket = "influx";
-        retention = 1500001;
+        username = "admin";
+        passwordFile = config.age.secrets.influxdb-admin-password.path;
+        tokenFile = config.age.secrets.influxdb-admin-token.path;
+        organization = org;
+        inherit bucket;
+        retention = 1500001; # seconds, about 17 days
+      };
+      organizations.${org}.auths.telegraf = {
+        description = "telegraf: write metrics";
+        tokenFile = config.age.secrets.influxdb-telegraf-token.path;
+        writeBuckets = [ bucket ];
       };
     };
   };
 
-  services.rsyncBackup.influxdb = {
-    enable = true;
-    source = dataDir;
-    schedule = "05:40";
-  };
-
-  users.users.influxdb2.uid = constants.users.influxdb;
-  users.groups.influxdb2.gid = constants.users.influxdb;
-
-  networking.firewall.allowedTCPPorts = [ 8086 ];
-
-  # Influx forces our hand for where it wants the data to be stored
-  # Instead of providing a data dir, we'll just symlink it to where we want
-  system.activationScripts.ensureInfluxdbDataDir = lib.mkAfter ''
-    mkdir -p ${dataDir}
-    cp ${secretsDir}/* ${dataDir}
-    echo "telegraf" > ${dataDir}/api.secret
-    chown -R ${toString constants.users.influxdb}:${toString constants.users.influxdb} ${dataDir}
-    ln -sf ${dataDir} /var/lib/influxdb2
-  '';
+  # Open to the LAN so other hosts' telegraf can report here
+  networking.firewall.allowedTCPPorts = [ constants.ports.influxdb ];
 }

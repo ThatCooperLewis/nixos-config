@@ -161,7 +161,7 @@ in {
     tdarr = "${plexStackIP}:${toString ports.tdarrWeb}";
     tautulli = "${plexStackIP}:${toString ports.tautulli}"; 
   	grafana = "${hosts.nuc}:${toString ports.grafana}";
-    influxdb = "${hosts.brain}:${toString ports.influxdb}";
+    influxdb = "${hosts.nuc}:${toString ports.influxdb}";
     # TrueNAS Apps
   	nas = "${hosts.nas}";
   	plex = "${hosts.nas}:${toString ports.plex}";
