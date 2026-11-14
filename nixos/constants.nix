@@ -9,6 +9,7 @@ let
     nuc = "10.50.0.4";
     fortressPi = "10.60.0.33";
     jetkvm = "10.0.50.111";
+    networkSwitch = "10.0.50.50";
   };
 
   hosts = {
@@ -22,6 +23,7 @@ let
     # LAN devices
     homeAss = "http://10.0.50.10";
     jetkvm = "http://10.0.50.111";
+    networkSwitch = "http://10.0.50.50";
   };
 
   tails = {
