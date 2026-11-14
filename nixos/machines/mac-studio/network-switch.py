@@ -20,6 +20,8 @@ Raw commands:
   get <cmd> [k=v ...]   GET cgi/get.cgi?cmd=<cmd>, print JSON
   set <cmd> k=v ...     POST cgi/set.cgi?cmd=<cmd> with the UI's form encoding
   save                  Save running config to startup (else lost on reboot)
+  backup <dir>          Download startup-config.cfg and running-config.cfg into <dir>
+                        (plain text; includes the admin password hash)
   cmds [filter]         List every get/set cmd the UI knows (from js/url.js)
   pages                 List UI pages (menu tree) and their HTML paths
   fields <html-path>    Show form field names and set cmds a UI page uses (fields built
@@ -164,6 +166,22 @@ def main(argv):
         after = raw_get("vlan_membership")["data"]["ports"][idx]
         print(f"result: {json.dumps(r)}")
         print(f"after:  {port} {after['adminVlans']}  (running config; run `save` to persist)")
+        return
+    elif c == "backup":
+        if len(rest) != 1:
+            sys.exit("usage: backup <dir>")
+        for kind in ("startup", "running"):
+            body = _form([("cfg_action", "backup"), ("method", "http"), ("fileType", kind)])
+            r = authed(lambda: _json(_open(f"cgi/set.cgi?cmd=file_backup&dummy={_ts()}", body)))
+            if r.get("status") != "ok" or not r.get("filename"):
+                sys.exit(f"{kind} backup failed: {json.dumps(r)}")
+            cfg = _open(r["filename"].lstrip("/"))
+            if "SYSTEM CONFIG FILE" not in cfg:
+                sys.exit(f"{kind} backup doesn't look like a config file")
+            path = os.path.join(rest[0], f"{kind}-config.cfg")
+            with open(path, "w") as f:
+                f.write(cfg)
+            print(f"{kind}: {path} ({len(cfg)} bytes)")
         return
     elif c == "save":
         r = authed(lambda: _json(_open(f"cgi/set.cgi?cmd=home_save&dummy={_ts()}")))

@@ -21,6 +21,10 @@ in
   # Bearer token for calendar-bridge writes: the Mac checks it, Stubert on nix-nuc sends it.
   "calendar-bridge-token.age".publicKeys = [ cooper mac-studio nix-nuc ];
 
+  # Managed switch web login (NETWORK_SWITCH_USER / NETWORK_SWITCH_PASSWORD, env-file format)
+  # for the Mac's nightly config backup. nix-nuc can't reach the switch's management IP.
+  "network-switch-env.age".publicKeys = [ cooper mac-studio ];
+
   # InfluxDB on nix-nuc: admin login and token, and the write-only token every telegraf host sends
   "influxdb-admin-password.age".publicKeys = [ cooper nix-nuc ];
   "influxdb-admin-token.age".publicKeys = [ cooper nix-nuc ];
